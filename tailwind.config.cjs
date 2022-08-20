@@ -18,12 +18,6 @@ module.exports = {
         spoqaMedium: ["SpoqaHanSansNeo-Medium"],
         spoqaBold: ["SpoqaHanSansNeo-Bold"],
       },
-      backgroundImage: {
-        logo: "url('/src/assets/sprites.png')",
-      },
-      backgroundPosition: {
-        toLogo: "top left",
-      },
     },
     screens: {
       xs: "360px",
