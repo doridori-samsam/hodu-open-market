@@ -1,7 +1,14 @@
-import LogIn from "./LogIn";
+import NavBar from "../../components/navBar/NavBar";
+import LogIn from "../Auth/LogIn";
+import Products from "./Products";
 
 function Home() {
-  return <LogIn />;
+  return (
+    <>
+      <NavBar />
+      <Products />
+    </>
+  );
 }
 
 export default Home;
