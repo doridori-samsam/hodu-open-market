@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import styles from "../../style";
 import ProductCarousel from "./ProductCarousel";
 import ProductList from "./ProductList";
 
@@ -12,7 +11,6 @@ function Products() {
     async function getProduct() {
       try {
         const res = await axios.get(url + "products/");
-        console.log(res);
         setProduct(res.data.results);
       } catch (err) {
         console.error(err);

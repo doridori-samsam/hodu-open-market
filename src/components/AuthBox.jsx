@@ -1,7 +1,12 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { useLocation } from "react-router-dom";
+import UserContext from "../context/UserContext";
 import styles from "../style";
 
 function AuthBox({ children, giveType }) {
+  const { userType, setUserType } = useContext(UserContext);
+  const location = useLocation();
+
   const [logInType, setLogInType] = useState({
     type: "BUYER",
     byBorder: "border-b-0",
@@ -34,6 +39,7 @@ function AuthBox({ children, giveType }) {
   function logInSubmit(e) {
     e.preventDefault();
     giveType(logInType.type);
+    setUserType(logInType.type);
   }
 
   return (
@@ -42,13 +48,13 @@ function AuthBox({ children, giveType }) {
         onClick={clickBuyerLogIn}
         className={`${logInType.byColor} ${logInType.byBorder} cursor-pointer inline-block w-[50%] h-[60px] border-[1px] rounded-b-none rounded-[10px] border-disabled sm:text-[18px] text-[15px] text-center font-spoqaMedium leading-[60px]`}
       >
-        구매회원 로그인
+        {location.pathname === "/join" ? "구매회원가입" : "구매회원 로그인"}
       </div>
       <div
         onClick={clickSellerLogIn}
         className={`${logInType.slColor} ${logInType.slBorder} cursor-pointer inline-block w-[50%] h-[60px] border-[1px] rounded-b-none rounded-[10px] border-disabled sm:text-[18px] text-[15px] text-center font-spoqaMedium leading-[60px]`}
       >
-        판매회원 로그인
+        {location.pathname === "/join" ? "판매회원가입" : "판매회원 로그인"}
       </div>
 
       <form

@@ -4,30 +4,29 @@ import styles from "../../style";
 function ProductList({ mapdata }) {
   return (
     <section
-      className={`${styles.flexCenter} w-full px-[60px] py-[60px] bg-white`}
+      className={`${styles.flexCenter} w-full md:px-[60px] px-[0] py-[60px] bg-white`}
     >
-      <ul className="grid grid-cols-[repeat(3,1fr)] gap-x-[70px] gap-y-[78px]">
+      <ul className="w-fit grid md:grid-cols-[repeat(3,1fr)] ss:grid-cols-[repeat(2,1fr)] grid-rows-[auto] gap-x-[70px] gap-y-[78px]">
         {mapdata.map((list, idx) => {
-          let image = list.image;
           return (
             <li key={list.product_id}>
               <div
-                className={`w-[380px] h-[380px] rounded-[10px] border-[1px]  bg-center bg-cover`}
+                className={`md:w-[380px] md:h-[380px] w-[250px] h-[250px] rounded-[10px] border-[1px]  bg-center bg-cover`}
                 style={{ backgroundImage: `url(${list.image})` }}
               ></div>
 
-              <span className="text-[16px] text-subText font-spoqa">
+              <span className="inline-block mb-[10px] text-[16px] text-subText font-spoqa">
                 {list.product_name}
               </span>
               <br />
-              <span className="text-[18px] text-mainText font-spoqa">
+              <span className="inline-block mb-[10px] text-[18px] text-mainText font-spoqa">
                 {list.product_info}
               </span>
               <br />
               <span className="text-[24px] text-mainText font-spoqaBold">
-                {list.price}
+                {list.price.toLocaleString()}
               </span>
-              <span>원</span>
+              <span className="text-mainText font-spoqa"> 원</span>
             </li>
           );
         })}

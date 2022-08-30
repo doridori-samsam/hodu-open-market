@@ -1,18 +1,21 @@
-import { useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import { useState, useRef, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import AuthHeader from "../../components/AuthHeader";
 import AuthBox from "../../components/AuthBox";
 import MainButton from "../../components/buttons/MainButton";
+import UserContext from "../../context/UserContext";
 import styles from "../../style";
 
 function LogIn() {
+  const { userType, setUserType } = useContext(UserContext);
   const url = "https://openmarket.weniv.co.kr/";
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [failMsg, setFailMsg] = useState("");
   const idInput = useRef();
   const passwordInput = useRef();
+  const navigate = useNavigate();
 
   function handleId(e) {
     setId(e.target.value);
@@ -42,7 +45,9 @@ function LogIn() {
         password: password,
         login_type: type,
       });
+      localStorage.setItem("token", res.data.token);
       setFailMsg("");
+      window.location.replace("/");
     } catch (err) {
       console.error(err.response.data);
       if (
@@ -53,6 +58,7 @@ function LogIn() {
         setFailMsg("아이디 또는 비밀번호가 일치하지 않습니다.");
       }
     }
+    console.log(userType);
   }
 
   return (
