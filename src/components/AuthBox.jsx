@@ -1,7 +1,6 @@
 import { useState, useContext } from "react";
 import { useLocation } from "react-router-dom";
 import UserContext from "../context/UserContext";
-import styles from "../style";
 
 function AuthBox({ children, giveType }) {
   const { userType, setUserType } = useContext(UserContext);
