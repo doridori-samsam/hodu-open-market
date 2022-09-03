@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import AuthHeader from "../../components/AuthHeader";
 import AuthBox from "../../components/AuthBox";
 import MediumButton from "../../components/buttons/MediumButton";
@@ -6,36 +8,417 @@ import MainButton from "../../components/buttons/MainButton";
 import styles from "../../style";
 
 function SignUp() {
-  console.log("렌더링");
+  const url = "https://openmarket.weniv.co.kr/";
+  const navigate = useNavigate();
+
+  /**회원가입 입력 정보 */
   const [newUserInfo, setNewUserInfo] = useState({
-    id: "",
+    username: "",
     password: "",
     passwordCheck: "",
     name: "",
-    phoneNumber: "",
-    email: "",
+    phoneNumber: ["010", "", ""],
+    email: ["", ""],
     consent: false,
   });
-  const [checkPassword, setCheckPassword] = useState(false);
-  const [consent, setConsent] = useState(false);
 
-  /**비밀번호 유효검사 정규표현식 */
+  /** 아이디 유효 검사 */
+  const [validUserName, setValidUserName] = useState({
+    fail: false,
+    checked: false,
+    message: "",
+  });
+
+  /**아이디 유효 검사 정규표현 */
+  const regUserName = /^[a-zA-Z0-9]{2,20}$/i;
+
+  /** 비밀번호 유효 검사 */
+  const [validPassword, setValidPassword] = useState({
+    fail: false,
+    message: "",
+  });
+
+  /**비밀번호 유효 검사 정규표현 */
   const regPassword =
     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/i;
 
+  /**사용자 이름 유효 검사 */
+  const [validName, setValidName] = useState({
+    fail: false,
+    message: "",
+  });
+
+  /**휴대폰 번호 유효 검사 */
+  const [validPhoneNumber, setValidPhoneNumber] = useState({
+    fail: false,
+    message: "",
+  });
+
+  /**휴대폰 번호 유효 검사 정규표현 */
+  const regPhoneNumber = /^[0-9]{3,4}$/i;
+
+  /**이메일 유효 검사 */
+  const [validEmail, setValidEmail] = useState({
+    fail: false,
+    message: "",
+  });
+
+  /**이메일 아이디 유효 검사 정규표현 */
+  const regEmail = /^[a-zA-Z0-9+-\_.]+$/i;
+
+  /**이메일 아이디 도메인 유효 검사 정규표현*/
+  const regDomain = /^[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/i;
+
+  /**아이디 입력 */
+  function handleUserName(e) {
+    if (e.target.value === "") {
+      setValidUserName({ fail: true, message: "필수 정보입니다" });
+    }
+    setNewUserInfo({ ...newUserInfo, username: e.target.value });
+  }
+
+  /**아이디 중복확인 클릭 */
+  async function checkUserNameValid(e) {
+    e.preventDefault();
+    if (newUserInfo.username) {
+      if (regUserName.test(newUserInfo.username)) {
+        try {
+          const res = await axios.post(url + "accounts/signup/valid/", {
+            username: newUserInfo.username,
+          });
+          setValidUserName({ checked: true, message: "멋진 아이디네요 :)" });
+        } catch (err) {
+          console.error(err);
+          setValidUserName({
+            fail: true,
+            message: err.response.data.FAIL_Message,
+          });
+        }
+      } else {
+        setValidUserName({
+          fail: true,
+          message: "20자 이내 영대소문자, 숫자만 입력가능합니다",
+        });
+        setNewUserInfo({
+          ...newUserInfo,
+          username: false,
+        });
+      }
+    } else {
+      setValidUserName({ fail: true, message: "아이디를 입력해주세요" });
+    }
+  }
+
   /**비밀번호 입력*/
   function handlePassword(e) {
-    setNewUserInfo({ ...newUserInfo, password: e.target.value });
-    setCheckPassword(regPassword.test(e.target.value));
+    if (e.target.value !== "" && !regPassword.test(e.target.value)) {
+      setValidPassword({
+        fail: true,
+        message: "8자 이상의 영대소문자, 숫자, 특수문자를 사용하세요",
+      });
+    } else if (e.target.value === "") {
+      setValidPassword({
+        fail: true,
+        message: "필수 정보입니다",
+      });
+    } else {
+      setNewUserInfo({ ...newUserInfo, password: e.target.value });
+      setValidPassword({ fail: !regPassword.test(e.target.value) });
+    }
   }
 
   /**비밀번호 재입력*/
   function handleCheckPassword(e) {
-    setNewUserInfo({ ...newUserInfo, passwordCheck: e.target.value });
+    if (newUserInfo.password === "" && validPassword.message === "") {
+      setValidPassword({
+        fail: true,
+        message: "필수 정보입니다",
+      });
+    }
+    if (e.target.value === "" || e.target.value !== newUserInfo.password) {
+      setNewUserInfo({ ...newUserInfo, passwordCheck: false });
+    } else {
+      setNewUserInfo({ ...newUserInfo, passwordCheck: e.target.value });
+    }
   }
 
+  /**사용자 이름 입력 */
+  function handleName(e) {
+    if (e.target.value === "") {
+      setValidName({ fail: true, message: "필수 정보입니다." });
+      setNewUserInfo({ ...newUserInfo, name: "" });
+    } else {
+      setNewUserInfo({ ...newUserInfo, name: e.target.value });
+      setValidName({ fail: false, message: "" });
+    }
+  }
+
+  /**휴대폰 번호 입력 */
+  function handlePhoneNumber1(e) {
+    setNewUserInfo({
+      ...newUserInfo,
+      phoneNumber: [
+        e.target.value,
+        newUserInfo.phoneNumber[1],
+        newUserInfo.phoneNumber[2],
+      ],
+    });
+  }
+
+  /**휴대폰 번호 입력2 */
+  function handlePhoneNumber2(e) {
+    if (e.target.value) {
+      if (regPhoneNumber.test(e.target.value)) {
+        setNewUserInfo({
+          ...newUserInfo,
+          phoneNumber: [
+            newUserInfo.phoneNumber[0],
+            e.target.value,
+            newUserInfo.phoneNumber[2],
+          ],
+        });
+        setValidPhoneNumber({
+          fail: false,
+          message: "",
+        });
+        if (!newUserInfo.phoneNumber[2]) {
+          setValidPhoneNumber({
+            fail: true,
+            message: "유효하지 않은 번호입니다",
+          });
+        }
+        if (newUserInfo.phoneNumber[2] === "") {
+          setValidPhoneNumber({
+            fail: true,
+            message: "필수 정보입니다",
+          });
+        }
+      } else {
+        setNewUserInfo({
+          ...newUserInfo,
+          phoneNumber: [
+            newUserInfo.phoneNumber[0],
+            false,
+            newUserInfo.phoneNumber[2],
+          ],
+        });
+        setValidPhoneNumber({
+          fail: true,
+          message: "유효하지 않은 번호입니다",
+        });
+      }
+    } else if (e.target.value === "") {
+      setNewUserInfo({
+        ...newUserInfo,
+        phoneNumber: [
+          newUserInfo.phoneNumber[0],
+          "",
+          newUserInfo.phoneNumber[2],
+        ],
+      });
+      setValidPhoneNumber({
+        fail: true,
+        message: "필수 정보입니다",
+      });
+    }
+  }
+
+  /**휴대폰 번호 입력3 */
+  function handlePhoneNumber3(e) {
+    if (e.target.value) {
+      if (regPhoneNumber.test(e.target.value)) {
+        setNewUserInfo({
+          ...newUserInfo,
+          phoneNumber: [
+            newUserInfo.phoneNumber[0],
+            newUserInfo.phoneNumber[1],
+            e.target.value,
+          ],
+        });
+        setValidPhoneNumber({
+          fail: false,
+          message: "",
+        });
+        if (!newUserInfo.phoneNumber[1]) {
+          setValidPhoneNumber({
+            fail: true,
+            message: "유효하지 않은 번호입니다",
+          });
+        }
+        if (newUserInfo.phoneNumber[1] === "") {
+          setValidPhoneNumber({
+            fail: true,
+            message: "필수 정보입니다",
+          });
+        }
+      } else {
+        setNewUserInfo({
+          ...newUserInfo,
+          phoneNumber: [
+            newUserInfo.phoneNumber[0],
+            newUserInfo.phoneNumber[1],
+            false,
+          ],
+        });
+        setValidPhoneNumber({
+          fail: true,
+          message: "유효하지 않은 번호입니다",
+        });
+      }
+    } else if (e.target.value === "") {
+      setNewUserInfo({
+        ...newUserInfo,
+        phoneNumber: [
+          newUserInfo.phoneNumber[0],
+          newUserInfo.phoneNumber[1],
+          "",
+        ],
+      });
+      setValidPhoneNumber({
+        fail: true,
+        message: "필수 정보입니다",
+      });
+    }
+  }
+
+  /**이메일 입력 */
+  function handleEmail1(e) {
+    if (e.target.value) {
+      if (regEmail.test(e.target.value)) {
+        setNewUserInfo({
+          ...newUserInfo,
+          email: [e.target.value, newUserInfo.email[1]],
+        });
+        setValidEmail({
+          fail: false,
+          message: "",
+        });
+        if (!newUserInfo.email[1]) {
+          setValidEmail({
+            fail: true,
+            message: "유효하지 않은 이메일입니다",
+          });
+        }
+        if (newUserInfo.email[1] === "") {
+          setValidEmail({
+            fail: true,
+            message: "필수 정보입니다",
+          });
+        }
+      } else {
+        setNewUserInfo({
+          ...newUserInfo,
+          email: [false, newUserInfo.email[1]],
+        });
+        setValidEmail({
+          fail: true,
+          message: "유효하지 않은 이메일입니다",
+        });
+      }
+    } else if (e.target.value === "") {
+      setNewUserInfo({
+        ...newUserInfo,
+        email: ["", newUserInfo.email[1]],
+      });
+      setValidEmail({
+        fail: true,
+        message: "필수 정보입니다",
+      });
+    }
+  }
+
+  /**이메일 입력2 */
+  function handleEmail2(e) {
+    if (e.target.value) {
+      if (regDomain.test(e.target.value)) {
+        setNewUserInfo({
+          ...newUserInfo,
+          email: [newUserInfo.email[0], e.target.value],
+        });
+        setValidEmail({
+          fail: false,
+          message: "",
+        });
+        if (!newUserInfo.email[0]) {
+          setValidEmail({
+            fail: true,
+            message: "유효하지 않은 이메일입니다",
+          });
+        }
+        if (newUserInfo.email[0] === "") {
+          setValidEmail({
+            fail: true,
+            message: "필수 정보입니다",
+          });
+        }
+      } else {
+        setNewUserInfo({
+          ...newUserInfo,
+          email: [newUserInfo.email[0], false],
+        });
+        setValidEmail({
+          fail: true,
+          message: "유효하지 않은 이메일입니다",
+        });
+      }
+    } else if (e.target.value === "") {
+      setNewUserInfo({
+        ...newUserInfo,
+        email: [newUserInfo.email[0], ""],
+      });
+      setValidEmail({
+        fail: true,
+        message: "필수 정보입니다",
+      });
+    }
+  }
+
+  /**동의 체크 클릭 */
   function clickConsent() {
     setNewUserInfo({ ...newUserInfo, consent: !newUserInfo.consent });
+  }
+
+  /**버튼 activate */
+  function buttonActivate() {
+    let result;
+    let validData = Object.values(newUserInfo);
+    result = validData.reduce((prev, cur) => {
+      if (typeof cur === "object") {
+        cur = cur.reduce((prev, cur) => {
+          return prev && cur;
+        });
+      }
+      return prev && cur;
+    });
+    return result;
+  }
+
+  /**회원가입  */
+  async function clickSignUp() {
+    try {
+      const res = await axios.post(url + "accounts/signup/", {
+        username: newUserInfo.username,
+        password: newUserInfo.password,
+        password2: newUserInfo.passwordCheck,
+        phone_number: newUserInfo.phoneNumber.join(""),
+        name: newUserInfo.name,
+      });
+      navigate("/login");
+    } catch (err) {
+      console.error(err.response.data);
+      if (err.response.data.phone_number) {
+        setValidPhoneNumber({
+          fail: true,
+          message: err.response.data.phone_number,
+        });
+      }
+      if (err.response.data.username) {
+        setValidUserName({
+          fail: true,
+          message: err.response.data.username,
+        });
+      }
+    }
   }
 
   return (
@@ -50,13 +433,25 @@ function SignUp() {
             <input
               type="text"
               id="user-id"
-              className={`${styles.signUpInput} w-[346px] mr-[12px]`}
+              onBlur={handleUserName}
+              className={`${styles.signUpInput} ${
+                validUserName.fail ? "focus:border-accentText" : null
+              } ss:w-[280px] sm:w-[346px] mr-[10px] sm:mr-[12px]`}
             ></input>
-            <MediumButton isActive style="w-[122px] bg-primary">
+            <MediumButton
+              isActive
+              type="button"
+              onClick={checkUserNameValid}
+              style="w-[80px] h-[35px] sm:w-[122px] ss:my-0 mt-[15px] bg-primary text-[14px]"
+            >
               중복확인
             </MediumButton>
-            <span className="block mt-[10px] font-spoqa text-primary">
-              멋진 아이디네요! :)
+            <span
+              className={`block mt-[10px] font-spoqa text-[14px] ss:text-[16px] ${
+                validUserName.fail ? "text-accentText" : "text-primary"
+              }`}
+            >
+              {validUserName.message}
             </span>
             <label
               htmlFor="user-pwd"
@@ -67,12 +462,18 @@ function SignUp() {
             <input
               type="password"
               id="user-pwd"
-              onChange={handlePassword}
-              className={`${styles.signUpInput} w-[480px] ${
-                checkPassword ? "icon-icon-check-on" : "icon-icon-check-off"
-              } bg-[top_13px_right_13px]`}
+              onBlur={handlePassword}
+              className={`${styles.signUpInput} ${
+                !validPassword.fail && newUserInfo.password !== ""
+                  ? "icon-icon-check-on"
+                  : "icon-icon-check-off"
+              } ${
+                validPassword.fail ? "focus:border-accentText" : null
+              } sm:w-[480px] bg-[center_right_5px] ss:bg-[top_13px_right_13px]`}
             ></input>
-
+            <span className="block mt-[10px] font-spoqa text-[14px] ss:text-[16px] text-accentText">
+              {validPassword.message}
+            </span>
             <label
               htmlFor="verify-pwd"
               className={`${styles.grayText} block mt-[12px]`}
@@ -82,30 +483,44 @@ function SignUp() {
             <input
               type="password"
               id="verify-pwd"
-              onChange={handleCheckPassword}
-              className={`${styles.signUpInput} w-[480px] ${
-                checkPassword &&
-                newUserInfo.password === newUserInfo.passwordCheck
+              onBlur={handleCheckPassword}
+              className={`${styles.signUpInput} ${
+                !validPassword.fail && newUserInfo.passwordCheck
                   ? "icon-icon-check-on"
-                  : "icon-icon-check-off focus:border-accentText"
-              } bg-[top_13px_right_13px]`}
+                  : "icon-icon-check-off"
+              } ${
+                newUserInfo.passwordCheck === false
+                  ? "focus:border-accentText"
+                  : null
+              } sm:w-[480px] bg-[center_right_5px] ss:bg-[top_13px_right_13px]`}
             ></input>
 
             <span className="block mt-[10px] mb-[20px] font-spoqa text-[16px] text-accentText leading-[20px]">
-              {newUserInfo.passwordCheck !== "" &&
-              newUserInfo.password !== newUserInfo.passwordCheck
+              {newUserInfo.passwordCheck === false
                 ? "비밀번호가 일치하지 않습니다"
                 : null}
             </span>
 
-            <label htmlFor="user-name" className={`${styles.grayText} block`}>
+            <label
+              htmlFor="user-name"
+              className={`${styles.grayText} block mt-[50px]`}
+            >
               이름
             </label>
             <input
               type="text"
               id="user-name"
-              className={`${styles.signUpInput} w-[480px]`}
+              onBlur={handleName}
+              className={`${styles.signUpInput} ${
+                validName.fail ? "focus:border-accentText" : null
+              } sm:w-[480px]`}
             ></input>
+            <span
+              className="block mt-[10px] font-spoqa text-[14px] ss:text-[16px] text-accentText 
+              "
+            >
+              {validName.message}
+            </span>
 
             <label
               htmlFor="user-phone"
@@ -114,7 +529,8 @@ function SignUp() {
               휴대폰번호
             </label>
             <select
-              className={`${styles.signUpInput} pl-[0px] w-[152px] mr-[12px] bg-white text-center`}
+              onChange={handlePhoneNumber1}
+              className={`${styles.signUpInput} pl-[0px] w-[84px] ss:w-[116px] sm:w-[152px] mr-[9px] ss:mr-[11px] sm:mr-[12px] bg-white text-center`}
             >
               <option value="010">010</option>
               <option value="011">011</option>
@@ -122,19 +538,25 @@ function SignUp() {
               <option value="017">017</option>
               <option value="018">018</option>
               <option value="019">019</option>
-              <option value="050">050</option>
-              <option value="070">070</option>
             </select>
             <input
               type="text"
               id="user-phone"
-              className={`${styles.signUpInput} w-[152px] mr-[12px]`}
+              onBlur={handlePhoneNumber2}
+              className={`${styles.signUpInput} ${
+                validPhoneNumber.fail ? "focus:border-accentText" : null
+              } pl-0 w-[84px] ss:w-[116px] sm:w-[152px] mr-[9px] ss:mr-[11px] sm:mr-[12px] text-center`}
             ></input>
             <input
               type="text"
-              className={`${styles.signUpInput} w-[152px]`}
+              onBlur={handlePhoneNumber3}
+              className={`${styles.signUpInput} ${
+                validPhoneNumber.fail ? "focus:border-accentText" : null
+              } pl-0 w-[84px] ss:w-[116px] sm:w-[152px] text-center`}
             ></input>
-
+            <span className="block mt-[10px] font-spoqa text-[14px] ss:text-[16px] text-accentText">
+              {validPhoneNumber.message}
+            </span>
             <label
               htmlFor="user-email"
               className={`${styles.grayText} block mt-[16px]`}
@@ -143,17 +565,22 @@ function SignUp() {
             </label>
             <input
               type="text"
-              className={`${styles.signUpInput} w-[220px]`}
+              onBlur={handleEmail1}
+              className={`${styles.signUpInput} w-[115px] ss:w-[165px] sm:w-[220px]`}
             ></input>
             <span className="mx-[12px] font-spoqa">@</span>
             <input
               type="text"
-              className={`${styles.signUpInput} w-[220px]`}
+              onBlur={handleEmail2}
+              className={`${styles.signUpInput} w-[115px] ss:w-[165px] sm:w-[220px]`}
             ></input>
+            <span className="block mt-[10px] font-spoqa text-[14px] ss:text-[16px] text-accentText">
+              {validEmail.fail ? validEmail.message : null}
+            </span>
           </div>
         </AuthBox>
       </section>
-      <div className="my-[34px] font-spoqa text-[16px] text-subText">
+      <div className="my-[34px] px-[30px] sm:px-0 font-spoqa text-[14px] sm:text-[16px] text-subText">
         <button
           className={`mb-[3px] mr-[10px] w-[16px] h-[16px] align-middle ${
             newUserInfo.consent ? "icon-check-fill-box" : "icon-check-box"
@@ -164,7 +591,12 @@ function SignUp() {
         <u className="font-spoqaBold">개인정보처리방침</u>에 대한 내용을
         확인하였고 동의합니다.
       </div>
-      <MainButton large isActve={false} type="submit">
+      <MainButton
+        large
+        isActive={validUserName.checked && buttonActivate()}
+        type="submit"
+        onClick={clickSignUp}
+      >
         가입하기
       </MainButton>
     </main>

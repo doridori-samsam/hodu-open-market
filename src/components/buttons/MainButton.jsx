@@ -8,6 +8,7 @@ function MainButton({ children, large, isActive, type, onClick }) {
       }`}
       type={type}
       onClick={onClick}
+      disabled={!isActive}
     >
       {children}
     </button>
