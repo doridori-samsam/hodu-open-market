@@ -1,10 +1,10 @@
 import { useState, useRef, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import UserContext from "../../context/UserContext";
 import AuthHeader from "../../components/AuthHeader";
 import AuthBox from "../../components/AuthBox";
 import MainButton from "../../components/buttons/MainButton";
-import UserContext from "../../context/UserContext";
 import styles from "../../style";
 
 function LogIn() {

@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import UserContext from "../../context/UserContext";
 import AuthHeader from "../../components/AuthHeader";
 import AuthBox from "../../components/AuthBox";
 import MediumButton from "../../components/buttons/MediumButton";
@@ -8,6 +9,7 @@ import MainButton from "../../components/buttons/MainButton";
 import styles from "../../style";
 
 function SignUp() {
+  const { userType, setUserType } = useContext(UserContext);
   const url = "https://openmarket.weniv.co.kr/";
   const navigate = useNavigate();
 
@@ -20,6 +22,8 @@ function SignUp() {
     phoneNumber: ["010", "", ""],
     email: ["", ""],
     consent: false,
+    businessNumber: "",
+    storeName: "",
   });
 
   /** 아이디 유효 검사 */
@@ -68,6 +72,21 @@ function SignUp() {
 
   /**이메일 아이디 도메인 유효 검사 정규표현*/
   const regDomain = /^[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/i;
+
+  /**사업자 등록번호 유효 검사 정규표현 */
+  const regBusinessNum = /^[0-9]+$/;
+
+  /**사업자 등록번호 유효 검사 */
+  const [validBusinessNum, setValidBusinessNum] = useState({
+    fail: false,
+    message: "",
+  });
+
+  /**스토어 이름 유효 검사 */
+  const [validStoreName, setValidStoreName] = useState({
+    fail: false,
+    message: "",
+  });
 
   /**아이디 입력 */
   function handleUserName(e) {
@@ -373,6 +392,53 @@ function SignUp() {
     }
   }
 
+  /**사업자 등록번호 입력 */
+  function handleBusinessNum(e) {
+    if (regBusinessNum.test(e.target.value)) {
+      setNewUserInfo({
+        ...newUserInfo,
+        businessNumber: e.target.value,
+      });
+      setValidBusinessNum({
+        fail: false,
+        message: "",
+      });
+    } else {
+      setNewUserInfo({
+        ...newUserInfo,
+        businessNumber: "",
+      });
+      setValidBusinessNum({
+        fail: true,
+        message: "유효하지 않은 번호입니다",
+      });
+    }
+  }
+
+  console.log(newUserInfo.businessNumber);
+  /**스토어 이름 입력 */
+  function handleStoreName(e) {
+    if (e.target.value === "") {
+      setNewUserInfo({
+        ...newUserInfo,
+        storeName: "",
+      });
+      setValidStoreName({
+        fail: true,
+        message: "필수 정보입니다",
+      });
+    } else {
+      setNewUserInfo({
+        ...newUserInfo,
+        storeName: e.target.value,
+      });
+      setValidStoreName({
+        fail: false,
+        mesage: "",
+      });
+    }
+  }
+
   /**동의 체크 클릭 */
   function clickConsent() {
     setNewUserInfo({ ...newUserInfo, consent: !newUserInfo.consent });
@@ -382,41 +448,99 @@ function SignUp() {
   function buttonActivate() {
     let result;
     let validData = Object.values(newUserInfo);
-    result = validData.reduce((prev, cur) => {
-      if (typeof cur === "object") {
-        cur = cur.reduce((prev, cur) => {
-          return prev && cur;
-        });
-      }
-      return prev && cur;
-    });
+    if (userType === "BUYER") {
+      result = validData.reduce((prev, cur) => {
+        if (validData.indexOf(cur) === 7 || validData.indexOf(cur) === 8) {
+          cur = true;
+        }
+        if (typeof cur === "object") {
+          cur = cur.reduce((prev, cur) => {
+            return prev && cur;
+          });
+        }
+        return prev && cur;
+      });
+    } else if (userType === "SELLER") {
+      result = validData.reduce((prev, cur) => {
+        if (typeof cur === "object") {
+          cur = cur.reduce((prev, cur) => {
+            console.log(prev && cur);
+            return prev && cur;
+          });
+        }
+        return prev && cur;
+      });
+      console.log(result);
+    }
     return result;
   }
 
   /**회원가입  */
   async function clickSignUp() {
-    try {
-      const res = await axios.post(url + "accounts/signup/", {
-        username: newUserInfo.username,
-        password: newUserInfo.password,
-        password2: newUserInfo.passwordCheck,
-        phone_number: newUserInfo.phoneNumber.join(""),
-        name: newUserInfo.name,
-      });
-      navigate("/login");
-    } catch (err) {
-      console.error(err.response.data);
-      if (err.response.data.phone_number) {
-        setValidPhoneNumber({
-          fail: true,
-          message: err.response.data.phone_number,
+    if (userType === "BUYER") {
+      try {
+        const res = await axios.post(url + "accounts/signup/", {
+          username: newUserInfo.username,
+          password: newUserInfo.password,
+          password2: newUserInfo.passwordCheck,
+          phone_number: newUserInfo.phoneNumber.join(""),
+          name: newUserInfo.name,
         });
+        navigate("/login");
+      } catch (err) {
+        console.error(err.response.data);
+        if (err.response.data.phone_number) {
+          setValidPhoneNumber({
+            fail: true,
+            message: err.response.data.phone_number,
+          });
+        }
+        if (err.response.data.username) {
+          setValidUserName({
+            fail: true,
+            message: err.response.data.username,
+          });
+        }
       }
-      if (err.response.data.username) {
-        setValidUserName({
-          fail: true,
-          message: err.response.data.username,
+    } else {
+      try {
+        const res = await axios.post(url + "accounts/signup_seller/", {
+          username: newUserInfo.username,
+          password: newUserInfo.password,
+          password2: newUserInfo.passwordCheck,
+          phone_number: newUserInfo.phoneNumber.join(""),
+          name: newUserInfo.name,
+          company_registration_number: newUserInfo.businessNumber,
+          store_name: newUserInfo.storeName,
         });
+        console.log(res);
+        //navigate("/login");
+      } catch (err) {
+        console.error(err);
+        if (err.response.data.phone_number) {
+          setValidPhoneNumber({
+            fail: true,
+            message: err.response.data.phone_number,
+          });
+        }
+        if (err.response.data.username) {
+          setValidUserName({
+            fail: true,
+            message: err.response.data.username,
+          });
+        }
+        if (err.response.data.company_registration_number) {
+          setValidBusinessNum({
+            fail: true,
+            message: err.response.data.company_registration_number,
+          });
+        }
+        if (err.response.data.store_name) {
+          setValidStoreName({
+            fail: true,
+            message: err.response.data.store_name,
+          });
+        }
       }
     }
   }
@@ -577,6 +701,52 @@ function SignUp() {
             <span className="block mt-[10px] font-spoqa text-[14px] ss:text-[16px] text-accentText">
               {validEmail.fail ? validEmail.message : null}
             </span>
+            {userType === "SELLER" ? (
+              <>
+                <label
+                  htmlFor="business-num"
+                  className={`${styles.grayText} block mt-[50px]`}
+                >
+                  사업자 등록번호
+                </label>
+                <input
+                  type="text"
+                  id="business-num"
+                  onBlur={handleBusinessNum}
+                  className={`${styles.signUpInput} ${
+                    validBusinessNum.fail ? "focus:border-accentText" : null
+                  } ss:w-[280px] sm:w-[346px] mr-[10px] sm:mr-[12px]`}
+                ></input>
+                <MediumButton
+                  isActive
+                  type="button"
+                  onClick={checkUserNameValid}
+                  style="w-[80px] h-[35px] sm:w-[122px] ss:my-0 mt-[15px] bg-primary text-[14px]"
+                >
+                  인증
+                </MediumButton>
+                <span className="block mt-[10px] font-spoqa text-[14px] ss:text-[16px] text-accentText">
+                  {validBusinessNum.message}
+                </span>
+                <label
+                  htmlFor="store-name"
+                  className={`${styles.grayText} block mt-[16px]`}
+                >
+                  스토어 이름
+                </label>
+                <input
+                  type="text"
+                  id="store-name"
+                  onBlur={handleStoreName}
+                  className={`${styles.signUpInput} ${
+                    validStoreName.fail ? "focus:border-accentText" : null
+                  } sm:w-[480px]`}
+                ></input>
+                <span className="block mt-[10px] font-spoqa text-[14px] ss:text-[16px] text-accentText">
+                  {validStoreName.message}
+                </span>
+              </>
+            ) : null}
           </div>
         </AuthBox>
       </section>

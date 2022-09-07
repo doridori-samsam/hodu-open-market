@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import UserContext from "../context/UserContext";
 
 function AuthBox({ children, giveType }) {
-  const { userType, setUserType } = useContext(UserContext);
+  const { userType, changeUserType } = useContext(UserContext);
   const location = useLocation();
 
   const [logInType, setLogInType] = useState({
@@ -22,6 +22,7 @@ function AuthBox({ children, giveType }) {
       slBorder: "",
       slColor: "bg-background",
     });
+    changeUserType("BUYER");
   }
 
   function clickSellerLogIn() {
@@ -32,13 +33,13 @@ function AuthBox({ children, giveType }) {
       slBorder: "border-b-0",
       slColor: "",
     });
+    changeUserType("SELLER");
   }
 
   //로그인 함수 실행함수 상위 컴포넌트에 전달
   function logInSubmit(e) {
     e.preventDefault();
     giveType(logInType.type);
-    setUserType(logInType.type);
   }
 
   return (

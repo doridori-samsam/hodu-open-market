@@ -5,7 +5,10 @@ export default UserContext;
 
 const UserContextProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("token"));
-  const [userType, setUserType] = useState("");
+  const [userType, setUserType] = useState("BUYER");
+  const changeUserType = (type) => {
+    setUserType(type);
+  };
 
   return (
     <UserContext.Provider
@@ -14,6 +17,7 @@ const UserContextProvider = ({ children }) => {
         setToken,
         userType,
         setUserType,
+        changeUserType,
       }}
     >
       {children}
