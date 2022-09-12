@@ -6,14 +6,18 @@ function ModalPortal({ close, children }) {
   const background = useRef();
   const modalRoot = document.getElementById("modal-root");
 
-  function test(e) {
+  function clickBackground(e) {
     if (background.current === e.target) {
       close();
     }
   }
   return ReactDOM.createPortal(
     <>
-      <div ref={background} onClick={test} className={`${styles.modalOverlay}`}>
+      <div
+        ref={background}
+        onClick={clickBackground}
+        className={`${styles.modalOverlay}`}
+      >
         {children}
       </div>
     </>,

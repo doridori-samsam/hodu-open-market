@@ -3,10 +3,8 @@ import styles from "../../style";
 
 function ProductList({ mapdata }) {
   return (
-    <section
-      className={`${styles.flexCenter} w-full md:px-[60px] px-[0] py-[60px] bg-white`}
-    >
-      <ul className="w-fit grid md:grid-cols-[repeat(3,1fr)] ss:grid-cols-[repeat(2,1fr)] grid-rows-[auto] gap-x-[70px] gap-y-[78px]">
+    <section className={`${styles.flexCenter}  bg-white`}>
+      <ul className="w-fit grid md:grid-cols-[repeat(3,1fr)] ss:grid-cols-[repeat(2,1fr)] grid-rows-[auto] sm:py-[52px] py-[30px] gap-x-[70px] gap-y-[78px]">
         {mapdata.map((list, idx) => {
           return (
             <li key={list.product_id}>

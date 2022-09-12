@@ -2,7 +2,7 @@ import styles from "../../style";
 
 function SearchBox() {
   return (
-    <div className="flex items-center">
+    <div className="h-full flex items-center">
       <div className="hidden sm:inline-block w-[124px] h-[38px] mr-[30px] icon-Logo-hodu bg-contain">
         <span className="a11y-hidden">호두마켓 로고</span>
       </div>

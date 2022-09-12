@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import ProductCarousel from "./ProductCarousel";
 import ProductList from "./ProductList";
+import styles from "../../style";
 
 function Products() {
   const url = "https://openmarket.weniv.co.kr/";
@@ -20,8 +21,8 @@ function Products() {
   }, []);
 
   return (
-    <main className="mt-[40px] sm:mt-[60px] bg-background">
-      <ProductCarousel />
+    <main className={`${styles.mainLayout}`}>
+      {/* <ProductCarousel /> */}
       <ProductList mapdata={product} />
     </main>
   );

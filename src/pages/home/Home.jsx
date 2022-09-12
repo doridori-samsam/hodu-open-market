@@ -1,6 +1,5 @@
-import LogInModal from "../../components/Modal/LogInModal";
 import NavBar from "../../components/navBar/NavBar";
-import LogIn from "../Auth/LogIn";
+import Footer from "../../components/footer/Footer";
 import Products from "./Products";
 
 function Home() {
@@ -8,6 +7,7 @@ function Home() {
     <>
       <NavBar />
       <Products />
+      <Footer />
     </>
   );
 }

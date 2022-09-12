@@ -9,7 +9,7 @@ import MainButton from "../../components/buttons/MainButton";
 import styles from "../../style";
 
 function SignUp() {
-  const { userType, setUserType } = useContext(UserContext);
+  const { userType } = useContext(UserContext);
   const url = "https://openmarket.weniv.co.kr/";
   const navigate = useNavigate();
 
@@ -107,7 +107,6 @@ function SignUp() {
           });
           setValidUserName({ checked: true, message: "멋진 아이디네요 :)" });
         } catch (err) {
-          console.error(err);
           setValidUserName({
             fail: true,
             message: err.response.data.FAIL_Message,
@@ -415,7 +414,6 @@ function SignUp() {
     }
   }
 
-  console.log(newUserInfo.businessNumber);
   /**스토어 이름 입력 */
   function handleStoreName(e) {
     if (e.target.value === "") {
@@ -464,13 +462,11 @@ function SignUp() {
       result = validData.reduce((prev, cur) => {
         if (typeof cur === "object") {
           cur = cur.reduce((prev, cur) => {
-            console.log(prev && cur);
             return prev && cur;
           });
         }
         return prev && cur;
       });
-      console.log(result);
     }
     return result;
   }
@@ -488,7 +484,6 @@ function SignUp() {
         });
         navigate("/login");
       } catch (err) {
-        console.error(err.response.data);
         if (err.response.data.phone_number) {
           setValidPhoneNumber({
             fail: true,
@@ -513,10 +508,8 @@ function SignUp() {
           company_registration_number: newUserInfo.businessNumber,
           store_name: newUserInfo.storeName,
         });
-        console.log(res);
-        //navigate("/login");
+        navigate("/login");
       } catch (err) {
-        console.error(err);
         if (err.response.data.phone_number) {
           setValidPhoneNumber({
             fail: true,

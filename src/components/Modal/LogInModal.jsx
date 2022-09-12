@@ -1,4 +1,4 @@
-import ModalPortal from "./MordalPortal";
+import ModalPortal from "./ModalPortal";
 import styles from "../../style";
 import MediumButton from "../buttons/MediumButton";
 

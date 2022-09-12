@@ -8,14 +8,14 @@ import MainButton from "../../components/buttons/MainButton";
 import styles from "../../style";
 
 function LogIn() {
-  const { userType, setUserType } = useContext(UserContext);
+  const { changeUserType, token } = useContext(UserContext);
   const url = "https://openmarket.weniv.co.kr/";
+  const navigate = useNavigate();
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [failMsg, setFailMsg] = useState("");
   const idInput = useRef();
   const passwordInput = useRef();
-  const navigate = useNavigate();
 
   function handleId(e) {
     setId(e.target.value);
@@ -46,6 +46,7 @@ function LogIn() {
         login_type: type,
       });
       localStorage.setItem("token", res.data.token);
+      changeUserType(type);
       setFailMsg("");
       window.location.replace("/");
     } catch (err) {
@@ -58,7 +59,6 @@ function LogIn() {
         setFailMsg("아이디 또는 비밀번호가 일치하지 않습니다.");
       }
     }
-    console.log(userType);
   }
 
   return (
