@@ -539,7 +539,7 @@ function SignUp() {
   }
 
   return (
-    <main className={`${styles.flexCenter} w-full flex-col pb-[20px]`}>
+    <main className={`${styles.mainLayout} items-center flex-col`}>
       <AuthHeader />
       <section className="ss:mt-[70px] mt-[40px]">
         <AuthBox>

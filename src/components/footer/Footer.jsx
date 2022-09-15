@@ -3,10 +3,10 @@ import styles from "../../style";
 function Footer() {
   return (
     <footer
-      className={`w-full sm:h-[298px] h-[200px] ${styles.flexCenter} flex-col md:py-[60px] sm:py-[40px] py-[10px] bg-background`}
+      className={`w-full sm:h-[250px] h-[210px] ${styles.flexCenter} flex-col md:py-[30px] sm:py-[15px] py-[10px] bg-background`}
     >
       <div className="w-[88%] h-full flex flex-col justify-around">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-[10px]">
+        <div className="flex flex-col md:flex-row md:items-center justify-between">
           <ul>
             <li className={`${styles.footerList}`}>호두샵 소개</li>
             <li className={`${styles.footerList}`}>이용약관</li>

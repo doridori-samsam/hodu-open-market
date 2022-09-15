@@ -4,6 +4,7 @@ import Home from "./pages/home/Home";
 import MyCart from "./pages/myCart/MyCart";
 import LogIn from "./pages/Auth/LogIn";
 import SignUp from "./pages/Auth/SignUp";
+import ProductDetail from "./pages/productDetail/ProductDetail";
 import NotFound from "./components/NotFound";
 import LogInModal from "./components/Modal/LogInModal";
 import UserContext, { UserContextProvider } from "./context/UserContext";
@@ -31,6 +32,7 @@ function Main() {
                 <Route path="/join" element={<SignUp />}></Route>
               </>
             )}
+            <Route path="/productdetail" element={<ProductDetail />}></Route>
           </Routes>
         </div>
         <LogInModal />

@@ -2,7 +2,9 @@ import React from "react";
 
 function ProductCarousel() {
   return (
-    <section className="md:h-[500px] h-[350px] bg-background">캐러셀</section>
+    <aside className="w-full md:h-[450px] h-[320px] bg-background">
+      캐러셀
+    </aside>
   );
 }
 

@@ -18,7 +18,7 @@ function NavIcon() {
     if (!token) {
       setModalOpen(!modalOpen);
     } else if (token) {
-      console.log("장바구니 기능 준비 중");
+      navigate("/cart");
     }
   }
 
@@ -34,7 +34,7 @@ function NavIcon() {
   }
 
   return (
-    <div className="hidden sm:flex sm:gap-[26px] items-center shrink-0 h-full">
+    <div className="hidden sl:flex sm:gap-[26px] items-center shrink-0 h-full">
       {token ? (
         userType === "BUYER" ? (
           <>

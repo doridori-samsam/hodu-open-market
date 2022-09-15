@@ -62,7 +62,7 @@ function LogIn() {
   }
 
   return (
-    <main className={`${styles.flexCenter} flex-col h-full`}>
+    <main className={`${styles.mainLayout} flex-col items-center h-full`}>
       <AuthHeader />
       <section className="ss:mt-[70px] mt-[40px]">
         <AuthBox giveType={handleSubmit}>

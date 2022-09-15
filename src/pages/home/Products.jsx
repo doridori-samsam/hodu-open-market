@@ -13,6 +13,7 @@ function Products() {
       try {
         const res = await axios.get(url + "products/");
         setProduct(res.data.results);
+        console.log(res.data);
       } catch (err) {
         console.error(err);
       }
@@ -21,10 +22,12 @@ function Products() {
   }, []);
 
   return (
-    <main className={`${styles.mainLayout}`}>
-      {/* <ProductCarousel /> */}
-      <ProductList mapdata={product} />
-    </main>
+    <>
+      <ProductCarousel />
+      <main className={`${styles.mainLayout}`}>
+        <ProductList mapdata={product} />
+      </main>
+    </>
   );
 }
 

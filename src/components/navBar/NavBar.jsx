@@ -4,11 +4,11 @@ import NavIcon from "./NavIcon";
 function NavBar() {
   return (
     <>
-      <header className="flex justify-center items-center w-full sm:h-[60px] fixed top-0 border-[1px] bg-white">
-        <div className="w-[88%] h-[40px] sm:h-[60px] justify-between flex items-center align-center">
+      <header className="flex justify-center items-center w-full h-[50px] sm:h-[70px] fixed top-0 border-[1px] bg-white">
+        <div className="md:w-[85%] w-[95%] h-full justify-between flex items-center align-center">
           <SearchBox />
           <NavIcon />
-          <div className="icon-menu w-[25px] h-[25px] bg-cover sm:hidden hover:cursor-pointer" />
+          <div className="icon-menu w-[25px] h-[25px] bg-cover sl:hidden hover:cursor-pointer" />
         </div>
       </header>
     </>
