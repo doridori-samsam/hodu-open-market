@@ -12,6 +12,7 @@ module.exports = {
         accentText: "#EB5757",
         background: "#f2f2f2",
         disabled: "#c4c4c4",
+        tabGray: "#E0E0E0",
       },
       fontFamily: {
         spoqa: ["SpoqaHanSansNeo-Regular"],

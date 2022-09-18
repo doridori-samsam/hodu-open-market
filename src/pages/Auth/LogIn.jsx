@@ -2,15 +2,22 @@ import { useState, useRef, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import UserContext from "../../context/UserContext";
-import AuthHeader from "../../components/AuthHeader";
-import AuthBox from "../../components/AuthBox";
+import AuthHeader from "./AuthHeader";
+import AuthBox from "./AuthBox";
 import MainButton from "../../components/buttons/MainButton";
 import styles from "../../style";
 
 function LogIn() {
-  const { changeUserType, token } = useContext(UserContext);
+  const { changeUserType } = useContext(UserContext);
   const url = "https://openmarket.weniv.co.kr/";
-  const navigate = useNavigate();
+
+  /**로그인 회원타입 가져오기 */
+  const [logInType, setLogInType] = useState("BUYER");
+
+  function getType(type) {
+    setLogInType(type);
+  }
+
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [failMsg, setFailMsg] = useState("");
@@ -25,7 +32,8 @@ function LogIn() {
     setPassword(e.target.value);
   }
 
-  function handleSubmit(type) {
+  function handleSubmit(e) {
+    e.preventDefault();
     if (id === "") {
       setFailMsg("아이디를 입력해주세요.");
       idInput.current.focus();
@@ -33,24 +41,24 @@ function LogIn() {
       setFailMsg("비밀번호를 입력해주세요.");
       passwordInput.current.focus();
     } else {
-      logIn(type);
+      logIn();
     }
   }
 
   //로그인 api 전송
-  async function logIn(type) {
+  async function logIn() {
     try {
       const res = await axios.post(url + "accounts/login/", {
         username: id,
         password: password,
-        login_type: type,
+        login_type: logInType,
       });
       localStorage.setItem("token", res.data.token);
-      changeUserType(type);
+      changeUserType(logInType);
       setFailMsg("");
       window.location.replace("/");
     } catch (err) {
-      console.error(err.response.data);
+      console.error(err);
       if (
         err.response.data.FAIL_Message === "로그인 정보가 없습니다." ||
         err.response.data.FAIL_Message ===
@@ -65,7 +73,7 @@ function LogIn() {
     <main className={`${styles.mainLayout} flex-col items-center h-full`}>
       <AuthHeader />
       <section className="ss:mt-[70px] mt-[40px]">
-        <AuthBox giveType={handleSubmit}>
+        <AuthBox passType={getType} onSubmit={handleSubmit}>
           <div>
             <input
               ref={idInput}

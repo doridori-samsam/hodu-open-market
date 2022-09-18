@@ -13,7 +13,7 @@ function Products() {
       try {
         const res = await axios.get(url + "products/");
         setProduct(res.data.results);
-        console.log(res.data);
+        console.log(res.data.results);
       } catch (err) {
         console.error(err);
       }
@@ -25,7 +25,7 @@ function Products() {
     <>
       <ProductCarousel />
       <main className={`${styles.mainLayout}`}>
-        <ProductList mapdata={product} />
+        <ProductList listdata={product} />
       </main>
     </>
   );

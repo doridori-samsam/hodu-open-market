@@ -32,7 +32,10 @@ function Main() {
                 <Route path="/join" element={<SignUp />}></Route>
               </>
             )}
-            <Route path="/productdetail" element={<ProductDetail />}></Route>
+            <Route
+              path="/products/:productId"
+              element={<ProductDetail />}
+            ></Route>
           </Routes>
         </div>
         <LogInModal />

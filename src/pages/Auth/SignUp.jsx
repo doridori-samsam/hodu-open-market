@@ -2,8 +2,8 @@ import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import UserContext from "../../context/UserContext";
-import AuthHeader from "../../components/AuthHeader";
-import AuthBox from "../../components/AuthBox";
+import AuthHeader from "./AuthHeader";
+import AuthBox from "./AuthBox";
 import MediumButton from "../../components/buttons/MediumButton";
 import MainButton from "../../components/buttons/MainButton";
 import styles from "../../style";
@@ -12,6 +12,13 @@ function SignUp() {
   const { userType } = useContext(UserContext);
   const url = "https://openmarket.weniv.co.kr/";
   const navigate = useNavigate();
+
+  /**회원가입 타입 가져오기*/
+  const [joinType, setJoinType] = useState("BUYER");
+
+  function getType(type) {
+    setJoinType(type);
+  }
 
   /**회원가입 입력 정보 */
   const [newUserInfo, setNewUserInfo] = useState({
@@ -26,7 +33,7 @@ function SignUp() {
     storeName: "",
   });
 
-  /** 아이디 유효 검사 */
+  /**아이디 유효 검사 */
   const [validUserName, setValidUserName] = useState({
     fail: false,
     checked: false,
@@ -79,6 +86,7 @@ function SignUp() {
   /**사업자 등록번호 유효 검사 */
   const [validBusinessNum, setValidBusinessNum] = useState({
     fail: false,
+    checked: false,
     message: "",
   });
 
@@ -102,10 +110,13 @@ function SignUp() {
     if (newUserInfo.username) {
       if (regUserName.test(newUserInfo.username)) {
         try {
-          const res = await axios.post(url + "accounts/signup/valid/", {
-            username: newUserInfo.username,
-          });
-          setValidUserName({ checked: true, message: "멋진 아이디네요 :)" });
+          const res = await axios.post(
+            url + "accounts/signup/valid/username/",
+            {
+              username: newUserInfo.username,
+            }
+          );
+          setValidUserName({ checked: true, message: res.data.Success });
         } catch (err) {
           setValidUserName({
             fail: true,
@@ -414,6 +425,32 @@ function SignUp() {
     }
   }
 
+  /**사업자 등록번호 검증 클릭 */
+  async function checkBusinessNumValid(e) {
+    e.preventDefault();
+    if (!validBusinessNum.fail) {
+      try {
+        const res = await axios.post(
+          url + "accounts/signup/valid/company_registration_number/",
+          {
+            company_registration_number: newUserInfo.businessNumber,
+          }
+        );
+        setValidBusinessNum({
+          checked: true,
+          message: res.data.Success,
+        });
+        console.log(res);
+      } catch (err) {
+        console.error(err);
+        setValidBusinessNum({
+          fail: true,
+          message: err.response.data.FAIL_Message,
+        });
+      }
+    }
+  }
+
   /**스토어 이름 입력 */
   function handleStoreName(e) {
     if (e.target.value === "") {
@@ -446,7 +483,7 @@ function SignUp() {
   function buttonActivate() {
     let result;
     let validData = Object.values(newUserInfo);
-    if (userType === "BUYER") {
+    if (joinType === "BUYER") {
       result = validData.reduce((prev, cur) => {
         if (validData.indexOf(cur) === 7 || validData.indexOf(cur) === 8) {
           cur = true;
@@ -458,7 +495,7 @@ function SignUp() {
         }
         return prev && cur;
       });
-    } else if (userType === "SELLER") {
+    } else if (joinType === "SELLER") {
       result = validData.reduce((prev, cur) => {
         if (typeof cur === "object") {
           cur = cur.reduce((prev, cur) => {
@@ -473,7 +510,7 @@ function SignUp() {
 
   /**회원가입  */
   async function clickSignUp() {
-    if (userType === "BUYER") {
+    if (joinType === "BUYER") {
       try {
         const res = await axios.post(url + "accounts/signup/", {
           username: newUserInfo.username,
@@ -542,7 +579,7 @@ function SignUp() {
     <main className={`${styles.mainLayout} items-center flex-col`}>
       <AuthHeader />
       <section className="ss:mt-[70px] mt-[40px]">
-        <AuthBox>
+        <AuthBox passType={getType}>
           <div className="w-full">
             <label htmlFor="user-id" className={`${styles.grayText} block`}>
               아이디
@@ -559,7 +596,7 @@ function SignUp() {
               isActive
               type="button"
               onClick={checkUserNameValid}
-              style="w-[80px] h-[35px] sm:w-[122px] ss:my-0 mt-[15px] bg-primary text-[14px]"
+              style="w-[80px] ss:h-[54px] h-[35px] sm:w-[122px] ss:my-0 mt-[15px] bg-primary text-[14px]"
             >
               중복확인
             </MediumButton>
@@ -694,7 +731,7 @@ function SignUp() {
             <span className="block mt-[10px] font-spoqa text-[14px] ss:text-[16px] text-accentText">
               {validEmail.fail ? validEmail.message : null}
             </span>
-            {userType === "SELLER" ? (
+            {joinType === "SELLER" ? (
               <>
                 <label
                   htmlFor="business-num"
@@ -713,12 +750,16 @@ function SignUp() {
                 <MediumButton
                   isActive
                   type="button"
-                  onClick={checkUserNameValid}
-                  style="w-[80px] h-[35px] sm:w-[122px] ss:my-0 mt-[15px] bg-primary text-[14px]"
+                  onClick={checkBusinessNumValid}
+                  style="w-[80px] ss:h-[54px] h-[35px] sm:w-[122px] ss:my-0 mt-[15px] bg-primary text-[14px]"
                 >
                   인증
                 </MediumButton>
-                <span className="block mt-[10px] font-spoqa text-[14px] ss:text-[16px] text-accentText">
+                <span
+                  className={`block mt-[10px] font-spoqa text-[14px] ss:text-[16px]  ${
+                    validBusinessNum.fail ? "text-accentText" : "text-primary"
+                  }`}
+                >
                   {validBusinessNum.message}
                 </span>
                 <label
@@ -756,7 +797,9 @@ function SignUp() {
       </div>
       <MainButton
         large
-        isActive={validUserName.checked && buttonActivate()}
+        isActive={
+          validUserName.checked && validBusinessNum.checked && buttonActivate()
+        }
         type="submit"
         onClick={clickSignUp}
       >
