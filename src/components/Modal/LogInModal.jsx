@@ -1,8 +1,15 @@
+import { useNavigate } from "react-router-dom";
 import ModalPortal from "./ModalPortal";
 import styles from "../../style";
 import MediumButton from "../buttons/MediumButton";
 
-function LogInModal({ open, close, onConfirm }) {
+function LogInModal({ open, close }) {
+  const navigate = useNavigate();
+
+  function clickModalConfirm() {
+    navigate("/login");
+  }
+
   return (
     <>
       {open ? (
@@ -21,7 +28,7 @@ function LogInModal({ open, close, onConfirm }) {
                 </span>
               </div>
               <MediumButton
-                onClick={onConfirm}
+                onClick={clickModalConfirm}
                 isActive={true}
                 style="w-[240px] text-[20px]"
               >

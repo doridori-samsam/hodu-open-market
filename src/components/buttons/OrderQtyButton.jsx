@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function OrderQtyButton({ stock, passQty }) {
+function OrderQtyButton({ stock }) {
   const [orderQty, setOrderQty] = useState(1);
   const [isActive, setIsActive] = useState(true);
 
@@ -21,10 +21,6 @@ function OrderQtyButton({ stock, passQty }) {
     }
   }
 
-  function passQty(price) {
-    return orderQty * price;
-  }
-
   return (
     <div className="flex md:w-[150px] md:h-[50px] sl:w-[120px] sl:h-[40px] w-[100px] h-[35px] border-[1px] border-disabled rounded-[5px]">
       <button
@@ -38,8 +34,8 @@ function OrderQtyButton({ stock, passQty }) {
         disabled={!isActive}
         onClick={addQty}
         className={`basis-1/3 border-l-[1px] ${
-          isActive ? "bg-white" : "bg-tabGray"
-        }border-disabled icon-icon-plus-line bg-center`}
+          isActive ? null : null
+        } border-disabled icon-icon-plus-line bg-center`}
       ></button>
     </div>
   );

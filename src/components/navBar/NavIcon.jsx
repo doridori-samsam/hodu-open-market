@@ -27,12 +27,6 @@ function NavIcon() {
     setIsOpen(!isOpen);
   }
 
-  /** 모달 확인 버튼 클릭 함수 */
-  function clickModalConfirm() {
-    navigate("/login");
-    setModalOpen(!modalOpen);
-  }
-
   return (
     <div className="hidden sl:flex sm:gap-[26px] items-center shrink-0 h-full">
       {token ? (
@@ -64,7 +58,6 @@ function NavIcon() {
             close={() => {
               setModalOpen(false);
             }}
-            onConfirm={clickModalConfirm}
           />
         </>
       )}

@@ -1,5 +1,7 @@
 import { useContext } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { QueryClientProvider, QueryClient } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 import Home from "./pages/home/Home";
 import MyCart from "./pages/myCart/MyCart";
 import LogIn from "./pages/Auth/LogIn";
@@ -9,37 +11,42 @@ import NotFound from "./components/NotFound";
 import LogInModal from "./components/Modal/LogInModal";
 import UserContext, { UserContextProvider } from "./context/UserContext";
 
+const queryClient = new QueryClient();
+
 function Main() {
   const { token } = useContext(UserContext);
 
   return (
     <>
-      <BrowserRouter>
-        <div className="App w-full box-border relative">
-          <Routes>
-            {token ? (
-              <>
-                <Route path="/" element={<Home />}></Route>
-                <Route path="/cart" element={<MyCart />}></Route>
-                <Route path="/login" element={<NotFound />}></Route>
-                <Route path="/join" element={<NotFound />}></Route>
-              </>
-            ) : (
-              <>
-                <Route path="/" element={<Home />}></Route>
-                <Route path="/cart" element={<NotFound />}></Route>
-                <Route path="/login" element={<LogIn />}></Route>
-                <Route path="/join" element={<SignUp />}></Route>
-              </>
-            )}
-            <Route
-              path="/products/:productId"
-              element={<ProductDetail />}
-            ></Route>
-          </Routes>
-        </div>
-        <LogInModal />
-      </BrowserRouter>
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <div className="App w-full box-border relative">
+            <Routes>
+              {token ? (
+                <>
+                  <Route path="/" element={<Home />}></Route>
+                  <Route path="/cart" element={<MyCart />}></Route>
+                  <Route path="/login" element={<NotFound />}></Route>
+                  <Route path="/join" element={<NotFound />}></Route>
+                </>
+              ) : (
+                <>
+                  <Route path="/" element={<Home />}></Route>
+                  <Route path="/cart" element={<NotFound />}></Route>
+                  <Route path="/login" element={<LogIn />}></Route>
+                  <Route path="/join" element={<SignUp />}></Route>
+                </>
+              )}
+              <Route
+                path="/products/:productId"
+                element={<ProductDetail />}
+              ></Route>
+            </Routes>
+          </div>
+          <LogInModal />
+        </BrowserRouter>
+        <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+      </QueryClientProvider>
     </>
   );
 }

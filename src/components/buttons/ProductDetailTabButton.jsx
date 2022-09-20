@@ -11,7 +11,7 @@ function ProductDetailTabButton({ onClick, content, active }) {
             onClick={() => onClick(idx)}
             className={`basis-1/4 box-border border-b-[6px] ${
               active === idx ? "border-primary" : "border-tabGray"
-            } text-center font-spoqaBold text-primary text-[18px] leading-[54px] cursor-pointer`}
+            } text-center font-spoqaBold text-primary sm:text-[18px] text-[15px] leading-[54px] cursor-pointer`}
           >
             {item.tabTitle}
           </li>

@@ -1,31 +1,31 @@
-import { useState, useEffect } from "react";
 import axios from "axios";
+import { useQuery } from "react-query";
 import ProductCarousel from "./ProductCarousel";
 import ProductList from "./ProductList";
 import styles from "../../style";
 
 function Products() {
   const url = "https://openmarket.weniv.co.kr/";
-  const [product, setProduct] = useState([]);
+  const { data, status } = useQuery("products", getProduct);
 
-  useEffect(() => {
-    async function getProduct() {
-      try {
-        const res = await axios.get(url + "products/");
-        setProduct(res.data.results);
-        console.log(res.data.results);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-    getProduct();
-  }, []);
+  async function getProduct() {
+    const res = await axios.get(url + "products/");
+    return res.data.results;
+  }
+
+  if (status === "loading") {
+    return console.log("로딩중");
+  }
+
+  if (status === "error") {
+    console.error(error);
+  }
 
   return (
     <>
       <ProductCarousel />
       <main className={`${styles.mainLayout}`}>
-        <ProductList listdata={product} />
+        <ProductList listdata={data} />
       </main>
     </>
   );

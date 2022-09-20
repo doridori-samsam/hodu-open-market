@@ -1,46 +1,66 @@
-import styles from "../../style";
+import { useEffect } from "react";
+import { useQuery } from "react-query";
+import axios from "axios";
+import OrderQtyButton from "../../components/buttons/OrderQtyButton";
+import SelectButton from "../../components/buttons/SelectButton";
 import SubButton from "../../components/buttons/SubButton";
+import styles from "../../style";
 
-function MyCartList() {
+function MyCartList({ listdata }) {
+  const url = "https://openmarket.weniv.co.kr/";
+  const { data, status } = useQuery(["list-info", listdata], getListInfo);
+  async function getListInfo() {
+    const res = await axios.get(url + "products/" + listdata + "/");
+    console.log(res.data);
+    return res.data;
+  }
+
   return (
-    <ul className="flex flex-col w-full gap-[10px]">
-      <li className="flex justify-between items-center w-full h-[200px] border-[1px] border-disabled rounded-[10px]">
-        <button className="border-[2px] border-primary w-[20px] h-[20px] mx-[30px] rounded-[10px] "></button>
-
-        <div className="shrink-0 w-[160px] h-[160px] border-[1px] border-disabled rounded-[10px] bg-[url('https://i.pinimg.com/736x/36/54/c2/3654c26ba91eceb871a7a69e4854a8f7.jpg')] bg-cover"></div>
-        <div className="basis-[27%] flex flex-col h-[160px] justify-between">
+    <li className="grid grid-cols-[5%_minmax(30%,_43%)_1.5fr_1fr_5%] items-center pl-[30px] w-full h-[200px] border-[1px] border-disabled rounded-[10px]">
+      <div className="">
+        <SelectButton />
+      </div>
+      <div className="flex gap-[30px]">
+        <img
+          src={data && data.image}
+          alt="상품 이미지"
+          className="w-[160px] h-[160px] rounded-[10px] border-[1px] border-disabled object-cover"
+        />
+        <div className="flex flex-col items-center justify-between">
           <div>
-            <span className="font-spoqa text-subText">백엔드글로벌</span>
+            <span className="font-spoqa text-subText">
+              {data && data.store_name}
+            </span>
             <p className="font-spoqa text-mainText text-[18px]">
-              안티 바보 머그컵
+              {data && data.product_name}
             </p>
             <strong className="font-spoqa text-mainText text-[18px] ">
-              17,500원
+              {data && data.price.toLocaleString()}원
             </strong>
           </div>
-          <span className="font-spoqa text-subText">택배배송/ 무료배송</span>
-        </div>
-        <div className="basis-[20%]">
-          <div className="mx-auto flex w-[150px] h-[50px] border-[1px] border-disabled rounded-[5px]">
-            <button className="basis-1/3 border-r-[1px] border-disabled icon-icon-minus-line bg-center"></button>
-            <span className="basis-1/3 text-center my-auto font-spoqa text-[18px]">
-              1
-            </span>
-            <button className="basis-1/3 border-l-[1px] border-disabled icon-icon-plus-line bg-center"></button>
+          <div>
+            <p className="font-spoqa text-[14px] text-subText">
+              택배배송/ 무료배송
+            </p>
           </div>
         </div>
-        <div className="basis-[15%] flex flex-col items-center gap-[26px]">
-          <p className="font-spoqaBold text-[18px] text-accentText">17,500원</p>
-          <SubButton style="w-[130px] h-[40px] font-spoqaMedium text-[16px]">
-            주문하기
-          </SubButton>
-        </div>
-        <button className="w-[22px] h-[22px] self-start m-[18px] icon-icon-delete"></button>
-      </li>
-      <li className="h-[200px] border-[1px] border-disabled rounded-[10px]">
-        내용2
-      </li>
-    </ul>
+      </div>
+
+      <div className="flex justify-center">
+        <OrderQtyButton
+          passQty={(orderQty) => {
+            console.log(orderQty);
+          }}
+        />
+      </div>
+      <div className="basis-2/12 flex flex-col items-center gap-[26px]">
+        <p className="font-spoqaBold text-[18px] text-accentText">17,500원</p>
+        <SubButton style="w-[130px] h-[40px] font-spoqaMedium text-[16px]">
+          주문하기
+        </SubButton>
+      </div>
+      <button className={`${styles.closeButton} self-start m-[10px]`}></button>
+    </li>
   );
 }
 

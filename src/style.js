@@ -1,7 +1,7 @@
 const styles = {
   flexCenter: "flex justify-center items-center",
   mainLayout:
-    "flex justify-center h-full w-full mt-[40px] sm:mt-[70px] pt-[60px] pb-[60px] bg-white",
+    "flex justify-center h-full w-full mt-[40px] sm:mt-[70px] pt-[40px] pb-[60px] bg-white",
   basicButton:
     "w-[220px] h-[68px] rounded-[5px] font-spoqaBold text-[24px] text-white",
   mediumButton:
@@ -11,8 +11,15 @@ const styles = {
   whiteButton:
     "border-[1px] border-disabled bg-white rounded-[5px] text-subText font-spoqaBold hover:border-mainText hover:text-mainText",
   subButton: "rounded-[5px] text-white bg-primary",
+  closeButton: "w-[22px] h-[22px] icon-icon-delete",
+  ModalWhiteButton:
+    "w-[100px] h-[40px] border-[1px] border-disabled rounded-[5px] font-spoqa text-subText text-[16px]",
+  ModalBasicButton:
+    "w-[100px] h-[40px] rounded-[5px] bg-primary font-spoqa text-white text-[16px]",
   modalBox:
     "fixed top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] w-[400px] h-[280px] p-[30px] bg-white border-[1px] border-disabled rounded-[10px] z-[100]",
+  smallModalBox:
+    "fixed top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] w-[360px] h-[200px] p-[20px] bg-white border-[1px] border-disabled z-[100] ",
   modalOverlay: "fixed top-0 bottom-0 right-0 left-0 bg-[#000000]/50",
   inputBox: "outline-none font-spoqa focus:border-primary",
   signUpInput:

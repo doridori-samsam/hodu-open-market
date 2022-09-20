@@ -15,12 +15,12 @@ function ProductList({ listdata }) {
                 ></div>
               </Link>
               <span className="inline-block md:text-[16px] sm:text-[14px] text-[11px] text-subText font-spoqa">
-                {list.product_name}
+                {list.store_name}
               </span>
               <span
                 className={`w-full md:text-[18px] sm:text-[16px] text-[13px] text-mainText font-spoqa ${styles.textEllipsis}`}
               >
-                {list.product_info}
+                {list.product_name}
               </span>
               <span className="inline-block md:text-[24px] sm:text-[22px] text-[14px] text-mainText font-spoqaBold">
                 {list.price.toLocaleString()}
