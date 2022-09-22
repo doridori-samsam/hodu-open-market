@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-function OrderQtyButton({ stock }) {
-  const [orderQty, setOrderQty] = useState(1);
+function OrderQtyButton({ stock, defaultQty, openModal, passQuantity }) {
+  const [orderQty, setOrderQty] = useState(defaultQty);
   const [isActive, setIsActive] = useState(true);
 
   function addQty() {
@@ -21,8 +21,15 @@ function OrderQtyButton({ stock }) {
     }
   }
 
+  useEffect(() => {
+    passQuantity(orderQty);
+  }, [orderQty]);
+
   return (
-    <div className="flex md:w-[150px] md:h-[50px] sl:w-[120px] sl:h-[40px] w-[100px] h-[35px] border-[1px] border-disabled rounded-[5px]">
+    <div
+      onClick={openModal}
+      className="flex md:w-[150px] md:h-[50px] sl:w-[120px] sl:h-[40px] w-[100px] h-[35px] border-[1px] border-disabled rounded-[5px]"
+    >
       <button
         onClick={subtractQty}
         className="basis-1/3 border-r-[1px] border-disabled icon-icon-minus-line bg-center"

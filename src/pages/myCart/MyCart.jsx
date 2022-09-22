@@ -1,17 +1,20 @@
-import { useEffect, useContext } from "react";
-import { useQuery } from "react-query";
+import { useState, useContext } from "react";
+import { useQuery, useQueries } from "react-query";
 import axios from "axios";
 import UserContext from "../../context/UserContext";
 import MyCartList from "./MyCartList";
 import NavBar from "../../components/navBar/NavBar";
 import SubButton from "../../components/buttons/SubButton";
 import SelectButton from "../../components/buttons/SelectButton";
+import AdjustQtyModal from "../../components/Modal/AdjustQtyModal";
 import styles from "../../style";
 
 function MyCart() {
   const url = "https://openmarket.weniv.co.kr/";
   const { token } = useContext(UserContext);
-  const { data, status } = useQuery("cart-list", getCartList);
+
+  const { data, status } = useQuery(["cart-list", token], getCartList);
+
   async function getCartList() {
     const res = await axios.get(url + "cart/", {
       headers: { Authorization: `JWT ${token}` },
@@ -19,6 +22,29 @@ function MyCart() {
     console.log(res.data.results);
     return res.data.results;
   }
+
+  if (status === "loading") {
+    console.log("로딩 중...!");
+  }
+
+  if (status === "error") {
+    console.log("에러");
+  }
+
+  const listDetails = useQueries(
+    !!data
+      ? data.map((item) => {
+          return {
+            queryKey: ["info", item.product_id],
+            queryFn: () => axios.get(url + "products/" + item.product_id + "/"),
+            staleTime: 5000,
+            cacheTime: 5000,
+          };
+        })
+      : []
+  );
+
+  const loadingFinishAll = listDetails.every((item) => item.isSuccess);
 
   return (
     <>
@@ -37,12 +63,17 @@ function MyCart() {
             </span>
           </div>
           <ul className="flex flex-col w-full gap-[10px]">
-            {data &&
-              data.map((id, idx) => (
-                <MyCartList key={id.product_id} listdata={id.product_id} />
+            {loadingFinishAll &&
+              data &&
+              data.map((el, idx) => (
+                <MyCartList
+                  key={el.product_id}
+                  itemInfo={listDetails}
+                  defaultQty={el.quantity}
+                  index={idx}
+                />
               ))}
           </ul>
-
           <div className="flex items-center w-full h-[150px] mt-[80px] rounded-[10px] bg-background">
             <div className={`grow ${styles.flexCenter} flex-col`}>
               <p className="font-spoqa text-[16px] mb-[12px]">총 상품금액</p>
