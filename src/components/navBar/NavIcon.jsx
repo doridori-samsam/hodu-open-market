@@ -40,6 +40,7 @@ function NavIcon() {
             <NavMyPage isOpen={isOpen} onClick={clickMyPage} />
             <MediumButton
               isActive
+              onClick={() => navigate("/seller_center")}
               style="inline-block w-[150px] sm:h-[48px] text-[16px]"
             >
               <div className="inline-block align-middle w-[30px] h-[33px] icon-icon-shopping-bag"></div>

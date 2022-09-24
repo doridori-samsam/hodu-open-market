@@ -7,6 +7,7 @@ import MyCart from "./pages/myCart/MyCart";
 import LogIn from "./pages/Auth/LogIn";
 import SignUp from "./pages/Auth/SignUp";
 import ProductDetail from "./pages/productDetail/ProductDetail";
+import SellerCenter from "./pages/sellerCenter/SellerCenter";
 import NotFound from "./components/NotFound";
 import LogInModal from "./components/Modal/LogInModal";
 import UserContext, { UserContextProvider } from "./context/UserContext";
@@ -14,7 +15,7 @@ import UserContext, { UserContextProvider } from "./context/UserContext";
 const queryClient = new QueryClient();
 
 function Main() {
-  const { token } = useContext(UserContext);
+  const { token, userType } = useContext(UserContext);
 
   return (
     <>
@@ -25,7 +26,19 @@ function Main() {
               {token ? (
                 <>
                   <Route path="/" element={<Home />}></Route>
-                  <Route path="/cart" element={<MyCart />}></Route>
+                  {userType === "BUYER" ? (
+                    <Route path="/cart" element={<MyCart />}></Route>
+                  ) : (
+                    <Route path="/cart" element={<NotFound />}></Route>
+                  )}
+                  {userType === "SELLER" ? (
+                    <Route
+                      path="/seller_center"
+                      element={<SellerCenter />}
+                    ></Route>
+                  ) : (
+                    <Route path="/seller_center" element={<NotFound />}></Route>
+                  )}
                   <Route path="/login" element={<NotFound />}></Route>
                   <Route path="/join" element={<NotFound />}></Route>
                 </>

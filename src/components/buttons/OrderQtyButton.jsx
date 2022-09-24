@@ -1,14 +1,19 @@
 import { useState, useEffect } from "react";
 
-function OrderQtyButton({ stock, defaultQty, openModal, passQuantity }) {
+function OrderQtyButton({
+  stock,
+  defaultQty,
+  openModal,
+  passQuantity,
+  blockAdjust,
+}) {
   const [orderQty, setOrderQty] = useState(defaultQty);
   const [isActive, setIsActive] = useState(true);
 
   function addQty() {
-    if (orderQty >= stock) {
+    setOrderQty(orderQty + 1);
+    if (orderQty === stock - 1) {
       setIsActive(false);
-    } else {
-      setOrderQty(orderQty + 1);
     }
   }
 
@@ -22,17 +27,25 @@ function OrderQtyButton({ stock, defaultQty, openModal, passQuantity }) {
   }
 
   useEffect(() => {
+    setOrderQty(defaultQty);
+  }, [defaultQty]);
+
+  useEffect(() => {
     passQuantity(orderQty);
   }, [orderQty]);
 
   return (
     <div
       onClick={openModal}
-      className="flex md:w-[150px] md:h-[50px] sl:w-[120px] sl:h-[40px] w-[100px] h-[35px] border-[1px] border-disabled rounded-[5px]"
+      className={`flex md:w-[150px] md:h-[50px] sl:w-[120px] sl:h-[40px] w-[100px] h-[35px] border-[1px] border-disabled rounded-[5px] ${
+        blockAdjust && "cursor-pointer"
+      }`}
     >
       <button
         onClick={subtractQty}
-        className="basis-1/3 border-r-[1px] border-disabled icon-icon-minus-line bg-center"
+        className={`basis-1/3 border-r-[1px] border-disabled icon-icon-minus-line bg-center ${
+          blockAdjust && "pointer-events-none"
+        }`}
       ></button>
       <span className="basis-1/3 text-center my-auto font-spoqa md:text-[18px] text-[14px]">
         {orderQty}
@@ -41,8 +54,10 @@ function OrderQtyButton({ stock, defaultQty, openModal, passQuantity }) {
         disabled={!isActive}
         onClick={addQty}
         className={`basis-1/3 border-l-[1px] ${
-          isActive ? null : null
-        } border-disabled icon-icon-plus-line bg-center`}
+          isActive ? null : "bg-none"
+        } border-disabled icon-icon-plus-line bg-center ${
+          blockAdjust && "pointer-events-none"
+        }`}
       ></button>
     </div>
   );

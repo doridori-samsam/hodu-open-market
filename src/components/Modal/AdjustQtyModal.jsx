@@ -1,30 +1,48 @@
-import { useContext } from "react";
+import { useState, useContext } from "react";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import UserContext from "../../context/UserContext";
 import axios from "axios";
 import ModalPortal from "./ModalPortal";
 import OrderQtyButton from "../buttons/OrderQtyButton";
 import styles from "../../style";
 
-function AdjustQtyModal({ open, stock, defaultQty, close }) {
+function AdjustQtyModal({ productId, cartId, open, stock, defaultQty, close }) {
   const url = "https://openmarket.weniv.co.kr/";
   const { token } = useContext(UserContext);
-  async function adjustQty() {
-    try {
-      const res = await axios.put(
-        url + "cart/" + carId + "/",
-        {
-          product_id: productId,
-          quantity: defaultQty,
-          is_active: true,
+  const queryClient = useQueryClient();
+  const [quantityNum, setQuantityNum] = useState(defaultQty);
+
+  const adjustQuantity = useMutation(sendAdjustQty, {
+    onSuccess: (res) => {
+      console.log("담기성공", res.data);
+      queryClient.invalidateQueries("cart-list");
+    },
+    onError: () => {
+      console.log("수량 수정 실패");
+    },
+  });
+  async function sendAdjustQty() {
+    const res = await axios.put(
+      url + "cart/" + cartId + "/",
+      {
+        product_id: productId,
+        quantity: quantityNum,
+        is_active: true,
+      },
+      {
+        headers: {
+          Authorization: `JWT ${token}`,
         },
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
-    } catch {}
+      }
+    );
+    close();
+    return res;
   }
+
+  function getQuantity(num) {
+    setQuantityNum(num);
+  }
+
   return (
     <>
       {open ? (
@@ -38,7 +56,11 @@ function AdjustQtyModal({ open, stock, defaultQty, close }) {
                 className={`${styles.closeButton} self-end`}
               />
               <div className="text-center text-[16px] font-spoqa">
-                <OrderQtyButton stock={stock} defaultQty={defaultQty} />
+                <OrderQtyButton
+                  stock={stock}
+                  defaultQty={defaultQty}
+                  passQuantity={getQuantity}
+                />
               </div>
               <div className="flex w-full justify-center gap-[10px]">
                 <button
@@ -48,7 +70,7 @@ function AdjustQtyModal({ open, stock, defaultQty, close }) {
                   취소
                 </button>
                 <button
-                  onClick={() => console.log(defaultQty)}
+                  onClick={adjustQuantity.mutate}
                   className={`${styles.ModalBasicButton}`}
                 >
                   수정

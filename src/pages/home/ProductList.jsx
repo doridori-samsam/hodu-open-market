@@ -3,7 +3,7 @@ import styles from "../../style";
 
 function ProductList({ listdata }) {
   return (
-    <section className={`${styles.flexCenter} md:w-[85%] w-[95%] bg-white`}>
+    <section className={`${styles.flexCenter} ${styles.sectionLayout}`}>
       <ul className="w-full border-[1px] border-red-700 grid lg:grid-cols-[repeat(3,350px)] md:grid-cols-[repeat(3,300px)] sl:grid-cols-[repeat(3,220px)] sm:grid-cols-[repeat(2, 220px)] ss:grid-cols-[repeat(2,200px)] grid-cols-[repeat(2,150px)] gap-y-[50px] justify-between">
         {listdata.map((list, idx) => {
           return (

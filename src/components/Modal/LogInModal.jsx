@@ -30,7 +30,7 @@ function LogInModal({ open, close }) {
               <MediumButton
                 onClick={clickModalConfirm}
                 isActive={true}
-                style="w-[240px] text-[20px]"
+                style="w-[240px] text-[24px]"
               >
                 확인
               </MediumButton>

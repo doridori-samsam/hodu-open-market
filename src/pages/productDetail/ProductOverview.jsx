@@ -1,4 +1,5 @@
 import { useState, useContext } from "react";
+import { useQueryClient, useMutation, QueryCache, useQuery } from "react-query";
 import axios from "axios";
 import UserContext from "../../context/UserContext";
 import OrderQtyButton from "../../components/buttons/OrderQtyButton";
@@ -9,36 +10,65 @@ import styles from "../../style";
 function ProductOverview({ productdata, productId }) {
   const url = "https://openmarket.weniv.co.kr/";
   const { token } = useContext(UserContext);
-  /**기존에 장바구니에 수량 있는디 check하는 state(나중에 수정 필요) */
+
+  /**기존에 장바구니에 수량 있는지 check하는 state(나중에 수정 필요) */
   const [validUser, setValidUser] = useState(Boolean(token));
   const [quantityNum, setQuantityNum] = useState(1);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isItemExist, setIsItemExist] = useState(false);
+  const [isLogInModalOpen, setIsLogInModalOpen] = useState(false);
+  const [isAddCartModalOpen, setIsAddCartModalOpen] = useState(false);
+  const queryClient = useQueryClient();
+  const cartData = queryClient.getQueryData(["cart-list", token]);
+  const addToCart = useMutation(clickAddToCart, {
+    onSuccess: (res) => {
+      console.log("담기성공", res.data.cart_item_id);
+      setIsAddCartModalOpen(true);
+      setIsItemExist(
+        data.some((item) => item.cart_item_id === res.data.cart_item_id)
+      );
+      queryClient.invalidateQueries("cart-list");
+    },
+    onError: () => {
+      console.log("담기 실패");
+    },
+  });
+  const { data, status } = useQuery(["cart-list", token], getCartList, {
+    enabled: !cartData,
+  });
+
+  console.log(isItemExist);
+
+  async function getCartList() {
+    const res = await axios.get(url + "cart/", {
+      headers: { Authorization: `JWT ${token}` },
+    });
+    console.log(res.data.results);
+    return res.data.results;
+  }
 
   function getQuantity(num) {
     setQuantityNum(num);
   }
 
+  console.log(data, "데이터", status);
+
   /**장바구니 클릭 버튼 함수 */
-  async function addToCart() {
+  async function clickAddToCart() {
     if (!token) {
       setIsModalOpen(!isModalOpen);
     } else {
-      try {
-        const res = await axios.post(
-          url + "cart/",
-          {
-            product_id: productId,
-            quantity: quantityNum,
-            check: validUser,
-          },
-          {
-            headers: { Authorization: `JWT ${token}` },
-          }
-        );
-        console.log(res);
-      } catch (err) {
-        console.error(err);
-      }
+      const res = await axios.post(
+        url + "cart/",
+        {
+          product_id: productId,
+          quantity: quantityNum,
+          check: validUser,
+        },
+        {
+          headers: { Authorization: `JWT ${token}` },
+        }
+      );
+      return res;
     }
   }
 
@@ -70,7 +100,11 @@ function ProductOverview({ productdata, productId }) {
           </div>
           <div>
             <p className="md:mb-[20px] sm:mb-[5px] mb-[30px] mt font-spoqa text-subText md:text-[16px] sm:text-[12px] text-[14px]">
-              택배배송 / 무료배송
+              {`택배배송 / ${
+                productdata.shipping_fee === 0
+                  ? `무료배송`
+                  : productdata.shipping_fee.toLocaleString() + "원"
+              } `}
             </p>
             <div className="flex items-center md:h-[100px] sl:h-[80px] sm:h-[45px] sl:border-y-[2px] sl:border-disabled">
               <OrderQtyButton
@@ -104,7 +138,7 @@ function ProductOverview({ productdata, productId }) {
                 바로 구매
               </button>
               <button
-                onClick={addToCart}
+                onClick={addToCart.mutate}
                 className="md:basis-1/4 basis-1/2 md:h-[60px] sl:h-[50px] sm:h-[40px] h-[50px] rounded-[5px] bg-subText font-spoqaBold sl:text-[18px] sm:text-[14px] text-[16px] text-white"
               >
                 장바구니
@@ -115,14 +149,15 @@ function ProductOverview({ productdata, productId }) {
       </section>
       {token ? (
         <AddCartModal
-          open={isModalOpen}
+          open={isAddCartModalOpen}
           close={() => {
-            setIsModalOpen(false);
+            setIsAddCartModalOpen(false);
           }}
+          existItem={isItemExist}
         />
       ) : (
         <LogInModal
-          open={isModalOpen}
+          open={isLogInModalOpen}
           close={() => {
             setIsModalOpen(false);
           }}

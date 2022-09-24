@@ -2,6 +2,7 @@ const styles = {
   flexCenter: "flex justify-center items-center",
   mainLayout:
     "flex justify-center h-full w-full mt-[40px] sm:mt-[70px] pt-[40px] pb-[60px] bg-white",
+  sectionLayout: "md:w-[85%] w-[95%] bg-white",
   basicButton:
     "w-[220px] h-[68px] rounded-[5px] font-spoqaBold text-[24px] text-white",
   mediumButton:

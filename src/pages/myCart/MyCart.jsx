@@ -1,19 +1,25 @@
-import { useState, useContext } from "react";
-import { useQuery, useQueries } from "react-query";
+import { useState, useContext, useEFfect } from "react";
+import { useQuery, useQueries, useQueryClient } from "react-query";
 import axios from "axios";
 import UserContext from "../../context/UserContext";
 import MyCartList from "./MyCartList";
+import MyCartEmpty from "./MyCartEmpty";
+import MyCartSumUp from "./MyCartSumUp";
 import NavBar from "../../components/navBar/NavBar";
 import SubButton from "../../components/buttons/SubButton";
 import SelectButton from "../../components/buttons/SelectButton";
 import AdjustQtyModal from "../../components/Modal/AdjustQtyModal";
 import styles from "../../style";
+import { useEffect } from "react";
 
 function MyCart() {
   const url = "https://openmarket.weniv.co.kr/";
   const { token } = useContext(UserContext);
-
-  const { data, status } = useQuery(["cart-list", token], getCartList);
+  const { data, status } = useQuery(["cart-list", token], getCartList, {
+    cacheTime: 30000,
+  });
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [shippingFee, setShippingFee] = useState(0);
 
   async function getCartList() {
     const res = await axios.get(url + "cart/", {
@@ -31,20 +37,48 @@ function MyCart() {
     console.log("에러");
   }
 
+  /**장바구니 리스트에서 뽑은 product_id로 상품 상세정보 가져오기 */
+  async function getDetails(id) {
+    const res = await axios.get(url + "products/" + id + "/");
+    return res.data;
+  }
   const listDetails = useQueries(
     !!data
       ? data.map((item) => {
           return {
-            queryKey: ["info", item.product_id],
-            queryFn: () => axios.get(url + "products/" + item.product_id + "/"),
-            staleTime: 5000,
-            cacheTime: 5000,
+            queryKey: ["info", "cart-list", item.product_id],
+            queryFn: () => getDetails(item.product_id),
           };
         })
       : []
   );
 
   const loadingFinishAll = listDetails.every((item) => item.isSuccess);
+  console.log("제품 상세 정보", listDetails);
+  console.log("카트 리스트", data);
+  useEffect(() => {
+    function getTotalPrice() {
+      if (data && loadingFinishAll) {
+        const totalPriceArr = data.map((item, idx) => {
+          return item.quantity * listDetails[idx].data.price;
+        });
+        setTotalPrice(
+          totalPriceArr.reduce((prev, cur) => {
+            return prev + cur;
+          }, 0)
+        );
+        const shippingFeeArr = listDetails.map((list, idx) => {
+          return list.data.shipping_fee;
+        });
+        setShippingFee(
+          shippingFeeArr.reduce((prev, cur) => {
+            return prev + cur;
+          }, 0)
+        );
+      }
+    }
+    getTotalPrice();
+  }, [getCartList]);
 
   return (
     <>
@@ -62,52 +96,36 @@ function MyCart() {
               상품금액
             </span>
           </div>
-          <ul className="flex flex-col w-full gap-[10px]">
-            {loadingFinishAll &&
-              data &&
-              data.map((el, idx) => (
-                <MyCartList
-                  key={el.product_id}
-                  itemInfo={listDetails}
-                  defaultQty={el.quantity}
-                  index={idx}
+          {data && data.length === 0 ? (
+            <MyCartEmpty />
+          ) : (
+            <>
+              <ul className="flex flex-col w-full gap-[10px]">
+                {loadingFinishAll &&
+                  data &&
+                  data.map((item, idx) => (
+                    <MyCartList
+                      key={item.product_id}
+                      productId={item.product_id}
+                      itemId={item.cart_item_id}
+                      itemInfo={listDetails}
+                      defaultQty={item.quantity}
+                      index={idx}
+                    />
+                  ))}
+              </ul>
+              {data && loadingFinishAll && (
+                <MyCartSumUp
+                  totalPrice={totalPrice}
+                  discountPrice={0}
+                  shippingFee={shippingFee}
                 />
-              ))}
-          </ul>
-          <div className="flex items-center w-full h-[150px] mt-[80px] rounded-[10px] bg-background">
-            <div className={`grow ${styles.flexCenter} flex-col`}>
-              <p className="font-spoqa text-[16px] mb-[12px]">총 상품금액</p>
-              <p className="font-spoqa text-[16px]">
-                <span className="font-spoqaBold text-[24px]">46,500</span> 원
-              </p>
-            </div>
-            <div className="w-[34px] h-[34px] rounded-[20px] bg-white icon-icon-minus-line bg-center"></div>
-            <div className={`grow ${styles.flexCenter} flex-col`}>
-              <p className="font-spoqa text-[16px] mb-[12px]">상품할인</p>
-              <p className="font-spoqa text-[16px]">
-                <span className="font-spoqaBold text-[24px]">0</span> 원
-              </p>
-            </div>
-            <div className="w-[34px] h-[34px] rounded-[20px] bg-white icon-icon-plus-line bg-center"></div>
-            <div className={`grow ${styles.flexCenter} flex-col`}>
-              <p className="font-spoqa text-[16px] mb-[12px]">배송비</p>
-              <p className="font-spoqa text-[16px]">
-                <span className="font-spoqaBold text-[24px]">0</span> 원
-              </p>
-            </div>
-            <div className={`grow ${styles.flexCenter} flex-col`}>
-              <p className="font-spoqaBold text-[18px]">결제 예정 금액</p>
-              <p className="font-spoqa text-[16px]">
-                <span className="font-spoqaBold text-[36px] leading-[45px] text-accentText">
-                  46,500
-                </span>
-                원
-              </p>
-            </div>
-          </div>
-          <SubButton style="w-[220px] h-[68px] mt-[40px] font-spoqaBold text-[24px]">
-            주문하기
-          </SubButton>
+              )}
+              <SubButton style="w-[220px] h-[68px] mt-[40px] font-spoqaBold text-[24px]">
+                주문하기
+              </SubButton>
+            </>
+          )}
         </section>
       </main>
     </>

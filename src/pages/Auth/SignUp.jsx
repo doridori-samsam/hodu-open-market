@@ -81,7 +81,7 @@ function SignUp() {
   const regDomain = /^[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/i;
 
   /**사업자 등록번호 유효 검사 정규표현 */
-  const regBusinessNum = /^[0-9]+$/;
+  const regBusinessNum = /^[0-9]{10}$/;
 
   /**사업자 등록번호 유효 검사 */
   const [validBusinessNum, setValidBusinessNum] = useState({
@@ -411,6 +411,7 @@ function SignUp() {
       });
       setValidBusinessNum({
         fail: false,
+        checked: true,
         message: "",
       });
     } else {
@@ -484,26 +485,30 @@ function SignUp() {
     let result;
     let validData = Object.values(newUserInfo);
     if (joinType === "BUYER") {
-      result = validData.reduce((prev, cur) => {
-        if (validData.indexOf(cur) === 7 || validData.indexOf(cur) === 8) {
-          cur = true;
-        }
-        if (typeof cur === "object") {
-          cur = cur.reduce((prev, cur) => {
-            return prev && cur;
-          });
-        }
-        return prev && cur;
-      });
+      result =
+        validUserName.checked &&
+        validData.reduce((prev, cur) => {
+          if (validData.indexOf(cur) === 7 || validData.indexOf(cur) === 8) {
+            cur = true;
+          }
+          if (typeof cur === "object") {
+            cur = cur.reduce((prev, cur) => {
+              return prev && cur;
+            });
+          }
+          return prev && cur;
+        });
     } else if (joinType === "SELLER") {
-      result = validData.reduce((prev, cur) => {
-        if (typeof cur === "object") {
-          cur = cur.reduce((prev, cur) => {
-            return prev && cur;
-          });
-        }
-        return prev && cur;
-      });
+      result =
+        validBusinessNum.checked &&
+        validData.reduce((prev, cur) => {
+          if (typeof cur === "object") {
+            cur = cur.reduce((prev, cur) => {
+              return prev && cur;
+            });
+          }
+          return prev && cur;
+        });
     }
     return result;
   }
@@ -797,9 +802,7 @@ function SignUp() {
       </div>
       <MainButton
         large
-        isActive={
-          validUserName.checked && validBusinessNum.checked && buttonActivate()
-        }
+        isActive={buttonActivate()}
         type="submit"
         onClick={clickSignUp}
       >
