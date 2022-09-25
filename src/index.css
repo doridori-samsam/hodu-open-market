@@ -1,5 +1,5 @@
 /* @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css); */
-@import "svg-data.css";
+@import "/src/assets/svg-data.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

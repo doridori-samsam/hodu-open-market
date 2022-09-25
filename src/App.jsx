@@ -8,6 +8,8 @@ import LogIn from "./pages/Auth/LogIn";
 import SignUp from "./pages/Auth/SignUp";
 import ProductDetail from "./pages/productDetail/ProductDetail";
 import SellerCenter from "./pages/sellerCenter/SellerCenter";
+import SellerProductRegister from "./pages/sellerCenter/sellerProductsUpload/SellerProductRegister";
+import SellerProductsEdit from "./pages/sellerCenter/sellerProductsUpload/SellerProductsEdit";
 import NotFound from "./components/NotFound";
 import LogInModal from "./components/Modal/LogInModal";
 import UserContext, { UserContextProvider } from "./context/UserContext";
@@ -32,12 +34,35 @@ function Main() {
                     <Route path="/cart" element={<NotFound />}></Route>
                   )}
                   {userType === "SELLER" ? (
-                    <Route
-                      path="/seller_center"
-                      element={<SellerCenter />}
-                    ></Route>
+                    <>
+                      <Route
+                        path="/seller_center"
+                        element={<SellerCenter />}
+                      ></Route>
+                      <Route
+                        path="/seller_center/upload"
+                        element={<SellerProductRegister />}
+                      ></Route>
+                      <Route
+                        path="/seller_center/upload/:productId"
+                        element={<SellerProductsEdit />}
+                      ></Route>
+                    </>
                   ) : (
-                    <Route path="/seller_center" element={<NotFound />}></Route>
+                    <>
+                      <Route
+                        path="/seller_center"
+                        element={<NotFound />}
+                      ></Route>
+                      <Route
+                        path="/seller_center/upload"
+                        element={<NotFound />}
+                      ></Route>
+                      <Route
+                        path="/seller_center/upload/:productId"
+                        element={<NotFound />}
+                      ></Route>
+                    </>
                   )}
                   <Route path="/login" element={<NotFound />}></Route>
                   <Route path="/join" element={<NotFound />}></Route>

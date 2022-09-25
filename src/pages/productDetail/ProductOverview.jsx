@@ -9,7 +9,7 @@ import styles from "../../style";
 
 function ProductOverview({ productdata, productId }) {
   const url = "https://openmarket.weniv.co.kr/";
-  const { token } = useContext(UserContext);
+  const { token, userType } = useContext(UserContext);
 
   /**기존에 장바구니에 수량 있는지 check하는 state(나중에 수정 필요) */
   const [validUser, setValidUser] = useState(Boolean(token));
@@ -55,7 +55,7 @@ function ProductOverview({ productdata, productId }) {
   /**장바구니 클릭 버튼 함수 */
   async function clickAddToCart() {
     if (!token) {
-      setIsModalOpen(!isModalOpen);
+      setIsLogInModalOpen(!isLogInModalOpen);
     } else {
       const res = await axios.post(
         url + "cart/",
@@ -134,11 +134,17 @@ function ProductOverview({ productdata, productId }) {
               </div>
             </div>
             <div className="flex gap-[14px]">
-              <button className="md:basis-3/4 basis-1/2 md:h-[60px] sl:h-[50px] sm:h-[40px] h-[50px] rounded-[5px] bg-primary font-spoqaBold sl:text-[18px] sm:text-[14px] text-[16px] text-white">
+              <button
+                disabled={userType === "SELLER"}
+                className={`md:basis-3/4 basis-1/2 md:h-[60px] sl:h-[50px] sm:h-[40px] h-[50px] rounded-[5px] ${
+                  userType === "SELLER" ? "bg-subText" : "bg-primary"
+                } font-spoqaBold sl:text-[18px] sm:text-[14px] text-[16px] text-white`}
+              >
                 바로 구매
               </button>
               <button
                 onClick={addToCart.mutate}
+                disabled={userType === "SELLER"}
                 className="md:basis-1/4 basis-1/2 md:h-[60px] sl:h-[50px] sm:h-[40px] h-[50px] rounded-[5px] bg-subText font-spoqaBold sl:text-[18px] sm:text-[14px] text-[16px] text-white"
               >
                 장바구니
@@ -159,7 +165,7 @@ function ProductOverview({ productdata, productId }) {
         <LogInModal
           open={isLogInModalOpen}
           close={() => {
-            setIsModalOpen(false);
+            setIsLogInModalOpen(false);
           }}
         />
       )}

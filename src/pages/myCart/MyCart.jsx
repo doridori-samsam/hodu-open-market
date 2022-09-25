@@ -1,4 +1,4 @@
-import { useState, useContext, useEFfect } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useQuery, useQueries, useQueryClient } from "react-query";
 import axios from "axios";
 import UserContext from "../../context/UserContext";
@@ -8,40 +8,18 @@ import MyCartSumUp from "./MyCartSumUp";
 import NavBar from "../../components/navBar/NavBar";
 import SubButton from "../../components/buttons/SubButton";
 import SelectButton from "../../components/buttons/SelectButton";
-import AdjustQtyModal from "../../components/Modal/AdjustQtyModal";
+import NowLoading from "../../components/NowLoading";
 import styles from "../../style";
-import { useEffect } from "react";
 
 function MyCart() {
   const url = "https://openmarket.weniv.co.kr/";
   const { token } = useContext(UserContext);
-  const { data, status } = useQuery(["cart-list", token], getCartList, {
-    cacheTime: 30000,
-  });
   const [totalPrice, setTotalPrice] = useState(0);
   const [shippingFee, setShippingFee] = useState(0);
-
-  async function getCartList() {
-    const res = await axios.get(url + "cart/", {
-      headers: { Authorization: `JWT ${token}` },
-    });
-    console.log(res.data.results);
-    return res.data.results;
-  }
-
-  if (status === "loading") {
-    console.log("로딩 중...!");
-  }
-
-  if (status === "error") {
-    console.log("에러");
-  }
-
-  /**장바구니 리스트에서 뽑은 product_id로 상품 상세정보 가져오기 */
-  async function getDetails(id) {
-    const res = await axios.get(url + "products/" + id + "/");
-    return res.data;
-  }
+  const { data, status } = useQuery(["cart-list", token], getCartList, {
+    cacheTime: 30000,
+    onSuccess: (data) => getTotalPrice(data),
+  });
   const listDetails = useQueries(
     !!data
       ? data.map((item) => {
@@ -54,31 +32,49 @@ function MyCart() {
   );
 
   const loadingFinishAll = listDetails.every((item) => item.isSuccess);
-  console.log("제품 상세 정보", listDetails);
-  console.log("카트 리스트", data);
-  useEffect(() => {
-    function getTotalPrice() {
-      if (data && loadingFinishAll) {
-        const totalPriceArr = data.map((item, idx) => {
-          return item.quantity * listDetails[idx].data.price;
-        });
-        setTotalPrice(
-          totalPriceArr.reduce((prev, cur) => {
-            return prev + cur;
-          }, 0)
-        );
-        const shippingFeeArr = listDetails.map((list, idx) => {
-          return list.data.shipping_fee;
-        });
-        setShippingFee(
-          shippingFeeArr.reduce((prev, cur) => {
-            return prev + cur;
-          }, 0)
-        );
-      }
+
+  async function getCartList() {
+    const res = await axios.get(url + "cart/", {
+      headers: { Authorization: `JWT ${token}` },
+    });
+    console.log(res.data.results);
+    return res.data.results;
+  }
+
+  /**장바구니 리스트에서 뽑은 product_id로 상품 상세정보 가져오기 */
+  async function getDetails(id) {
+    const res = await axios.get(url + "products/" + id + "/");
+    return res.data;
+  }
+
+  if (status === "loading") {
+    return <NowLoading />;
+  }
+
+  if (status === "error") {
+    console.log("에러");
+  }
+
+  function getTotalPrice() {
+    if (data && loadingFinishAll) {
+      const totalPriceArr = data.map((item, idx) => {
+        return item.quantity * listDetails[idx].data.price;
+      });
+      setTotalPrice(
+        totalPriceArr.reduce((prev, cur) => {
+          return prev + cur;
+        }, 0)
+      );
+      const shippingFeeArr = listDetails.map((list, idx) => {
+        return list.data.shipping_fee;
+      });
+      setShippingFee(
+        shippingFeeArr.reduce((prev, cur) => {
+          return prev + cur;
+        }, 0)
+      );
     }
-    getTotalPrice();
-  }, [getCartList]);
+  }
 
   return (
     <>

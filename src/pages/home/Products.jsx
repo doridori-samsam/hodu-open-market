@@ -2,6 +2,7 @@ import axios from "axios";
 import { useQuery } from "react-query";
 import ProductCarousel from "./ProductCarousel";
 import ProductList from "./ProductList";
+import NowLoading from "../../components/NowLoading";
 import styles from "../../style";
 
 function Products() {
@@ -15,7 +16,7 @@ function Products() {
   }
 
   if (status === "loading") {
-    return console.log("로딩중");
+    return <NowLoading />;
   }
 
   if (status === "error") {
