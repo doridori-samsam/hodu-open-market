@@ -18,7 +18,7 @@ function SearchBox() {
         <input
           type="text"
           placeholder="상품을 검색해보세요!"
-          className={`${styles.inputBox} basis-4/5 font-spoqa text-[12px] ss:text-[16px]`}
+          className={`border-none ${styles.inputBox} basis-4/5 text-[12px] ss:text-[16px]`}
         ></input>
         <button className="w-[20px] h-[20px] sm:w-[28px] sm:h-[28px] bg-cover icon-search"></button>
       </div>

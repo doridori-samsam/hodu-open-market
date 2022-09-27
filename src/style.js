@@ -22,7 +22,7 @@ const styles = {
   smallModalBox:
     "fixed top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] w-[360px] h-[200px] p-[20px] bg-white border-[1px] border-disabled z-[100] ",
   modalOverlay: "fixed top-0 bottom-0 right-0 left-0 bg-[#000000]/50",
-  inputBox: "outline-none font-spoqa focus:border-primary",
+  inputBox: "border-disabled outline-none font-spoqa focus:border-primary",
   signUpInput:
     "w-full h-[40px] ss:h-[54px] mt-[10px] pl-[16px] border-[1px] rounded-[5px] border-disabled outline-none font-spoqa focus:border-primary",
   footerList:

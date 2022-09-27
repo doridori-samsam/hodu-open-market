@@ -12,7 +12,7 @@ function SellerCenterHeader() {
           >
             <span className="a11y-hidden">호두마켓 로고</span>
           </div>
-          <span className="font-spoqaMedium leading-[28px] ss:text-[28px] text-[20px]">
+          <span className="font-spoqaMedium leading-[28px] sl:text-[28px] text-[20px]">
             판매자 센터
           </span>
         </div>

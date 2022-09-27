@@ -44,12 +44,11 @@ function SellerCenter() {
     ["seller-products", token],
     getSellerProducts,
     {
-      onSuccess: (data) => {
-        setSellerMenu([
+      onSettled: (data) => {
+        return setSellerMenu([
           ...sellerMenu,
           (sellerMenu[0].menuContent = <SellerProductsList products={data} />),
         ]);
-        return data;
       },
     }
   );
@@ -77,23 +76,27 @@ function SellerCenter() {
     <>
       <SellerCenterHeader />
       <main className={`${styles.mainLayout} flex-col items-center`}>
-        <div className="flex md:w-[85%] w-[95%] justify-between">
-          <h1 className="font-spoqaBold text-[36px]">
+        <div className="flex md:w-[85%] w-[95%] justify-between items-center">
+          <h1 className="font-spoqaBold sl:text-[36px] ss:text-[30px] text-[26px]">
             대시보드
-            <span className="ml-[16px] font-spoqaMedium text-primary">
+            <span className="block sl:inline-block sl:ml-[16px] ss:text-[24px] text-[20px] sl:text-[36px] font-spoqaMedium text-primary">
               {isSuccess && data.length === 0 ? null : data[0].store_name}
             </span>
           </h1>
           <SubButton
             onClick={() => navigate("upload")}
-            style={"w-[168px] h-[54px] font-spoqaMedium text-[18px]"}
+            style={
+              "ss:w-[168px] ss:h-[54px] w-[50px] h-[50px] ss:rounded-[5px] rounded-[50px] font-spoqaMedium ss:text-[18px] text-[12px]"
+            }
           >
-            <div className="w-[30px] h-[30px] inline-block icon-icon-plus bg-cover align-top"></div>
-            <span className="ml-[9px] leading-[30px]">상품 업로드</span>
+            <div className="ss:w-[30px] w-[25px] ss:h-[30px] h-[25px] inline-block icon-icon-plus bg-cover align-top"></div>
+            <span className="ss:inline hidden ml-[9px] leading-[30px]">
+              상품 업로드
+            </span>
           </SubButton>
         </div>
         <section
-          className={`${styles.sectionLayout} flex gap-[30px] mt-[38px]`}
+          className={`${styles.sectionLayout} flex-col sl:flex-row flex gap-[30px] mt-[38px]`}
         >
           <SellerCenterMenu
             content={sellerMenu}
