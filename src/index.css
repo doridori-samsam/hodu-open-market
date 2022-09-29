@@ -36,3 +36,9 @@
   margin: -1px;
   clip: rect(0 0 0 0);
 }
+
+input::-webkit-inner-spin-button {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}

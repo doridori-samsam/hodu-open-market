@@ -1,9 +1,47 @@
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { useMutation, useQueryClient } from "react-query";
+import axios from "axios";
+import UserContext from "../../context/UserContext";
 import SubButton from "../../components/buttons/SubButton";
 import WhiteButton from "../../components/buttons/WhiteButton";
+import DeleteCheckModal from "../../components/Modal/DeleteCheckModal";
 
 function SellerProductsList({ products }) {
+  const url = "https://openmarket.weniv.co.kr/";
+  const { token } = useContext(UserContext);
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const [isDelModalOpen, setIsDelModalOpen] = useState(false);
+  const [productId, setProductId] = useState("");
+  const removeProduct = useMutation(
+    (id) =>
+      axios.delete(url + "products/" + id + "/", {
+        headers: {
+          Authorization: `JWT ${token}`,
+        },
+      }),
+    {
+      onSuccess: () => {
+        setIsDelModalOpen(false);
+        queryClient.invalidateQueries("seller-products");
+      },
+      onError: () => {
+        console.log("삭제 실패");
+      },
+    }
+  );
+
+  /**삭제 버튼 클릭 함수 */
+  function openDelModal(id) {
+    setIsDelModalOpen(true);
+    setProductId(id);
+  }
+
+  /**판매 상품 삭제 mutate function */
+  function clickDeleteProduct() {
+    removeProduct.mutate(productId);
+  }
 
   return (
     <>
@@ -44,7 +82,10 @@ function SellerProductsList({ products }) {
                 >
                   수정
                 </SubButton>
-                <WhiteButton style={"w-[80px] h-[40px] font-spoqa"}>
+                <WhiteButton
+                  style={"w-[80px] h-[40px] font-spoqa"}
+                  onClick={() => openDelModal(item.product_id)}
+                >
                   삭제
                 </WhiteButton>
               </div>
@@ -52,6 +93,11 @@ function SellerProductsList({ products }) {
           );
         })}
       </ul>
+      <DeleteCheckModal
+        open={isDelModalOpen}
+        close={() => setIsDelModalOpen(false)}
+        clickConfirm={clickDeleteProduct}
+      />
     </>
   );
 }

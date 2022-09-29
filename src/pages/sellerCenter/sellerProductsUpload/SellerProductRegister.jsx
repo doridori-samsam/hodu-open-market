@@ -1,11 +1,118 @@
+import { useState, useRef, useContext } from "react";
+import { useMutation } from "react-query";
+import UserContext from "../../../context/UserContext";
 import SellerCenterHeader from "../SellerCenterHeader";
 import UploadWarning from "./UploadWarning";
 import EditorArea from "./EditorArea";
 import WhiteButton from "../../../components/buttons/WhiteButton";
 import SubButton from "../../../components/buttons/SubButton";
+import CancelProductUploadModal from "../../../components/Modal/CancelProductUploadModal";
 import styles from "../../../style";
 
 function SellerProductRegister() {
+  const { token } = useContext(UserContext);
+  const [productInfo, setProductInfo] = useState({
+    name: "",
+    image: "/chicken.jpg",
+    price: "",
+    shipping_method: "",
+    shipping_fee: "",
+    stock: "",
+    products_info: "",
+    token: token,
+  });
+
+  const [imgPreview, setImgPreview] = useState("");
+  const [nameInputFocused, setNameInputFocused] = useState(false);
+  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
+  const imgRef = useRef();
+
+  /**이미지 파일 업로드 함수 */
+  function handleImgInput(e) {
+    let loadImg = e.target.files;
+    const formData = new FormData();
+    formData.append("image", loadImg[0]);
+    preview(loadImg);
+    console.log(formData.get("image"), "폼데이터");
+    setProductInfo({
+      ...productInfo,
+      image: JSON.stringify(formData.get("image")),
+    });
+  }
+
+  /**이미지 파일 미리보기 */
+  function preview(loadImg) {
+    const reader = new FileReader();
+    reader.readAsDataURL(loadImg[0]);
+    reader.onload = () => {
+      setImgPreview(reader.result);
+    };
+  }
+
+  /**상품명 input handle 함수 */
+  function handleProductNameInput(e) {
+    if (e.target.value) {
+      setProductInfo({ ...productInfo, name: e.target.value });
+    } else {
+      setProductInfo({ ...productInfo, name: "" });
+    }
+  }
+
+  /**판매가 input handle 함수 */
+  function handlePriceInput(e) {
+    e.target.value = e.target.value.replace(/[^0-9]/g, ""); // 입력값이 숫자가 아니면 공백
+    e.target.value = e.target.value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    setProductInfo({
+      ...productInfo,
+      price: Number(e.target.value.replace(",", "")),
+    });
+  }
+
+  /**배송방법 value 가져오기 함수 */
+  function getShippingMethod(e) {
+    if (e.target.checked) {
+      setProductInfo({ ...productInfo, shipping_method: e.target.value });
+    }
+  }
+
+  /**기본 배송비 input handle 함수 */
+  function handleShippingFeeInput(e) {
+    e.target.value = e.target.value.replace(/[^0-9]/g, "");
+    e.target.value = e.target.value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    setProductInfo({
+      ...productInfo,
+      shipping_fee: Number(e.target.value.replace(",", "")),
+    });
+  }
+
+  /**재고 input handle 함수 */
+  function handleStockInput(e) {
+    e.target.value = e.target.value.replace(/[^0-9]/g, "");
+    setProductInfo({ ...productInfo, stock: Number(e.target.value) });
+  }
+
+  /**제품 상세 정보 handle 함수 */
+  function handleProductInfoEdit(cont) {
+    setProductInfo({ ...productInfo, products_info: cont });
+  }
+
+  /**저장 버튼 activate 함수 */
+  function saveButtonActivate() {
+    let infoList = Object.values(productInfo);
+    let result;
+    console.log(infoList);
+    result = infoList.reduce((prev, cur) => {
+      return prev && cur;
+    });
+    return result;
+  }
+
+  /**취소 버튼 클릭 함수 */
+  function openCancelModal(e) {
+    e.preventDefault();
+    setIsCancelModalOpen(true);
+  }
+
   return (
     <>
       <SellerCenterHeader />
@@ -23,18 +130,26 @@ function SellerProductRegister() {
                 <p className="font-spoqa text-subText text-[16px] ">
                   상품 이미지
                 </p>
-                <div className="w-[430px] h-[430px] mt-[10px] flex justify-center items-center bg-disabled">
-                  <label htmlFor="choose-img">
+                <div
+                  style={
+                    imgPreview
+                      ? { backgroundImage: `url(${imgPreview})` }
+                      : { backgroundColor: "#c4c4c4" }
+                  }
+                  className={`w-[430px] h-[430px] mt-[10px] flex justify-center items-center bg-cover bg-center`}
+                >
+                  <label htmlFor="upload-img">
                     <div className="icon-icon-img w-[50px] h-[50px] cursor-pointer"></div>
                   </label>
+                  <input
+                    type="file"
+                    id="upload-img"
+                    accept="image/*"
+                    onChange={handleImgInput}
+                    ref={imgRef}
+                    className="hidden"
+                  ></input>
                 </div>
-                <input
-                  type="file"
-                  name={name}
-                  id="choose-img"
-                  accept="image/*"
-                  className="hidden"
-                ></input>
               </div>
               <div className="flex flex-col justify-between w-full">
                 <label
@@ -43,13 +158,23 @@ function SellerProductRegister() {
                 >
                   상품명
                 </label>
-                <input
-                  id="item-name"
-                  type="text"
-                  placeholder="13/20"
-                  className={`w-full h-[50px] px-[12px] border-[1px] rounded-[5px] ${styles.inputBox} placeholder:text-[14px] placeholder:text-right placeholder:text-disabled`}
-                ></input>
-
+                <div
+                  className={`w-full flex justify-between items-center h-[50px] px-[12px] border-[1px] rounded-[5px] ${
+                    styles.inputBox
+                  } ${nameInputFocused && "border-primary"}`}
+                >
+                  <input
+                    id="item-name"
+                    type="text"
+                    maxLength="20"
+                    defaultValue={productInfo.name}
+                    onChange={handleProductNameInput}
+                    onFocus={() => setNameInputFocused(true)}
+                    onBlur={() => setNameInputFocused(false)}
+                    className="w-[93%] h-full outline-none"
+                  ></input>
+                  <span className="text-[14px] text-disabled">{`${productInfo.name.length}/20`}</span>
+                </div>
                 <label
                   htmlFor="item-price"
                   className="block font-spoqa text-subText text-[16px]"
@@ -60,6 +185,9 @@ function SellerProductRegister() {
                   <input
                     id="item-price"
                     type="text"
+                    defaultValue={productInfo.price}
+                    onChange={handlePriceInput}
+                    maxLength="10"
                     className={`w-[160px] h-[50px] px-[12px] border-y-[1px] border-l-[1px] rounded-l-[5px] ${styles.inputBox}`}
                   ></input>
                   <div
@@ -76,12 +204,14 @@ function SellerProductRegister() {
                     <input
                       id="parcel"
                       name="deliver-method"
+                      value="PARCEL"
                       type="radio"
+                      onClick={getShippingMethod}
                       className="peer hidden"
                     ></input>
                     <label
                       htmlFor="parcel"
-                      className="flex items-center justify-center w-[200px] h-[50px] rounded-[5px] border-[1px] border-disabled font-spoqaMedium text-subText text-[16px] cursor-pointer peer-checked:bg-primary peer-checked:border-none peer-checked:text-white"
+                      className="flex items-center justify-center w-[210px] h-[50px] rounded-[5px] border-[1px] border-disabled font-spoqaMedium text-subText text-[16px] cursor-pointer peer-checked:bg-primary peer-checked:border-none peer-checked:text-white"
                     >
                       택배, 소포, 등기
                     </label>
@@ -90,12 +220,14 @@ function SellerProductRegister() {
                     <input
                       id="delivery"
                       name="deliver-method"
+                      value="DELIVERY"
                       type="radio"
+                      onClick={getShippingMethod}
                       className="peer hidden"
                     ></input>
                     <label
                       htmlFor="delivery"
-                      className="flex items-center justify-center w-[200px] h-[50px] rounded-[5px] border-[1px] border-disabled font-spoqaMedium text-subText text-[16px] cursor-pointer peer-checked:bg-primary peer-checked:border-none peer-checked:text-white"
+                      className="flex items-center justify-center w-[210px] h-[50px] rounded-[5px] border-[1px] border-disabled font-spoqaMedium text-subText text-[16px] cursor-pointer peer-checked:bg-primary peer-checked:border-none peer-checked:text-white"
                     >
                       직접배송(화물배달)
                     </label>
@@ -111,6 +243,9 @@ function SellerProductRegister() {
                   <input
                     id="shipping-fee"
                     type="text"
+                    maxLength="10"
+                    defaultValue={productInfo.shipping_fee}
+                    onChange={handleShippingFeeInput}
                     className={`w-[160px] h-[50px] px-[12px] border-y-[1px] border-l-[1px] rounded-l-[5px] ${styles.inputBox}`}
                   ></input>
                   <div
@@ -129,6 +264,9 @@ function SellerProductRegister() {
                   <input
                     id="stock"
                     type="text"
+                    maxLength="5"
+                    defaultValue={productInfo.stock}
+                    onChange={handleStockInput}
                     className={`w-[160px] h-[50px] px-[12px] border-y-[1px] border-l-[1px] rounded-l-[5px] ${styles.inputBox}`}
                   ></input>
                   <div
@@ -139,13 +277,19 @@ function SellerProductRegister() {
                 </div>
               </div>
             </div>
-            <EditorArea />
+            <EditorArea passContent={handleProductInfoEdit} />
             <div className="w-full mt-[50px] text-right">
-              <WhiteButton style={"w-[200px] h-[50px] text-[18px] mr-[14px]"}>
+              <WhiteButton
+                style={"w-[200px] h-[50px] text-[18px] mr-[14px]"}
+                onClick={openCancelModal}
+              >
                 취소
               </WhiteButton>
               <SubButton
-                style={"w-[200px] h-[50px] font-spoqaBold text-[18px]"}
+                isActive={saveButtonActivate()}
+                style={`w-[200px] h-[50px] font-spoqaBold text-[18px] ${
+                  saveButtonActivate() ? "bg-primary" : "bg-disabled"
+                }`}
               >
                 저장
               </SubButton>
@@ -153,6 +297,10 @@ function SellerProductRegister() {
           </form>
         </section>
       </main>
+      <CancelProductUploadModal
+        open={isCancelModalOpen}
+        close={() => setIsCancelModalOpen(false)}
+      />
     </>
   );
 }

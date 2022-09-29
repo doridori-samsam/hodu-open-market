@@ -45,10 +45,14 @@ function SellerCenter() {
     getSellerProducts,
     {
       onSettled: (data) => {
-        return setSellerMenu([
-          ...sellerMenu,
-          (sellerMenu[0].menuContent = <SellerProductsList products={data} />),
-        ]);
+        let findIndex = sellerMenu.findIndex(
+          (menu) => menu.menuTitle === "판매중인 상품"
+        );
+        let copiedMenu = [...sellerMenu];
+        copiedMenu[findIndex].menuContent = (
+          <SellerProductsList products={data} />
+        );
+        setSellerMenu(copiedMenu);
       },
     }
   );
@@ -70,8 +74,6 @@ function SellerCenter() {
     setActiveIndex(index);
   }
 
-  console.log(data, status);
-
   return (
     <>
       <SellerCenterHeader />
@@ -84,6 +86,7 @@ function SellerCenter() {
             </span>
           </h1>
           <SubButton
+            isActive={true}
             onClick={() => navigate("upload")}
             style={
               "ss:w-[168px] ss:h-[54px] w-[50px] h-[50px] ss:rounded-[5px] rounded-[50px] font-spoqaMedium ss:text-[18px] text-[12px]"
