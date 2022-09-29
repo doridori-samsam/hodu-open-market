@@ -15,6 +15,7 @@ function AdjustQtyModal({ productId, cartId, open, stock, defaultQty, close }) {
   const adjustQuantity = useMutation(sendAdjustQty, {
     onSuccess: (res) => {
       console.log("담기성공", res.data);
+      // queryClient.invalidateQueries("cart-list");
       queryClient.invalidateQueries("cart-list");
     },
     onError: () => {

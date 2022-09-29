@@ -21,12 +21,11 @@ function ProductOverview({ productdata, productId }) {
   const cartData = queryClient.getQueryData(["cart-list", token]);
   const addToCart = useMutation(clickAddToCart, {
     onSuccess: (res) => {
-      console.log("담기성공", res.data.cart_item_id);
       setIsAddCartModalOpen(true);
       setIsItemExist(
         data.some((item) => item.cart_item_id === res.data.cart_item_id)
       );
-      queryClient.invalidateQueries("cart-list");
+      queryClient.invalidateQueries("cart-list", "info");
     },
     onError: () => {
       console.log("담기 실패");
@@ -35,8 +34,6 @@ function ProductOverview({ productdata, productId }) {
   const { data, status } = useQuery(["cart-list", token], getCartList, {
     enabled: !cartData,
   });
-
-  console.log(isItemExist);
 
   async function getCartList() {
     const res = await axios.get(url + "cart/", {
@@ -49,8 +46,6 @@ function ProductOverview({ productdata, productId }) {
   function getQuantity(num) {
     setQuantityNum(num);
   }
-
-  console.log(data, "데이터", status);
 
   /**장바구니 클릭 버튼 함수 */
   async function clickAddToCart() {

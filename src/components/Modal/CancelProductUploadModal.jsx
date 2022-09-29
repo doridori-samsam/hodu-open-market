@@ -1,7 +1,7 @@
 import ModalPortal from "./ModalPortal";
 import styles from "../../style";
 
-function CancelProductUploadModal({ close, open }) {
+function CancelProductUploadModal({ close, open, clickConfirm }) {
   return (
     <>
       {open ? (
@@ -20,7 +20,10 @@ function CancelProductUploadModal({ close, open }) {
               <button onClick={close} className={`${styles.ModalWhiteButton}`}>
                 취소
               </button>
-              <button type="reset" className={`${styles.ModalBasicButton}`}>
+              <button
+                onClick={clickConfirm}
+                className={`${styles.ModalBasicButton}`}
+              >
                 확인
               </button>
             </div>

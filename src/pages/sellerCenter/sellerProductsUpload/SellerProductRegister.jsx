@@ -1,5 +1,7 @@
 import { useState, useRef, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { useMutation } from "react-query";
+import axios from "axios";
 import UserContext from "../../../context/UserContext";
 import SellerCenterHeader from "../SellerCenterHeader";
 import UploadWarning from "./UploadWarning";
@@ -10,10 +12,11 @@ import CancelProductUploadModal from "../../../components/Modal/CancelProductUpl
 import styles from "../../../style";
 
 function SellerProductRegister() {
+  const url = "https://openmarket.weniv.co.kr/";
   const { token } = useContext(UserContext);
   const [productInfo, setProductInfo] = useState({
-    name: "",
-    image: "/chicken.jpg",
+    product_name: "",
+    image: "",
     price: "",
     shipping_method: "",
     shipping_fee: "",
@@ -26,6 +29,16 @@ function SellerProductRegister() {
   const [nameInputFocused, setNameInputFocused] = useState(false);
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
   const imgRef = useRef();
+  const uploadProduct = useMutation(postProductInfo);
+
+  async function postProductInfo() {
+    const res = await axios.post(url + "products/", productInfo, {
+      header: {
+        Authorization: `JWT ${token}`,
+      },
+    });
+    console.log(res);
+  }
 
   /**이미지 파일 업로드 함수 */
   function handleImgInput(e) {
@@ -36,10 +49,12 @@ function SellerProductRegister() {
     console.log(formData.get("image"), "폼데이터");
     setProductInfo({
       ...productInfo,
-      image: JSON.stringify(formData.get("image")),
+      image: formData,
     });
+    getImgString(formData);
   }
 
+  console.log(productInfo);
   /**이미지 파일 미리보기 */
   function preview(loadImg) {
     const reader = new FileReader();
@@ -49,12 +64,26 @@ function SellerProductRegister() {
     };
   }
 
+  async function getImgString(formData) {
+    try {
+      const res = await axios.post(url + "products/", productInfo, {
+        headers: {
+          Authorization: `JWT ${token}`,
+        },
+      });
+      console.log(res);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  console.log(productInfo);
   /**상품명 input handle 함수 */
   function handleProductNameInput(e) {
     if (e.target.value) {
-      setProductInfo({ ...productInfo, name: e.target.value });
+      setProductInfo({ ...productInfo, product_name: e.target.value });
     } else {
-      setProductInfo({ ...productInfo, name: "" });
+      setProductInfo({ ...productInfo, product_name: "" });
     }
   }
 
@@ -100,7 +129,6 @@ function SellerProductRegister() {
   function saveButtonActivate() {
     let infoList = Object.values(productInfo);
     let result;
-    console.log(infoList);
     result = infoList.reduce((prev, cur) => {
       return prev && cur;
     });
@@ -113,6 +141,13 @@ function SellerProductRegister() {
     setIsCancelModalOpen(true);
   }
 
+  /**이미지 파일 submit 함수 */
+  function clickSaveButton(e) {
+    e.preventDefault();
+    uploadProduct.mutate;
+  }
+
+  console.log(uploadProduct);
   return (
     <>
       <SellerCenterHeader />
@@ -167,13 +202,13 @@ function SellerProductRegister() {
                     id="item-name"
                     type="text"
                     maxLength="20"
-                    defaultValue={productInfo.name}
+                    defaultValue={productInfo.product_name}
                     onChange={handleProductNameInput}
                     onFocus={() => setNameInputFocused(true)}
                     onBlur={() => setNameInputFocused(false)}
                     className="w-[93%] h-full outline-none"
                   ></input>
-                  <span className="text-[14px] text-disabled">{`${productInfo.name.length}/20`}</span>
+                  <span className="text-[14px] text-disabled">{`${productInfo.product_name.length}/20`}</span>
                 </div>
                 <label
                   htmlFor="item-price"
@@ -287,6 +322,8 @@ function SellerProductRegister() {
               </WhiteButton>
               <SubButton
                 isActive={saveButtonActivate()}
+                type="button"
+                onClick={postProductInfo}
                 style={`w-[200px] h-[50px] font-spoqaBold text-[18px] ${
                   saveButtonActivate() ? "bg-primary" : "bg-disabled"
                 }`}
@@ -300,6 +337,7 @@ function SellerProductRegister() {
       <CancelProductUploadModal
         open={isCancelModalOpen}
         close={() => setIsCancelModalOpen(false)}
+        clickConfirm={() => window.location.reload()}
       />
     </>
   );

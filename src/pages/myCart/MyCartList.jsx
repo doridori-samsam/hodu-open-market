@@ -9,14 +9,20 @@ import AdjustQtyModal from "../../components/Modal/AdjustQtyModal";
 import DeleteCheckModal from "../../components/Modal/DeleteCheckModal";
 import styles from "../../style";
 
-function MyCartList({ itemInfo, defaultQty, index, itemId, productId }) {
+function MyCartList({
+  itemInfo,
+  defaultQty,
+  index,
+  itemId,
+  productId,
+  children,
+}) {
   const url = "https://openmarket.weniv.co.kr/";
   const { token } = useContext(UserContext);
   const queryClient = useQueryClient();
   const [isQtyModalOpen, setIsQtyModalOpen] = useState(false);
   const [isDelModalOpen, setIsDelModalOpen] = useState(false);
-
-  // const [quantityNum, setQuantityNum] = useState(defaultQty);
+  const [quantityNum, setQuantityNum] = useState(defaultQty);
   const deleteItem = useMutation(
     (itemId) =>
       axios.delete(url + "cart/" + itemId + "/", {
@@ -29,8 +35,9 @@ function MyCartList({ itemInfo, defaultQty, index, itemId, productId }) {
         setIsDelModalOpen(false);
         queryClient.invalidateQueries("cart-list");
       },
-      onError: () => {
+      onError: (error) => {
         console.log("삭제 실패");
+        console.error(error);
       },
     }
   );
@@ -42,7 +49,7 @@ function MyCartList({ itemInfo, defaultQty, index, itemId, productId }) {
 
   /**장바구니 아이템 수량 수정 모달창 띄우기*/
   function openQtyModal() {
-    setIsQtyModalOpen(!isQtyModalOpen);
+    setIsQtyModalOpen(true);
   }
 
   /**장바구니 아이템 삭제 확인 모달창 띄우기 */
@@ -51,15 +58,13 @@ function MyCartList({ itemInfo, defaultQty, index, itemId, productId }) {
   }
 
   function getQuantity(num) {
-    console.log(num);
+    setQuantityNum(num);
   }
 
   return (
     <>
       <li className="grid grid-cols-[5%_minmax(30%,_43%)_1.5fr_1fr_3%] items-center pl-[30px] w-full h-[200px] border-[1px] border-disabled rounded-[10px]">
-        <div className="">
-          <SelectButton />
-        </div>
+        <div className="">{children}</div>
         <div className="flex gap-[30px]">
           <img
             src={itemInfo[index].data.image}
