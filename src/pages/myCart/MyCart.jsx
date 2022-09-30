@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import { useQuery, useQueries, useQueryClient } from "react-query";
 import axios from "axios";
 import UserContext from "../../context/UserContext";
@@ -16,11 +16,22 @@ function MyCart() {
   const { token } = useContext(UserContext);
   const [totalPrice, setTotalPrice] = useState(0);
   const [shippingFee, setShippingFee] = useState([]);
+  const [checkList, setCheckList] = useState({});
   const [isAllChecked, setIsAllChecked] = useState(true);
 
   const { data, status } = useQuery(["cart-list", token], getCartList, {
     cacheTime: 30000,
+    onSuccess: (data) => {
+      let checkObj = data.reduce((newObj, idx) => {
+        newObj["check" + data.indexOf(idx)] = true;
+        return newObj;
+      }, {});
+      setCheckList(checkObj);
+    },
   });
+
+  console.log(checkList, "체크항목");
+
   const listDetails = useQueries(
     !!data
       ? data.map((item) => {
@@ -81,11 +92,35 @@ function MyCart() {
   /**장바구니 상품 전체 선택 */
   function selectAllItem(e) {
     setIsAllChecked(!isAllChecked);
+    if (e.target.checked) {
+      for (let key in checkList) {
+        console.log(checkList[key]);
+        setCheckList((cur) => {
+          let copiedCheck = { ...cur };
+          copiedCheck[key] = true;
+          return copiedCheck;
+        });
+      }
+    } else {
+      for (let key in checkList) {
+        console.log(checkList[key]);
+        setCheckList((cur) => {
+          let copiedCheck = { ...cur };
+          copiedCheck[key] = false;
+          return copiedCheck;
+        });
+      }
+    }
   }
+
   /**장바구니 상품 개별 checkbox 선택 함수 */
   function selectItem(e) {
     setIsAllChecked(false);
-    setTotalPrice(0);
+    setCheckList({
+      ...checkList,
+      [`check${e.target.value}`]: !checkList[`check${e.target.value}`],
+    });
+
     if (e.target.checked) {
       const itemQuantity = data[e.target.value].quantity;
       const itemPrice = listDetails[e.target.value].data.price;
@@ -94,8 +129,6 @@ function MyCart() {
     }
   }
 
-  console.log(totalPrice);
-
   return (
     <>
       <NavBar />
@@ -103,7 +136,11 @@ function MyCart() {
         <section className={`${styles.flexCenter} flex-col w-[95%] md:w-[85%]`}>
           <h1 className="font-spoqaBold text-[36px] my-[52px]">장바구니</h1>
           <div className="grid items-center grid-cols-[12%_minmax(30%,_40%)_1fr_1fr] w-full h-[50px] px-[30px] mb-[35px] rounded-[10px] bg-background text-center">
-            <SelectButton checked={isAllChecked} clickCheck={selectAllItem} />
+            <SelectButton
+              checked={isAllChecked}
+              defaultChecked={isAllChecked}
+              onChange={selectAllItem}
+            />
             <span className="font-spoqa text-[18px] leading-[30px]">
               상품정보
             </span>
@@ -130,8 +167,8 @@ function MyCart() {
                     >
                       <SelectButton
                         value={idx}
-                        checked={isAllChecked}
-                        clickCheck={selectItem}
+                        checked={checkList[`check${idx}`]}
+                        onChange={selectItem}
                       />
                     </MyCartList>
                   ))}
