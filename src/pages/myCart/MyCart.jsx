@@ -15,13 +15,14 @@ function MyCart() {
   const url = "https://openmarket.weniv.co.kr/";
   const { token } = useContext(UserContext);
   const [totalPrice, setTotalPrice] = useState(0);
-  const [shippingFee, setShippingFee] = useState([]);
+  const [shippingFee, setShippingFee] = useState(0);
   const [checkList, setCheckList] = useState({});
   const [isAllChecked, setIsAllChecked] = useState(true);
 
   const { data, status } = useQuery(["cart-list", token], getCartList, {
     cacheTime: 30000,
     onSuccess: (data) => {
+      setIsAllChecked(true);
       let checkObj = data.reduce((newObj, idx) => {
         newObj["check" + data.indexOf(idx)] = true;
         return newObj;
@@ -29,8 +30,6 @@ function MyCart() {
       setCheckList(checkObj);
     },
   });
-
-  console.log(checkList, "체크항목");
 
   const listDetails = useQueries(
     !!data
@@ -78,23 +77,32 @@ function MyCart() {
           }, 0)
         );
       }
+      let priceSum = 0;
+      let feeSum = 0;
+      let checkedArr = Object.values(checkList);
+      for (let i in checkedArr) {
+        if (checkedArr[i]) {
+          priceSum += data[i].quantity * listDetails[i].data.price;
+          feeSum += listDetails[i].data.shipping_fee;
+        }
+      }
+      setTotalPrice(priceSum);
+      setShippingFee(feeSum);
     }
     data && loadingFinishAll && getTotalPrice();
-  }, [data, listDetails]);
+  }, [data, listDetails, checkList]);
 
   if (status === "loading") {
     return <NowLoading />;
   }
 
-  console.log(data, "장바구니 리스트");
-  console.log(listDetails, "상품 상세정보");
+  console.log(checkList);
 
   /**장바구니 상품 전체 선택 */
   function selectAllItem(e) {
     setIsAllChecked(!isAllChecked);
     if (e.target.checked) {
       for (let key in checkList) {
-        console.log(checkList[key]);
         setCheckList((cur) => {
           let copiedCheck = { ...cur };
           copiedCheck[key] = true;
@@ -103,7 +111,6 @@ function MyCart() {
       }
     } else {
       for (let key in checkList) {
-        console.log(checkList[key]);
         setCheckList((cur) => {
           let copiedCheck = { ...cur };
           copiedCheck[key] = false;
@@ -120,13 +127,6 @@ function MyCart() {
       ...checkList,
       [`check${e.target.value}`]: !checkList[`check${e.target.value}`],
     });
-
-    if (e.target.checked) {
-      const itemQuantity = data[e.target.value].quantity;
-      const itemPrice = listDetails[e.target.value].data.price;
-      const total = itemQuantity * itemPrice;
-      setTotalPrice(total);
-    }
   }
 
   return (
