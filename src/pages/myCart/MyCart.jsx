@@ -20,9 +20,10 @@ function MyCart() {
   const [shippingFee, setShippingFee] = useState(0);
   const [checkList, setCheckList] = useState({});
   const [isAllChecked, setIsAllChecked] = useState(true);
-
+  /**주문 페이지에 넘겨질 선택된 상품 */
+  const [selectedItems, setSelectedItems] = useState([]);
   const { data, status } = useQuery(["cart-list", token], getCartList, {
-    cacheTime: 50000,
+    cacheTime: 300000,
     onSuccess: (data) => {
       setIsAllChecked(true);
       let checkObj = data.reduce((newObj, idx) => {
@@ -39,6 +40,7 @@ function MyCart() {
           return {
             queryKey: ["info", item.product_id],
             queryFn: () => getDetails(item.product_id),
+            cacheTime: 300000,
           };
         })
       : []
@@ -94,11 +96,23 @@ function MyCart() {
     data && loadingFinishAll && getTotalPrice();
   }, [data, listDetails, checkList]);
 
+  useEffect(() => {
+    function getSelectedItems() {
+      let checkedArr = Object.values(checkList);
+      let copiedCheckedArr = [];
+      for (let i in checkedArr) {
+        if (checkedArr[i]) {
+          copiedCheckedArr.push(data[i]);
+        }
+      }
+      setSelectedItems(copiedCheckedArr);
+    }
+    getSelectedItems();
+  }, [checkList]);
+
   if (status === "loading") {
     return <NowLoading />;
   }
-
-  console.log(checkList);
 
   /**장바구니 상품 전체 선택 */
   function selectAllItem(e) {
@@ -142,6 +156,7 @@ function MyCart() {
 
   console.log(data, "장바구니 데이터");
   console.log(listDetails, "상품 상세정보");
+  console.log(selectedItems, "선택된 상품");
   return (
     <>
       <NavBar />
@@ -191,7 +206,15 @@ function MyCart() {
               )}
               <SubButton
                 isActive={orderButtonActivate()}
-                onClick={() => navigate("/order")}
+                onClick={() =>
+                  navigate("/order", {
+                    state: {
+                      items: selectedItems,
+                      totalPrice: totalPrice,
+                      shippingFee: shippingFee,
+                    },
+                  })
+                }
                 style="w-[220px] h-[68px] mt-[40px] font-spoqaBold text-[24px]"
               >
                 주문하기

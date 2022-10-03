@@ -31,6 +31,8 @@ function ProductOverview({ productdata, productId }) {
       console.log("담기 실패");
     },
   });
+
+  /**장바구니 페이지를 방문한 적이 있으면 data fetch X */
   const { data, status } = useQuery(["cart-list", token], getCartList, {
     enabled: !cartData,
   });

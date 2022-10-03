@@ -1,6 +1,6 @@
 import MediumButton from "../../components/buttons/MediumButton";
 
-function PaymentSumUp() {
+function PaymentSumUp({ productPrice, shippingFee, total }) {
   return (
     <div className="w-[37%]">
       <h2 className="mb-[18px] font-spoqaMedium text-[24px]">최종결제 정보</h2>
@@ -9,7 +9,7 @@ function PaymentSumUp() {
           <p className="flex justify-between">
             <span>- 상품금액</span>
             <span className="font-spoqaBold text-[18px]">
-              46,500{" "}
+              {productPrice.toLocaleString()}
               <span className="font-spoqa text-[14px] text-subText">원</span>
             </span>
           </p>
@@ -22,14 +22,15 @@ function PaymentSumUp() {
           <p className="flex justify-between">
             <span>- 배송비</span>
             <span className="font-spoqaBold text-[18px]">
-              0 <span className="font-spoqa text-[14px] text-subText">원</span>
+              {shippingFee.toLocaleString()}{" "}
+              <span className="font-spoqa text-[14px] text-subText">원</span>
             </span>
           </p>
         </div>
         <p className="p-[20px] flex justify-between items-center">
           <span className="font-spoqa">- 결제금액</span>
           <span className="font-spoqaBold text-[24px] text-accentText">
-            46,500<span>원</span>
+            {`${total.toLocaleString()}원`}
           </span>
         </p>
         <div className="w-full h-[138px] pt-[20px] pb-[12px] px-[20px] flex flex-col justify-between items-center bg-background z-[-100] rounded-b-lg">
