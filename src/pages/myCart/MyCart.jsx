@@ -1,5 +1,6 @@
-import { useState, useContext, useEffect, useRef } from "react";
-import { useQuery, useQueries, useQueryClient } from "react-query";
+import { useState, useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useQuery, useQueries } from "react-query";
 import axios from "axios";
 import UserContext from "../../context/UserContext";
 import MyCartList from "./MyCartList";
@@ -14,13 +15,14 @@ import styles from "../../style";
 function MyCart() {
   const url = "https://openmarket.weniv.co.kr/";
   const { token } = useContext(UserContext);
+  const navigate = useNavigate();
   const [totalPrice, setTotalPrice] = useState(0);
   const [shippingFee, setShippingFee] = useState(0);
   const [checkList, setCheckList] = useState({});
   const [isAllChecked, setIsAllChecked] = useState(true);
 
   const { data, status } = useQuery(["cart-list", token], getCartList, {
-    cacheTime: 30000,
+    cacheTime: 50000,
     onSuccess: (data) => {
       setIsAllChecked(true);
       let checkObj = data.reduce((newObj, idx) => {
@@ -129,18 +131,25 @@ function MyCart() {
     });
   }
 
+  /**주문하기 버튼 활성화 함수 */
+  function orderButtonActivate() {
+    const checkedArr = Object.values(checkList);
+    let result = checkedArr.some((check) => {
+      return check === true;
+    });
+    return result;
+  }
+
+  console.log(data, "장바구니 데이터");
+  console.log(listDetails, "상품 상세정보");
   return (
     <>
       <NavBar />
-      <main className={`${styles.mainLayout}`}>
+      <main className={`${styles.mainLayout} flex-col items-center`}>
+        <h1 className="font-spoqaBold text-[36px] mb-[52px]">장바구니</h1>
         <section className={`${styles.flexCenter} flex-col w-[95%] md:w-[85%]`}>
-          <h1 className="font-spoqaBold text-[36px] my-[52px]">장바구니</h1>
           <div className="grid items-center grid-cols-[12%_minmax(30%,_40%)_1fr_1fr] w-full h-[50px] px-[30px] mb-[35px] rounded-[10px] bg-background text-center">
-            <SelectButton
-              checked={isAllChecked}
-              defaultChecked={isAllChecked}
-              onChange={selectAllItem}
-            />
+            <SelectButton checked={isAllChecked} onChange={selectAllItem} />
             <span className="font-spoqa text-[18px] leading-[30px]">
               상품정보
             </span>
@@ -180,7 +189,11 @@ function MyCart() {
                   shippingFee={shippingFee}
                 />
               )}
-              <SubButton style="w-[220px] h-[68px] mt-[40px] font-spoqaBold text-[24px]">
+              <SubButton
+                isActive={orderButtonActivate()}
+                onClick={() => navigate("/order")}
+                style="w-[220px] h-[68px] mt-[40px] font-spoqaBold text-[24px]"
+              >
                 주문하기
               </SubButton>
             </>

@@ -7,6 +7,7 @@ import MyCart from "./pages/myCart/MyCart";
 import LogIn from "./pages/Auth/LogIn";
 import SignUp from "./pages/Auth/SignUp";
 import ProductDetail from "./pages/productDetail/ProductDetail";
+import Payment from "./pages/payment/Payment";
 import SellerCenter from "./pages/sellerCenter/SellerCenter";
 import SellerProductRegister from "./pages/sellerCenter/sellerProductsUpload/SellerProductRegister";
 import SellerProductsEdit from "./pages/sellerCenter/sellerProductsUpload/SellerProductsEdit";
@@ -29,9 +30,15 @@ function Main() {
                 <>
                   <Route path="/" element={<Home />}></Route>
                   {userType === "BUYER" ? (
-                    <Route path="/cart" element={<MyCart />}></Route>
+                    <>
+                      <Route path="/cart" element={<MyCart />}></Route>
+                      <Route path="/order" element={<Payment />}></Route>
+                    </>
                   ) : (
-                    <Route path="/cart" element={<NotFound />}></Route>
+                    <>
+                      <Route path="/cart" element={<NotFound />}></Route>
+                      <Route ptah="/order" element={<NotFound />}></Route>
+                    </>
                   )}
                   {userType === "SELLER" ? (
                     <>

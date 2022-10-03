@@ -128,12 +128,12 @@
   width: 32px;
   height: 32px;
 }
-.icon-icon-rhigt-arrow,
-.icon-icon-rhigt-arrow\:regular {
+.icon-icon-right-arrow,
+.icon-icon-right-arrow\:regular {
   background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2222%22%20height%3D%2222%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M7.592%205.167L13%2011.583%207.592%2018%22%20stroke%3D%22%23767676%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E");
   background-repeat: no-repeat;
 }
-.icon-icon-rhigt-arrow-dims {
+.icon-icon-right-arrow-dims {
   width: 22px;
   height: 22px;
 }
