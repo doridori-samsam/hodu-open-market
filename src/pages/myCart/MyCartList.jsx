@@ -85,7 +85,11 @@ function MyCartList({
             </div>
             <div>
               <p className="font-spoqa text-[14px] text-subText">
-                {`택배배송 / ${
+                {`${
+                  itemInfo[index].data.shipping_method === "PARCEL"
+                    ? `택배배송`
+                    : `직접배송`
+                } / ${
                   itemInfo[index].data.shipping_fee === 0
                     ? `무료배송`
                     : itemInfo[index].data.shipping_fee.toLocaleString() + "원"

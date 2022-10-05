@@ -6,7 +6,7 @@ function OrderList({ productId, quantity }) {
   const productData = queryClient.getQueryData(["info", productId]);
 
   return (
-    <li className="grid grid-cols-[minmax(30%,_45%)_1fr_1fr_1fr] items-center w-full h-[120px] pb-[12px] border-b-[1px] border-disabled">
+    <li className="grid grid-cols-[minmax(30%,_45%)_1fr_1fr_1fr] items-center w-full h-[120px] border-b-[1px] border-disabled">
       <div className="flex items-center gap-[30px]">
         <img
           src={`${productData.image}`}
@@ -30,7 +30,7 @@ function OrderList({ productId, quantity }) {
           : productData.shipping_fee.toLocaleString()}
       </span>
       <span className="text-center font-spoqaBold text-[18px]">
-        {productData.price.toLocaleString()}원
+        {(productData.price * quantity).toLocaleString()}원
       </span>
     </li>
   );

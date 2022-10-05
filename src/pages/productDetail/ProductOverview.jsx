@@ -97,7 +97,11 @@ function ProductOverview({ productdata, productId }) {
           </div>
           <div>
             <p className="md:mb-[20px] sm:mb-[5px] mb-[30px] mt font-spoqa text-subText md:text-[16px] sm:text-[12px] text-[14px]">
-              {`택배배송 / ${
+              {` ${
+                productdata.shipping_method === "PARCEL"
+                  ? `택배배송`
+                  : `직접배송`
+              } / ${
                 productdata.shipping_fee === 0
                   ? `무료배송`
                   : productdata.shipping_fee.toLocaleString() + "원"

@@ -6,7 +6,7 @@ function Footer() {
       className={`w-full sm:h-[250px] h-[210px] ${styles.flexCenter} flex-col md:py-[30px] sm:py-[15px] py-[10px] bg-background`}
     >
       <div className="w-[88%] h-full flex flex-col justify-around">
-        <div className="flex flex-col md:flex-row md:items-center justify-between">
+        <div className="flex flex-col gap-[10px] md:flex-row md:items-center md:justify-between">
           <ul>
             <li className={`${styles.footerList}`}>호두샵 소개</li>
             <li className={`${styles.footerList}`}>이용약관</li>

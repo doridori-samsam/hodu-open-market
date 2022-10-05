@@ -1,15 +1,27 @@
 import MediumButton from "../../components/buttons/MediumButton";
 
-function PaymentSumUp({ productPrice, shippingFee, total }) {
+function PaymentSumUp({
+  productPrice,
+  shippingFee,
+  total,
+  consent,
+  clickConsent,
+  isPayActive,
+  clickPay,
+}) {
   return (
     <div className="w-[37%]">
       <h2 className="mb-[18px] font-spoqaMedium text-[24px]">최종결제 정보</h2>
-      <div className="h-[350px] border-[2px] rounded-[10px] border-primary">
+      <div
+        className={`h-[350px] border-[2px] rounded-[10px] ${
+          isPayActive ? "border-primary" : "border-disabled"
+        }`}
+      >
         <div className="flex flex-col p-[20px] gap-[10px] pb-[10px] border-b-[1px] border-disabled font-spoqa text-[16px]">
           <p className="flex justify-between">
             <span>- 상품금액</span>
             <span className="font-spoqaBold text-[18px]">
-              {productPrice.toLocaleString()}
+              {productPrice.toLocaleString()}{" "}
               <span className="font-spoqa text-[14px] text-subText">원</span>
             </span>
           </p>
@@ -37,14 +49,21 @@ function PaymentSumUp({ productPrice, shippingFee, total }) {
           <div>
             <button
               className={`mb-[3px] mr-[10px] w-[16px] h-[16px] align-middle ${
-                true ? "icon-check-fill-box" : "icon-check-box"
+                consent ? "icon-check-fill-box" : "icon-check-box"
               }`}
+              onClick={clickConsent}
             ></button>
             <span className="font-spoqa text-[15px]">
               주문 내용을 확인하였으며, 정보 제공 등에 동의합니다.
             </span>
           </div>
-          <MediumButton style="sm:text-[20px] w-[200px]">결제하기</MediumButton>
+          <MediumButton
+            isActive={isPayActive}
+            onClick={clickPay}
+            style="sm:text-[20px] w-[200px]"
+          >
+            결제하기
+          </MediumButton>
         </div>
       </div>
     </div>

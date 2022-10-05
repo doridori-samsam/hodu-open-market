@@ -1,8 +1,15 @@
 import SubButton from "../../components/buttons/SubButton";
-import MediumButton from "../../components/buttons/MediumButton";
 import styles from "../../style";
 
-function OrderInfoInput({ children }) {
+function OrderInfoInput({
+  children,
+  singleInput,
+  handlePhoneNumber,
+  variousInputOnBlur,
+  clickPostCode,
+  addressVal1,
+  addressVal2,
+}) {
   return (
     <section className={`${styles.sectionLayout} mt-[80px]`}>
       <h2 className="pb-[15px] border-b-[2px] border-disabled font-spoqaMedium text-[24px]">
@@ -14,54 +21,70 @@ function OrderInfoInput({ children }) {
         </p>
         <div className="flex items-center gap-[130px] border-b-[1px] border-disabled">
           <label
-            htmlFor="buyer-name"
+            htmlFor="buyer_name"
             className="basis-1/12 font-spoqa text-[16px]"
           >
             이름
           </label>
           <input
-            id="buyer-name"
             type="text"
+            id="buyer_name"
+            name="buyer_name"
+            onChange={singleInput}
             className={`${styles.inputBox} w-[330px] h-[40px] my-[8px] border-[1px] px-[10px]`}
           />
         </div>
         <div className="flex items-center gap-[130px] border-b-[1px] border-disabled">
           <label
-            htmlFor="buyer-phone"
+            htmlFor="buyer_phone"
             className="basis-1/12 font-spoqa text-[16px]"
           >
             휴대폰
           </label>
           <div className="flex items-center justify-between w-[330px]">
             <input
-              id="buyer-phone"
               type="text"
+              id="buyer_phone"
+              name="buyer_phone_number1"
+              maxLength={4}
+              onChange={handlePhoneNumber}
+              onBlur={variousInputOnBlur}
               className={`${styles.inputBox} w-[80px] h-[40px] my-[8px] border-[1px] px-[10px]`}
             />
             -
             <input
-              id="buyer-phone"
               type="text"
+              id="buyer_phone2"
+              name="buyer_phone_number2"
+              maxLength={4}
+              onChange={handlePhoneNumber}
+              onBlur={variousInputOnBlur}
               className={`${styles.inputBox} w-[100px] h-[40px] my-[8px] border-[1px] px-[10px]`}
             />
             -
             <input
-              id="buyer-phone"
               type="text"
+              id="buyer_phone3"
+              name="buyer_phone_number3"
+              maxLength={4}
+              onChange={handlePhoneNumber}
+              onBlur={variousInputOnBlur}
               className={`${styles.inputBox} w-[100px] h-[40px] my-[8px] border-[1px] px-[10px]`}
             />
           </div>
         </div>
         <div className="flex items-center gap-[130px] border-b-[1px] border-disabled">
           <label
-            htmlFor="buyer-email"
+            htmlFor="buyer_email"
             className="basis-1/12 font-spoqa text-[16px]"
           >
             이메일
           </label>
           <input
-            id="buyer-email"
             type="text"
+            id="buyer_email"
+            name="buyer_email"
+            onChange={singleInput}
             className={`${styles.inputBox} w-[330px] h-[40px] my-[8px] border-[1px] px-[10px]`}
           />
         </div>
@@ -72,40 +95,54 @@ function OrderInfoInput({ children }) {
         </p>
         <div className="flex items-center gap-[130px] border-b-[1px] border-disabled">
           <label
-            htmlFor="receiver-name"
+            htmlFor="receiver_name"
             className="basis-1/12 font-spoqa text-[16px]"
           >
             수령인
           </label>
           <input
-            id="receiver-name"
             type="text"
+            id="receiver_name"
+            name="receiver"
+            onChange={singleInput}
             className={`${styles.inputBox} w-[330px] h-[40px] my-[8px] border-[1px] px-[10px]`}
           />
         </div>
         <div className="flex items-center gap-[130px] border-b-[1px] border-disabled">
           <label
-            htmlFor="receiver-phone"
+            htmlFor="receiver_phone"
             className="basis-1/12 font-spoqa text-[16px]"
           >
             휴대폰
           </label>
           <div className="flex items-center justify-between w-[330px]">
             <input
-              id="receiver-phone"
               type="text"
+              id="receiver_phone"
+              name="receiver_phone_number1"
+              maxLength={4}
+              onChange={handlePhoneNumber}
+              onBlur={variousInputOnBlur}
               className={`${styles.inputBox} w-[80px] h-[40px] my-[8px] border-[1px] px-[10px]`}
             />
             -
             <input
-              id="receiver-phone"
               type="text"
+              id="receiver_phone2"
+              name="receiver_phone_number2"
+              maxLength={4}
+              onChange={handlePhoneNumber}
+              onBlur={variousInputOnBlur}
               className={`${styles.inputBox} w-[100px] h-[40px] my-[8px] border-[1px] px-[10px]`}
             />
             -
             <input
-              id="receiver-phone"
               type="text"
+              id="receiver_phone3"
+              name="receiver_phone_number3"
+              maxLength={4}
+              onChange={handlePhoneNumber}
+              onBlur={variousInputOnBlur}
               className={`${styles.inputBox} w-[100px] h-[40px] my-[8px] border-[1px] px-[10px]`}
             />
           </div>
@@ -120,22 +157,34 @@ function OrderInfoInput({ children }) {
           <div className="flex flex-col">
             <div className="flex items-center gap-[10px]">
               <input
-                id="address"
                 type="text"
+                id="address"
+                name="address1"
+                value={addressVal1}
+                readOnly
                 className={`${styles.inputBox} w-[170px] h-[40px] my-[8px] border-[1px] px-[10px]`}
               />
-              <SubButton style="w-[154px] h-[40px] font-spoqaMedium">
+              <SubButton
+                onClick={clickPostCode}
+                isActive="true"
+                style="w-[154px] h-[40px] font-spoqaMedium"
+              >
                 우편번호 조회
               </SubButton>
             </div>
             <input
-              id="address"
               type="text"
+              id="address2"
+              name="address2"
+              value={addressVal2}
+              readOnly
               className={`${styles.inputBox} w-[600px] h-[40px] border-[1px] px-[10px]`}
             />
             <input
-              id="address"
               type="text"
+              id="address3"
+              name="address"
+              onBlur={variousInputOnBlur}
               className={`${styles.inputBox} w-[600px] h-[40px] my-[8px] border-[1px] px-[10px]`}
             />
           </div>
@@ -148,8 +197,10 @@ function OrderInfoInput({ children }) {
             배송 메시지
           </label>
           <input
-            id="deliver-msg"
             type="text"
+            id="deliver-msg"
+            name="address_message"
+            onChange={singleInput}
             className={`${styles.inputBox} w-[600px] h-[40px] my-[8px] border-[1px] px-[10px]`}
           />
         </div>
@@ -161,9 +212,11 @@ function OrderInfoInput({ children }) {
             <div className="flex shrink-0 gap-[8px]">
               <input
                 type="radio"
-                name="pay-method"
                 id="card"
-                className="appearance-none align-bottom text-center border-[2px] border-disabled w-[20px] h-[20px] rounded-[20px] cursor-pointer checked:border-primary checked:after:content-[''] checked:after:inline-block checked:after:mb-[4.5px] checked:after:w-[12px] checked:after:h-[12px] checked:after:rounded-[12px] checked:after:bg-primary"
+                name="payment_method"
+                value="CARD"
+                onChange={singleInput}
+                className="appearance-none align-bottom text-center border-[2px] border-disabled w-[20px] h-[20px] rounded-[20px] cursor-pointer checked:border-primary checked:after:content-[''] checked:after:inline-block checked:after:align-[4.2px] checked:after:w-[12px] checked:after:h-[12px] checked:after:rounded-[12px] checked:after:bg-primary"
               />
               <label
                 htmlFor="card"
@@ -175,9 +228,11 @@ function OrderInfoInput({ children }) {
             <div className="flex shrink-0 gap-[8px]">
               <input
                 type="radio"
-                name="pay-method"
                 id="deposit"
-                className="appearance-none align-bottom text-center border-[2px] border-disabled w-[20px] h-[20px] rounded-[20px] cursor-pointer checked:border-primary checked:after:content-[''] checked:after:inline-block checked:after:mb-[4.5px] checked:after:w-[12px] checked:after:h-[12px] checked:after:rounded-[12px] checked:after:bg-primary"
+                name="payment_method"
+                value="DEPOSIT"
+                onChange={singleInput}
+                className="appearance-none align-bottom text-center border-[2px] border-disabled w-[20px] h-[20px] rounded-[20px] cursor-pointer checked:border-primary checked:after:content-[''] checked:after:inline-block checked:after:align-[4.2px] checked:after:w-[12px] checked:after:h-[12px] checked:after:rounded-[12px] checked:after:bg-primary"
               />
               <label
                 htmlFor="deposit"
@@ -189,9 +244,11 @@ function OrderInfoInput({ children }) {
             <div className="flex shrink-0 gap-[8px]">
               <input
                 type="radio"
-                name="pay-method"
                 id="mobile-pay"
-                className="appearance-none align-bottom text-center border-[2px] border-disabled w-[20px] h-[20px] rounded-[20px] cursor-pointer checked:border-primary checked:after:content-[''] checked:after:inline-block checked:after:mb-[4.5px] checked:after:w-[12px] checked:after:h-[12px] checked:after:rounded-[12px] checked:after:bg-primary"
+                name="payment_method"
+                value="PHONE_PAYMENT"
+                onChange={singleInput}
+                className="appearance-none align-bottom text-center border-[2px] border-disabled w-[20px] h-[20px] rounded-[20px] cursor-pointer checked:border-primary checked:after:content-[''] checked:after:inline-block checked:after:align-[4.3px] checked:after:w-[12px] checked:after:h-[12px] checked:after:rounded-[12px] checked:after:bg-primary"
               />
               <label
                 htmlFor="mobile-pay"
@@ -203,9 +260,11 @@ function OrderInfoInput({ children }) {
             <div className="flex shrink-0 gap-[8px]">
               <input
                 type="radio"
-                name="pay-method"
                 id="naver-pay"
-                className="appearance-none align-bottom text-center border-[2px] border-disabled w-[20px] h-[20px] rounded-[20px] cursor-pointer checked:border-primary checked:after:content-[''] checked:after:inline-block checked:after:mb-[4.5px] checked:after:w-[12px] checked:after:h-[12px] checked:after:rounded-[12px] checked:after:bg-primary"
+                name="payment_method"
+                value="NAVERPAY"
+                onChange={singleInput}
+                className="appearance-none align-bottom text-center border-[2px] border-disabled w-[20px] h-[20px] rounded-[20px] cursor-pointer checked:border-primary checked:after:content-[''] checked:after:inline-block checked:after:align-[4.3px] checked:after:w-[12px] checked:after:h-[12px] checked:after:rounded-[12px] checked:after:bg-primary"
               />
               <label
                 htmlFor="naver-pay"
@@ -217,9 +276,11 @@ function OrderInfoInput({ children }) {
             <div className="flex shrink-0 gap-[8px]">
               <input
                 type="radio"
-                name="pay-method"
                 id="kakao-pay"
-                className="appearance-none align-bottom text-center border-[2px] border-disabled w-[20px] h-[20px] rounded-[20px] cursor-pointer checked:border-primary checked:after:content-[''] checked:after:inline-block checked:after:mb-[4.5px] checked:after:w-[12px] checked:after:h-[12px] checked:after:rounded-[12px] checked:after:bg-primary"
+                name="payment_method"
+                value="KAKAOPAY"
+                onChange={singleInput}
+                className="appearance-none align-bottom text-center border-[2px] border-disabled w-[20px] h-[20px] rounded-[20px] cursor-pointer checked:border-primary checked:after:content-[''] checked:after:inline-block checked:after:align-[4.3px] checked:after:w-[12px] checked:after:h-[12px] checked:after:rounded-[12px] checked:after:bg-primary"
               />
               <label
                 htmlFor="kakao-pay"

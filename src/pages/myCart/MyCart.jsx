@@ -23,7 +23,7 @@ function MyCart() {
   /**주문 페이지에 넘겨질 선택된 상품 */
   const [selectedItems, setSelectedItems] = useState([]);
   const { data, status } = useQuery(["cart-list", token], getCartList, {
-    cacheTime: 300000,
+    cacheTime: 1000000,
     onSuccess: (data) => {
       setIsAllChecked(true);
       let checkObj = data.reduce((newObj, idx) => {
@@ -40,7 +40,7 @@ function MyCart() {
           return {
             queryKey: ["info", item.product_id],
             queryFn: () => getDetails(item.product_id),
-            cacheTime: 300000,
+            cacheTime: 1000000,
           };
         })
       : []
@@ -156,7 +156,7 @@ function MyCart() {
 
   console.log(data, "장바구니 데이터");
   console.log(listDetails, "상품 상세정보");
-  console.log(selectedItems, "선택된 상품");
+
   return (
     <>
       <NavBar />

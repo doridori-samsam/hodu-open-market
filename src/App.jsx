@@ -37,7 +37,7 @@ function Main() {
                   ) : (
                     <>
                       <Route path="/cart" element={<NotFound />}></Route>
-                      <Route ptah="/order" element={<NotFound />}></Route>
+                      <Route path="/order" element={<NotFound />}></Route>
                     </>
                   )}
                   {userType === "SELLER" ? (
@@ -78,6 +78,7 @@ function Main() {
                 <>
                   <Route path="/" element={<Home />}></Route>
                   <Route path="/cart" element={<NotFound />}></Route>
+                  <Route path="/order" element={<NotFound />}></Route>
                   <Route path="/login" element={<LogIn />}></Route>
                   <Route path="/join" element={<SignUp />}></Route>
                 </>
