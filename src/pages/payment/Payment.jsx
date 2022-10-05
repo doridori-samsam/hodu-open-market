@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useMutation } from "react-query";
 import UserContext from "../../context/UserContext";
 import axios from "axios";
@@ -8,19 +8,20 @@ import OrderList from "./OrderList";
 import OrderInfoInput from "./OrderInfoInput";
 import PaymentSumUp from "./PaymentSumUp";
 import PostCodeModal from "../../components/Modal/PostCodeModal";
+import PaymentConfirm from "./PaymentConfirm";
 import styles from "../../style";
 import { useEffect } from "react";
 
 function Payment() {
   const url = "https://openmarket.weniv.co.kr/";
   const { token } = useContext(UserContext);
-  console.log(token);
+  const navigate = useNavigate();
   /**이전 장바구니 페이지에서 선택한 아이템 정보 가져오기 */
   const location = useLocation();
   const selectedItems = location.state.items;
   const itemPrice = location.state.totalPrice;
   const shippingFee = location.state.shippingFee;
-
+  const orderType = location.state.orderKind;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [zipCode, setZipCode] = useState("");
   const [mainAddress, setMainAddress] = useState("");
@@ -33,7 +34,7 @@ function Payment() {
   });
   const [deliveryData, setDeliveryData] = useState({
     total_price: itemPrice + shippingFee,
-    order_kind: "cart_order",
+    order_kind: orderType,
     receiver: "",
     receiver_phone_number: "",
     address: "",
@@ -95,7 +96,6 @@ function Payment() {
     return passed && consent;
   }
 
-  console.log(deliveryData);
   /**결제 mutate 함수 */
   const purchaseItems = useMutation(
     () =>
@@ -105,7 +105,9 @@ function Payment() {
         },
       }),
     {
-      onSuccess: (data) => console.log(data, "성공"),
+      onSuccess: () => {
+        return <PaymentConfirm />;
+      },
       onError: (error) => console.error(error),
     }
   );

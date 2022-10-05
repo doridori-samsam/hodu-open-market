@@ -1,4 +1,4 @@
-import { useState, useContext, useRef } from "react";
+import { useState, useContext } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import axios from "axios";
 import UserContext from "../../context/UserContext";
@@ -10,13 +10,17 @@ import DeleteCheckModal from "../../components/Modal/DeleteCheckModal";
 import styles from "../../style";
 
 function MyCartList({
+  cartInfo,
   itemInfo,
   defaultQty,
   index,
   itemId,
   productId,
   children,
+  stockActive,
+  clickSingleOrder,
 }) {
+  console.log(cartInfo, "카트리스트에서 받아온것");
   const url = "https://openmarket.weniv.co.kr/";
   const { token } = useContext(UserContext);
   const queryClient = useQueryClient();
@@ -112,7 +116,13 @@ function MyCartList({
           <p className="font-spoqaBold text-[18px] text-accentText">
             {(defaultQty * itemInfo[index].data.price).toLocaleString()}원
           </p>
-          <SubButton style="w-[130px] h-[40px] font-spoqaMedium text-[16px]">
+          <SubButton
+            isActive={stockActive}
+            onClick={clickSingleOrder}
+            style={`w-[130px] h-[40px] font-spoqaMedium text-[16px] ${
+              stockActive ? "bg-primary" : "bg-disabled"
+            }`}
+          >
             주문하기
           </SubButton>
         </div>

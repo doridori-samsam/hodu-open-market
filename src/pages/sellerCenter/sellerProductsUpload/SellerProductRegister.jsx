@@ -21,7 +21,7 @@ function SellerProductRegister() {
     shipping_method: "",
     shipping_fee: "",
     stock: "",
-    products_info: "",
+    product_info: "",
     token: token,
   });
 

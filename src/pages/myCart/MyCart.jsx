@@ -154,6 +154,18 @@ function MyCart() {
     return result;
   }
 
+  /**단일 상품 주문하기 버튼 함수 */
+  function singleItemOrder(item, idx) {
+    navigate("/order", {
+      state: {
+        items: [item],
+        totalPrice: listDetails[idx].data.price * item.quantity,
+        shippingFee: listDetails[idx].data.shipping_fee,
+        orderKind: "cart_one_order",
+      },
+    });
+  }
+
   console.log(data, "장바구니 데이터");
   console.log(listDetails, "상품 상세정보");
 
@@ -188,6 +200,11 @@ function MyCart() {
                       itemInfo={listDetails}
                       defaultQty={item.quantity}
                       index={idx}
+                      cartInfo={item}
+                      stockActive={item.is_active}
+                      clickSingleOrder={() => {
+                        singleItemOrder(item, idx);
+                      }}
                     >
                       <SelectButton
                         value={idx}
@@ -212,6 +229,7 @@ function MyCart() {
                       items: selectedItems,
                       totalPrice: totalPrice,
                       shippingFee: shippingFee,
+                      orderKind: "cart_order",
                     },
                   })
                 }
