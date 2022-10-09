@@ -20,6 +20,7 @@ function MyCart() {
   const [shippingFee, setShippingFee] = useState(0);
   const [checkList, setCheckList] = useState({});
   const [isAllChecked, setIsAllChecked] = useState(true);
+
   /**주문 페이지에 넘겨질 선택된 상품 */
   const [selectedItems, setSelectedItems] = useState([]);
   const { data, status } = useQuery(["cart-list", token], getCartList, {

@@ -1,5 +1,6 @@
 import { useState, useContext } from "react";
-import { useQueryClient, useMutation, QueryCache, useQuery } from "react-query";
+import { useNavigate } from "react-router-dom";
+import { useQueryClient, useMutation, useQuery } from "react-query";
 import axios from "axios";
 import UserContext from "../../context/UserContext";
 import OrderQtyButton from "../../components/buttons/OrderQtyButton";
@@ -10,6 +11,7 @@ import styles from "../../style";
 function ProductOverview({ productdata, productId }) {
   const url = "https://openmarket.weniv.co.kr/";
   const { token, userType } = useContext(UserContext);
+  const navigate = useNavigate();
 
   /**기존에 장바구니에 수량 있는지 check하는 state(나중에 수정 필요) */
   const [validUser, setValidUser] = useState(Boolean(token));
@@ -67,6 +69,19 @@ function ProductOverview({ productdata, productId }) {
       );
       return res;
     }
+  }
+
+  /**바로 주문하기 클릭 버튼 */
+  function clickOrderItem() {
+    navigate("/order", {
+      state: {
+        items: [{ quantity: quantityNum }],
+        totalPrice: productdata.price * quantityNum,
+        shippingFee: productdata.shipping_fee,
+        orderKind: "direct_order",
+        product: productdata,
+      },
+    });
   }
 
   return (
@@ -137,6 +152,7 @@ function ProductOverview({ productdata, productId }) {
             <div className="flex gap-[14px]">
               <button
                 disabled={userType === "SELLER"}
+                onClick={clickOrderItem}
                 className={`md:basis-3/4 basis-1/2 md:h-[60px] sl:h-[50px] sm:h-[40px] h-[50px] rounded-[5px] ${
                   userType === "SELLER" ? "bg-subText" : "bg-primary"
                 } font-spoqaBold sl:text-[18px] sm:text-[14px] text-[16px] text-white`}

@@ -11,7 +11,6 @@ function Products() {
 
   async function getProduct() {
     const res = await axios.get(url + "products/");
-    console.log(res.data);
     return res.data.results;
   }
 

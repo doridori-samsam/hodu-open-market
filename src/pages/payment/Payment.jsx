@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import UserContext from "../../context/UserContext";
 import axios from "axios";
 import NavBar from "../../components/navBar/NavBar";
@@ -22,6 +22,11 @@ function Payment() {
   const itemPrice = location.state.totalPrice;
   const shippingFee = location.state.shippingFee;
   const orderType = location.state.orderKind;
+  const queryClient = useQueryClient();
+  const cartItemDetail = selectedItems.map((data, idx) =>
+    queryClient.getQueriesData(["info", data.product_id])
+  );
+  const productDetail = location.state.product;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [zipCode, setZipCode] = useState("");
   const [mainAddress, setMainAddress] = useState("");
@@ -32,6 +37,7 @@ function Payment() {
     buyer_phone_number: "",
     buyer_email: "",
   });
+  /**주문시 api post에 들어가는 data */
   const [deliveryData, setDeliveryData] = useState({
     total_price: itemPrice + shippingFee,
     order_kind: orderType,
@@ -97,20 +103,39 @@ function Payment() {
   }
 
   /**결제 mutate 함수 */
-  const purchaseItems = useMutation(
-    () =>
-      axios.post(url + "order/", deliveryData, {
+  const purchaseItems = useMutation(sendOrderData, {
+    onSuccess: () => {
+      return <PaymentConfirm />;
+    },
+    onError: (error) => console.error(error),
+    onSettled: () => console.log("성공"),
+  });
+
+  async function sendOrderData() {
+    if (orderType === "direct_order") {
+      const res = await axios.post(
+        url + "order/",
+        {
+          ...deliveryData,
+          product_id: productDetail.product_id,
+          quantity: selectedItems[0].quantity,
+        },
+        {
+          headers: {
+            Authorization: `JWT ${token}`,
+          },
+        }
+      );
+      console.log(res);
+    } else {
+      const res = await axios.post(url + "order/", deliveryData, {
         headers: {
           Authorization: `JWT ${token}`,
         },
-      }),
-    {
-      onSuccess: () => {
-        return <PaymentConfirm />;
-      },
-      onError: (error) => console.error(error),
+      });
     }
-  );
+  }
+
   useEffect(() => {
     function combineVariousValue() {
       setDeliveryData({
@@ -150,7 +175,11 @@ function Payment() {
                 <OrderList
                   key={idx}
                   quantity={item.quantity}
-                  productId={item.product_id}
+                  productData={
+                    orderType === "direct_order"
+                      ? productDetail
+                      : cartItemDetail[idx][0][1]
+                  }
                 />
               );
             })}

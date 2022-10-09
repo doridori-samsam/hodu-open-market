@@ -1,10 +1,4 @@
-import { useQueryClient } from "react-query";
-import NotFound from "../../components/NotFound";
-
-function OrderList({ productId, quantity }) {
-  const queryClient = useQueryClient();
-  const productData = queryClient.getQueryData(["info", productId]);
-
+function OrderList({ productData, quantity }) {
   return (
     <li className="grid grid-cols-[minmax(30%,_45%)_1fr_1fr_1fr] items-center w-full h-[120px] border-b-[1px] border-disabled">
       <div className="flex items-center gap-[30px]">
@@ -23,7 +17,9 @@ function OrderList({ productId, quantity }) {
           <span className="text-[14px] text-subText">{`수량: ${quantity}개`}</span>
         </div>
       </div>
-      <span className="text-center">-</span>
+      <span className="text-center font-spoqa text-[18px] text-subText ">
+        -
+      </span>
       <span className="text-center font-spoqa text-[18px] text-subText">
         {productData.shipping_fee === 0
           ? "무료배송"

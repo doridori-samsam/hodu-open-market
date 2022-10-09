@@ -3,7 +3,6 @@ import { useMutation, useQueryClient } from "react-query";
 import axios from "axios";
 import UserContext from "../../context/UserContext";
 import OrderQtyButton from "../../components/buttons/OrderQtyButton";
-import SelectButton from "../../components/buttons/SelectButton";
 import SubButton from "../../components/buttons/SubButton";
 import AdjustQtyModal from "../../components/Modal/AdjustQtyModal";
 import DeleteCheckModal from "../../components/Modal/DeleteCheckModal";
@@ -20,7 +19,6 @@ function MyCartList({
   stockActive,
   clickSingleOrder,
 }) {
-  console.log(cartInfo, "카트리스트에서 받아온것");
   const url = "https://openmarket.weniv.co.kr/";
   const { token } = useContext(UserContext);
   const queryClient = useQueryClient();
