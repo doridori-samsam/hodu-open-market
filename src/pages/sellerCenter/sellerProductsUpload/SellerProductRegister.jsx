@@ -1,6 +1,6 @@
 import { useState, useRef, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { useMutation } from "react-query";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useMutation, useQueryClient } from "react-query";
 import axios from "axios";
 import UserContext from "../../../context/UserContext";
 import SellerCenterHeader from "../SellerCenterHeader";
@@ -14,6 +14,7 @@ import styles from "../../../style";
 function SellerProductRegister() {
   const url = "https://openmarket.weniv.co.kr/";
   const { token } = useContext(UserContext);
+  const navigate = useNavigate();
   const [productInfo, setProductInfo] = useState({
     product_name: "",
     image: "",
@@ -25,36 +26,34 @@ function SellerProductRegister() {
     token: token,
   });
 
+  console.log(productInfo);
   const [imgPreview, setImgPreview] = useState("");
   const [nameInputFocused, setNameInputFocused] = useState(false);
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
-  const imgRef = useRef();
   const uploadProduct = useMutation(postProductInfo);
 
   async function postProductInfo() {
     const res = await axios.post(url + "products/", productInfo, {
-      header: {
+      headers: {
         Authorization: `JWT ${token}`,
+        "Content-Type": "multipart/form-data",
       },
     });
-    console.log(res);
+    return res;
   }
 
   /**이미지 파일 업로드 함수 */
   function handleImgInput(e) {
-    let loadImg = e.target.files;
     const formData = new FormData();
+    let loadImg = e.target.files;
     formData.append("image", loadImg[0]);
     preview(loadImg);
-    console.log(formData.get("image"), "폼데이터");
     setProductInfo({
       ...productInfo,
-      image: formData,
+      image: formData.get("image"),
     });
-    getImgString(formData);
   }
 
-  console.log(productInfo);
   /**이미지 파일 미리보기 */
   function preview(loadImg) {
     const reader = new FileReader();
@@ -64,65 +63,31 @@ function SellerProductRegister() {
     };
   }
 
-  async function getImgString(formData) {
-    try {
-      const res = await axios.post(url + "products/", productInfo, {
-        headers: {
-          Authorization: `JWT ${token}`,
-        },
-      });
-      console.log(res);
-    } catch (error) {
-      console.error(error);
+  /**상품 정보 set input handle 함수 */
+  function setInputValues(e) {
+    const { name, value } = e.target;
+    setProductInfo({ ...productInfo, [name]: value });
+    if (name === "product_name") {
+      setNameInputFocused(false);
     }
   }
 
-  console.log(productInfo);
-  /**상품명 input handle 함수 */
-  function handleProductNameInput(e) {
-    if (e.target.value) {
-      setProductInfo({ ...productInfo, product_name: e.target.value });
-    } else {
-      setProductInfo({ ...productInfo, product_name: "" });
-    }
-  }
-
-  /**판매가 input handle 함수 */
+  /**가격 표시 input handle 함수 */
   function handlePriceInput(e) {
+    const { name, value } = e.target;
     e.target.value = e.target.value.replace(/[^0-9]/g, ""); // 입력값이 숫자가 아니면 공백
     e.target.value = e.target.value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     setProductInfo({
       ...productInfo,
-      price: Number(e.target.value.replace(",", "")),
+      [name]: parseInt(value.replace(",", "")),
     });
   }
 
-  /**배송방법 value 가져오기 함수 */
-  function getShippingMethod(e) {
-    if (e.target.checked) {
-      setProductInfo({ ...productInfo, shipping_method: e.target.value });
-    }
-  }
-
-  /**기본 배송비 input handle 함수 */
-  function handleShippingFeeInput(e) {
-    e.target.value = e.target.value.replace(/[^0-9]/g, "");
-    e.target.value = e.target.value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    setProductInfo({
-      ...productInfo,
-      shipping_fee: Number(e.target.value.replace(",", "")),
-    });
-  }
-
-  /**재고 input handle 함수 */
+  /**재고 input 입력양식 handle 함수 */
   function handleStockInput(e) {
+    const { name, value } = e.target;
     e.target.value = e.target.value.replace(/[^0-9]/g, "");
-    setProductInfo({ ...productInfo, stock: Number(e.target.value) });
-  }
-
-  /**제품 상세 정보 handle 함수 */
-  function handleProductInfoEdit(cont) {
-    setProductInfo({ ...productInfo, products_info: cont });
+    setProductInfo({ ...productInfo, [name]: parseInt(value, 10) });
   }
 
   /**저장 버튼 activate 함수 */
@@ -130,6 +95,9 @@ function SellerProductRegister() {
     let infoList = Object.values(productInfo);
     let result;
     result = infoList.reduce((prev, cur) => {
+      if (cur === 0) {
+        return (cur = true);
+      }
       return prev && cur;
     });
     return result;
@@ -141,13 +109,16 @@ function SellerProductRegister() {
     setIsCancelModalOpen(true);
   }
 
-  /**이미지 파일 submit 함수 */
+  /**상품 정보 submit 함수 */
   function clickSaveButton(e) {
     e.preventDefault();
-    uploadProduct.mutate;
+    uploadProduct.mutate(postProductInfo, {
+      onSuccess: () => {
+        navigate("/seller_center");
+      },
+    });
   }
 
-  console.log(uploadProduct);
   return (
     <>
       <SellerCenterHeader />
@@ -159,7 +130,12 @@ function SellerProductRegister() {
           className={`${styles.sectionLayout} flex gap-[50px] mt-[38px]`}
         >
           <UploadWarning />
-          <form method="post" id="product-form" className="w-full">
+          <form
+            method="post"
+            id="product-form"
+            className="w-full"
+            onSubmit={clickSaveButton}
+          >
             <div className="flex gap-[30px] w-full">
               <div>
                 <p className="font-spoqa text-subText text-[16px] ">
@@ -181,7 +157,6 @@ function SellerProductRegister() {
                     id="upload-img"
                     accept="image/*"
                     onChange={handleImgInput}
-                    ref={imgRef}
                     className="hidden"
                   ></input>
                 </div>
@@ -199,13 +174,12 @@ function SellerProductRegister() {
                   } ${nameInputFocused && "border-primary"}`}
                 >
                   <input
-                    id="item-name"
-                    type="text"
+                    required
                     maxLength="20"
-                    defaultValue={productInfo.product_name}
-                    onChange={handleProductNameInput}
+                    id="item-name"
+                    name="product_name"
                     onFocus={() => setNameInputFocused(true)}
-                    onBlur={() => setNameInputFocused(false)}
+                    onChange={setInputValues}
                     className="w-[93%] h-full outline-none"
                   ></input>
                   <span className="text-[14px] text-disabled">{`${productInfo.product_name.length}/20`}</span>
@@ -218,10 +192,11 @@ function SellerProductRegister() {
                 </label>
                 <div>
                   <input
-                    id="item-price"
                     type="text"
-                    defaultValue={productInfo.price}
+                    id="item-price"
+                    name="price"
                     onChange={handlePriceInput}
+                    required
                     maxLength="10"
                     className={`w-[160px] h-[50px] px-[12px] border-y-[1px] border-l-[1px] rounded-l-[5px] ${styles.inputBox}`}
                   ></input>
@@ -237,11 +212,11 @@ function SellerProductRegister() {
                 <div>
                   <div className="inline-block mr-[10px]">
                     <input
-                      id="parcel"
-                      name="deliver-method"
-                      value="PARCEL"
                       type="radio"
-                      onClick={getShippingMethod}
+                      id="parcel"
+                      name="shipping_method"
+                      value="PARCEL"
+                      onClick={setInputValues}
                       className="peer hidden"
                     ></input>
                     <label
@@ -253,11 +228,11 @@ function SellerProductRegister() {
                   </div>
                   <div className="inline-block">
                     <input
-                      id="delivery"
-                      name="deliver-method"
-                      value="DELIVERY"
                       type="radio"
-                      onClick={getShippingMethod}
+                      id="delivery"
+                      name="shipping_method"
+                      value="DELIVERY"
+                      onClick={setInputValues}
                       className="peer hidden"
                     ></input>
                     <label
@@ -276,11 +251,12 @@ function SellerProductRegister() {
                 </label>
                 <div>
                   <input
-                    id="shipping-fee"
                     type="text"
+                    required
                     maxLength="10"
-                    defaultValue={productInfo.shipping_fee}
-                    onChange={handleShippingFeeInput}
+                    id="shipping-fee"
+                    name="shipping_fee"
+                    onChange={handlePriceInput}
                     className={`w-[160px] h-[50px] px-[12px] border-y-[1px] border-l-[1px] rounded-l-[5px] ${styles.inputBox}`}
                   ></input>
                   <div
@@ -297,10 +273,11 @@ function SellerProductRegister() {
                 </label>
                 <div>
                   <input
-                    id="stock"
                     type="text"
+                    required
                     maxLength="5"
-                    defaultValue={productInfo.stock}
+                    id="stock"
+                    name="stock"
                     onChange={handleStockInput}
                     className={`w-[160px] h-[50px] px-[12px] border-y-[1px] border-l-[1px] rounded-l-[5px] ${styles.inputBox}`}
                   ></input>
@@ -312,7 +289,7 @@ function SellerProductRegister() {
                 </div>
               </div>
             </div>
-            <EditorArea passContent={handleProductInfoEdit} />
+            <EditorArea handleEditorArea={setInputValues} />
             <div className="w-full mt-[50px] text-right">
               <WhiteButton
                 style={"w-[200px] h-[50px] text-[18px] mr-[14px]"}
@@ -322,8 +299,7 @@ function SellerProductRegister() {
               </WhiteButton>
               <SubButton
                 isActive={saveButtonActivate()}
-                type="button"
-                onClick={postProductInfo}
+                type="submit"
                 style={`w-[200px] h-[50px] font-spoqaBold text-[18px] ${
                   saveButtonActivate() ? "bg-primary" : "bg-disabled"
                 }`}

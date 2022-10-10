@@ -105,10 +105,11 @@ function Payment() {
   /**결제 mutate 함수 */
   const purchaseItems = useMutation(sendOrderData, {
     onSuccess: () => {
+      console.log("성공");
       return <PaymentConfirm />;
     },
     onError: (error) => console.error(error),
-    onSettled: () => console.log("성공"),
+    onSettled: () => console.log("settle성공"),
   });
 
   async function sendOrderData() {
@@ -126,13 +127,14 @@ function Payment() {
           },
         }
       );
-      console.log(res);
+      return res;
     } else {
       const res = await axios.post(url + "order/", deliveryData, {
         headers: {
           Authorization: `JWT ${token}`,
         },
       });
+      return res;
     }
   }
 

@@ -1,13 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ProductDetailTabButton from "../../components/buttons/ProductDetailTabButton";
 import styles from "../../style";
 
-function ProductMoreInfo() {
+function ProductMoreInfo({ detailInfo }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [tabContent, setTabContent] = useState([
     {
       tabTitle: "상세 페이지",
-      tabContent: "상세 페이지 내용",
+      tabContent: detailInfo,
     },
     {
       tabTitle: "리뷰",
@@ -27,6 +27,11 @@ function ProductMoreInfo() {
     setActiveIndex(index);
   }
 
+  useEffect(() => {
+    let copiedArr = [...tabContent];
+    copiedArr[0].tabContent = detailInfo;
+    setTabContent(copiedArr);
+  }, [detailInfo]);
   return (
     <section
       className={`${styles.flexCenter} mt-[100px] flex-col md:w-[85%] w-[95%]`}
@@ -36,7 +41,9 @@ function ProductMoreInfo() {
         content={tabContent}
         active={activeIndex}
       />
-      <article>{tabContent[activeIndex].tabContent}</article>
+      <article className="font-spoqa mt-[50px]">
+        {tabContent[activeIndex].tabContent}
+      </article>
     </section>
   );
 }

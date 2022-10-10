@@ -86,7 +86,7 @@ function SellerCenter() {
             </span>
           </h1>
           <SubButton
-            isActive={true}
+            isActive="true"
             onClick={() => navigate("upload")}
             style={
               "ss:w-[168px] ss:h-[54px] w-[50px] h-[50px] ss:rounded-[5px] rounded-[50px] font-spoqaMedium ss:text-[18px] text-[12px]"

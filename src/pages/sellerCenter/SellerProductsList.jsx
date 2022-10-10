@@ -77,7 +77,14 @@ function SellerProductsList({ products }) {
               </span>
               <div className="basis-[19%] flex gap-[40px] ">
                 <SubButton
-                  onClick={() => navigate(`upload/${item.product_id}`)}
+                  isActive="true"
+                  onClick={() =>
+                    navigate(`upload/${item.product_id}`, {
+                      state: {
+                        modifyData: item,
+                      },
+                    })
+                  }
                   style={"w-[80px] h-[40px]"}
                 >
                   수정
