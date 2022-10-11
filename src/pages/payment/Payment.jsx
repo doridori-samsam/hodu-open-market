@@ -105,11 +105,10 @@ function Payment() {
   /**결제 mutate 함수 */
   const purchaseItems = useMutation(sendOrderData, {
     onSuccess: () => {
-      console.log("성공");
+      //console.log("성공");
       return <PaymentConfirm />;
     },
     onError: (error) => console.error(error),
-    onSettled: () => console.log("settle성공"),
   });
 
   async function sendOrderData() {
@@ -159,6 +158,10 @@ function Payment() {
     combineVariousValue();
   }, [variousValue]);
 
+  if (purchaseItems.isSuccess) {
+    console.log("성공");
+    return <PaymentConfirm />;
+  }
   return (
     <>
       <NavBar />

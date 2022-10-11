@@ -29,6 +29,7 @@ function SellerProductRegister() {
   });
 
   const myImageUrl = modifyProduct.image;
+  console.log(myImageUrl);
   const getBlobFromUrl = (myImageUrl) => {
     return new Promise((resolve, reject) => {
       let request = new XMLHttpRequest();
@@ -42,6 +43,7 @@ function SellerProductRegister() {
     });
   };
   const getDataFromBlob = (myBlob) => {
+    console.log(myBlob);
     return new Promise((resolve, reject) => {
       let reader = new FileReader();
       reader.onload = () => {
@@ -57,13 +59,17 @@ function SellerProductRegister() {
       let myBlob = await getBlobFromUrl(myImageUrl);
       console.log(myBlob);
       let myImageData = await getDataFromBlob(myBlob);
-      console.log(myImageData);
+      console.log(myImageData, "데이터");
+      const formData = new FormData();
+      formData.append("image", myImageData);
+      console.log(formData.get("image"));
       return myImageData;
     } catch (err) {
       console.log(err);
       return null;
     }
   };
+
   console.log(convertUrlToImageData());
   console.log(modifyProduct.image);
   const [imgPreview, setImgPreview] = useState(modifyProduct.image);

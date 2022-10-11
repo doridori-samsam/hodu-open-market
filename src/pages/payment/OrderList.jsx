@@ -8,12 +8,12 @@ function OrderList({ productData, quantity }) {
           className="w-[100px] h-[100px] rounded-[10px] object-cover"
         />
         <div className="flex flex-col justify-center font-spoqa gap-[10px]">
-          <p className="text-[14px] text-subText">
-            {productData.store_name}
+          <div className="text-[14px] text-subText">
+            <p>{productData.store_name}</p>
             <p className="text-[18px] text-mainText">
               {productData.product_name}
             </p>
-          </p>
+          </div>
           <span className="text-[14px] text-subText">{`수량: ${quantity}개`}</span>
         </div>
       </div>
