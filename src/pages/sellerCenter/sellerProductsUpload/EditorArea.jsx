@@ -10,7 +10,7 @@ function EditorArea({ handleEditorArea, defaultValue }) {
         name="product_info"
         defaultValue={defaultValue}
         onChange={handleEditorArea}
-        className="w-full h-[400px] mt-[10px] p-[30px] border-[1px] outline-subText border-disabled rounded-[5px] bg-[#f1f0f0] font-spoqa placeholder:text-center placeholder:leading-[335px] placeholder:text-[48px] placeholder:text-disabled"
+        className="w-full sm:h-[400px] h-[320px] mt-[10px] p-[30px] overflow-hidden border-[1px] outline-subText border-disabled rounded-[5px] bg-[#f1f0f0] font-spoqa placeholder:text-center placeholder:sm:leading-[335px] placeholder:leading-[240px] placeholder:ss:text-[48px] placeholder:text-[30px] placeholder:text-disabled"
       ></textarea>
     </div>
   );

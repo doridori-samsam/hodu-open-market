@@ -2,7 +2,7 @@ import React from "react";
 
 function UploadWarning() {
   return (
-    <div>
+    <div className="sl:inline-block hidden">
       <span className="font-spoqaMedium text-accentText text-[16px]">
         *상품 등록 주의사항
       </span>

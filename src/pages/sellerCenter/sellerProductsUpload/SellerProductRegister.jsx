@@ -26,7 +26,6 @@ function SellerProductRegister() {
     token: token,
   });
 
-  console.log(productInfo);
   const [imgPreview, setImgPreview] = useState("");
   const [nameInputFocused, setNameInputFocused] = useState(false);
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
@@ -124,7 +123,9 @@ function SellerProductRegister() {
       <SellerCenterHeader />
       <main className={`${styles.mainLayout} flex-col items-center`}>
         <div className="flex md:w-[85%] w-[95%] justify-between">
-          <h1 className="font-spoqaBold text-[36px]">상품 등록</h1>
+          <h1 className="font-spoqaBold sl:text-[36px] ss:text-[30px] text-[26px]">
+            상품 등록
+          </h1>
         </div>
         <section
           className={`${styles.sectionLayout} flex gap-[50px] mt-[38px]`}
@@ -136,7 +137,7 @@ function SellerProductRegister() {
             className="w-full"
             onSubmit={clickSaveButton}
           >
-            <div className="flex gap-[30px] w-full">
+            <div className="flex md:flex-row flex-col gap-[30px] w-full">
               <div>
                 <p className="font-spoqa text-subText text-[16px] ">
                   상품 이미지
@@ -147,7 +148,7 @@ function SellerProductRegister() {
                       ? { backgroundImage: `url(${imgPreview})` }
                       : { backgroundColor: "#c4c4c4" }
                   }
-                  className={`w-[430px] h-[430px] mt-[10px] flex justify-center items-center bg-cover bg-center`}
+                  className={`sl:w-[430px] w-full ss:h-[430px] h-[280px] mt-[10px] flex justify-center items-center bg-cover bg-center`}
                 >
                   <label htmlFor="upload-img">
                     <div className="icon-icon-img w-[50px] h-[50px] cursor-pointer"></div>
@@ -161,7 +162,7 @@ function SellerProductRegister() {
                   ></input>
                 </div>
               </div>
-              <div className="flex flex-col justify-between w-full">
+              <div className="flex flex-col md:gap-0 gap-[15px] justify-between w-full">
                 <label
                   htmlFor="item-name"
                   className="font-spoqa text-subText text-[16px]"
@@ -209,8 +210,8 @@ function SellerProductRegister() {
                 <p className="inline font-spoqa text-subText text-[16px]">
                   배송방법
                 </p>
-                <div>
-                  <div className="inline-block mr-[10px]">
+                <div className="flex w-full ss:justify-start justify-between">
+                  <div className="ss:basis-0 basis-1/2 inline-block mr-[10px]">
                     <input
                       type="radio"
                       id="parcel"
@@ -221,12 +222,12 @@ function SellerProductRegister() {
                     ></input>
                     <label
                       htmlFor="parcel"
-                      className="flex items-center justify-center w-[210px] h-[50px] rounded-[5px] border-[1px] border-disabled font-spoqaMedium text-subText text-[16px] cursor-pointer peer-checked:bg-primary peer-checked:border-none peer-checked:text-white"
+                      className="flex items-center justify-center ss:w-[210px] w-full h-[50px] rounded-[5px] border-[1px] border-disabled font-spoqaMedium text-subText ss:text-[16px] text-[14px] cursor-pointer peer-checked:bg-primary peer-checked:border-none peer-checked:text-white"
                     >
                       택배, 소포, 등기
                     </label>
                   </div>
-                  <div className="inline-block">
+                  <div className="ss:basis-0 basis-1/2 inline-block">
                     <input
                       type="radio"
                       id="delivery"
@@ -237,7 +238,7 @@ function SellerProductRegister() {
                     ></input>
                     <label
                       htmlFor="delivery"
-                      className="flex items-center justify-center w-[210px] h-[50px] rounded-[5px] border-[1px] border-disabled font-spoqaMedium text-subText text-[16px] cursor-pointer peer-checked:bg-primary peer-checked:border-none peer-checked:text-white"
+                      className="flex items-center justify-center ss:w-[210px] w-full h-[50px] rounded-[5px] border-[1px] border-disabled font-spoqaMedium text-subText ss:text-[16px] text-[14px] cursor-pointer peer-checked:bg-primary peer-checked:border-none peer-checked:text-white"
                     >
                       직접배송(화물배달)
                     </label>
@@ -290,7 +291,7 @@ function SellerProductRegister() {
               </div>
             </div>
             <EditorArea handleEditorArea={setInputValues} />
-            <div className="w-full mt-[50px] text-right">
+            <div className="w-full mt-[50px] flex justify-end">
               <WhiteButton
                 style={"w-[200px] h-[50px] text-[18px] mr-[14px]"}
                 onClick={openCancelModal}
@@ -313,7 +314,7 @@ function SellerProductRegister() {
       <CancelProductUploadModal
         open={isCancelModalOpen}
         close={() => setIsCancelModalOpen(false)}
-        clickConfirm={() => window.location.reload()}
+        clickConfirm={() => navigate(-1)}
       />
     </>
   );

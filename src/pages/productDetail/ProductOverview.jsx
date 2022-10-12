@@ -88,13 +88,15 @@ function ProductOverview({ productdata, productId }) {
     <>
       <section
         key={productdata.product_id}
-        className={`${styles.flexCenter} h-full sm:flex-row flex-col md:w-[85%] w-[95%] md:gap-[60px] gap-[50px] border-[1px] border-purple-600`}
+        className={`${styles.flexCenter} h-full sm:flex-row flex-col md:w-[85%] w-[95%] md:gap-[60px] gap-[50px]`}
       >
-        <img
-          src={productdata.image}
-          alt="상품 이미지"
-          className="sm:basis-1/2 basis-2/5 md:w-[530px] sl:w-[380px] sm:w-[320px] md:h-[530px] sl:h-[380px] sm:h-[320px] w-[280px] h-[300px] object-cover"
-        />
+        <div className="sm:basis-1/2 basis-2/5 w-[100%] h-[100%] bg-contain">
+          <img
+            src={productdata.image}
+            alt="상품 이미지"
+            className="md:w-[500px] sl:w-[380px] sm:w-[320px] md:h-[530px] sl:h-[380px] sm:h-[320px] w-full h-[330px]"
+          />
+        </div>
         <div className="sm:basis-1/2 basis-3/5 w-full md:h-[530px] sl:h-[380px] sm:h-[320px] h-[230px] flex flex-col justify-between">
           <div className="flex flex-col md:gap-[16px] gap-[2px]">
             <p className="font-spoqa text-subText md:text-[18px] sm:text-[14px] text-[16px]">

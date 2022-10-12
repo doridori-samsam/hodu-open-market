@@ -1,5 +1,6 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { useMutation } from "react-query";
 import axios from "axios";
 import UserContext from "../../context/UserContext";
 import AuthHeader from "./AuthHeader";
@@ -12,6 +13,16 @@ function SignUp() {
   const { userType } = useContext(UserContext);
   const url = "https://openmarket.weniv.co.kr/";
   const navigate = useNavigate();
+  const checkUserName = useMutation(checkUserNameValid, {
+    onSuccess: (res) =>
+      setValidUserName({ checked: true, message: res.data.Success }),
+    onError: (error) =>
+      setValidUserName({
+        fail: true,
+        message: error.response.data.FAIL_Message,
+      }),
+  });
+  const joinMutation = useMutation();
 
   /**회원가입 타입 가져오기*/
   const [joinType, setJoinType] = useState("BUYER");
@@ -104,25 +115,15 @@ function SignUp() {
     setNewUserInfo({ ...newUserInfo, username: e.target.value });
   }
 
-  /**아이디 중복확인 클릭 */
+  /**아이디 중복확인 함수 */
   async function checkUserNameValid(e) {
     e.preventDefault();
     if (newUserInfo.username) {
       if (regUserName.test(newUserInfo.username)) {
-        try {
-          const res = await axios.post(
-            url + "accounts/signup/valid/username/",
-            {
-              username: newUserInfo.username,
-            }
-          );
-          setValidUserName({ checked: true, message: res.data.Success });
-        } catch (err) {
-          setValidUserName({
-            fail: true,
-            message: err.response.data.FAIL_Message,
-          });
-        }
+        const res = await axios.post(url + "accounts/signup/valid/username/", {
+          username: newUserInfo.username,
+        });
+        return res;
       } else {
         setValidUserName({
           fail: true,
@@ -600,7 +601,7 @@ function SignUp() {
             <MediumButton
               isActive
               type="button"
-              onClick={checkUserNameValid}
+              onClick={checkUserName.mutate()}
               style="w-[80px] ss:h-[54px] h-[35px] sm:w-[122px] ss:my-0 mt-[15px] bg-primary text-[14px]"
             >
               중복확인

@@ -8,9 +8,16 @@ import styles from "../../style";
 function Products() {
   const url = "https://openmarket.weniv.co.kr/";
   const { data, status } = useQuery("products", getProduct);
-
+  const { data: secondPage, status: secondStatus } = useQuery(
+    "secondProducts",
+    () => axios.get("https://openmarket.weniv.co.kr/products/?limit=10&page=2"),
+    {
+      onSuccess: (res) => console.log(res, "둘째"),
+    }
+  );
   async function getProduct() {
-    const res = await axios.get(url + "products/");
+    const res = await axios.get(url + "products/?limit=10");
+    console.log(res, "첫째");
     return res.data.results;
   }
 
