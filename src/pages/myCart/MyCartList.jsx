@@ -65,28 +65,30 @@ function MyCartList({
 
   return (
     <>
-      <li className="grid grid-cols-[5%_minmax(30%,_43%)_1.5fr_1fr_3%] items-center pl-[30px] w-full h-[200px] border-[1px] border-disabled rounded-[10px]">
+      <li className="grid sm:grid-cols-[5%_minmax(30%,_43%)_1.5fr_1fr_4%] grid-cols-[7%_33%_34%_20%_5%] items-center md:pl-[30px] pl-[10px] w-full sm:h-[200px] h-[180px] border-[1px] border-disabled rounded-[10px]">
         <div className="">{children}</div>
-        <div className="flex gap-[30px]">
+        <div className="flex sm:flex-row flex-col sm:gap-[30px] gap-[5px]">
           <img
             src={itemInfo[index].data.image}
             alt="상품 이미지"
-            className="w-[160px] h-[160px] rounded-[10px] border-[1px] border-disabled object-cover"
+            className="sl:w-[160px] sm:w-[100px] w-[70px] sl:h-[160px] sm:h-[100px] h-[70px] shrink-0 my-auto rounded-[10px] border-[1px] border-disabled object-cover"
           />
-          <div className="flex flex-col justify-between">
+          <div className="w-full flex flex-col justify-between shrink">
             <div>
-              <span className="font-spoqa text-subText">
+              <span className="font-spoqa text-subText sl:text-[16px] sm:text-[14px] text-[12px]">
                 {itemInfo[index].data.store_name}
               </span>
-              <p className="font-spoqa text-mainText text-[18px]">
+              <p
+                className={`${styles.textEllipsis} sm:whitespace-normal text-ellipsis font-spoqa text-mainText sl:text-[18px] sm:text-[15px] text-[13px]`}
+              >
                 {itemInfo[index].data.product_name}
               </p>
-              <strong className="font-spoqa text-mainText text-[18px] ">
+              <strong className="font-spoqa text-mainText sl:text-[18px] sm:text-[15px] text-[13px] ">
                 {itemInfo[index].data.price.toLocaleString()}원
               </strong>
             </div>
             <div>
-              <p className="font-spoqa text-[14px] text-subText">
+              <p className="font-spoqa sm:text-[14px] text-[11px] text-subText">
                 {`${
                   itemInfo[index].data.shipping_method === "PARCEL"
                     ? `택배배송`
@@ -101,7 +103,7 @@ function MyCartList({
           </div>
         </div>
 
-        <div className="flex justify-center">
+        <div className="sm:flex sm:justify-center">
           <OrderQtyButton
             defaultQty={defaultQty}
             openModal={openQtyModal}
@@ -110,14 +112,14 @@ function MyCartList({
             blockAdjust={true}
           />
         </div>
-        <div className="flex flex-col items-center gap-[26px]">
-          <p className="font-spoqaBold text-[18px] text-accentText">
+        <div className="sm:w-full w-fit flex flex-col items-center sm:gap-[26px] gap-[10px]">
+          <p className="font-spoqaBold sl:text-[18px] sm:text-[16px] text-[14px] text-accentText">
             {(defaultQty * itemInfo[index].data.price).toLocaleString()}원
           </p>
           <SubButton
             isActive={stockActive}
             onClick={clickSingleOrder}
-            style={`w-[130px] h-[40px] font-spoqaMedium text-[16px] ${
+            style={`sl:w-[130px] sm:w-[100px] w-[70px] sm:h-[40px] h-[30px] font-spoqaMedium sm:text-[16px] text-[12px] ${
               stockActive ? "bg-primary" : "bg-disabled"
             }`}
           >
@@ -126,7 +128,7 @@ function MyCartList({
         </div>
         <button
           onClick={openDelModal}
-          className={`${styles.closeButton} self-start mt-[10px] text-right`}
+          className={`${styles.closeButton} self-start mx-auto mt-[10px]`}
         ></button>
       </li>
       <AdjustQtyModal

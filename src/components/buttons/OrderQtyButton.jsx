@@ -37,17 +37,17 @@ function OrderQtyButton({
   return (
     <div
       onClick={openModal}
-      className={`flex md:w-[150px] md:h-[50px] sl:w-[120px] sl:h-[40px] w-[100px] h-[35px] border-[1px] border-disabled rounded-[5px] ${
+      className={`flex md:w-[150px] sl:w-[120px] w-[85px] md:h-[50px] sl:h-[40px] h-[32px] border-[1px] border-disabled rounded-[5px] ${
         blockAdjust && "cursor-pointer"
       }`}
     >
       <button
         onClick={subtractQty}
-        className={`basis-1/3 border-r-[1px] border-disabled icon-icon-minus-line bg-center ${
+        className={`basis-1/3 border-r-[1px] border-disabled icon-icon-minus-line bg-center sl:bg-auto bg-[length:12px_12px] ${
           blockAdjust && "pointer-events-none"
         }`}
       ></button>
-      <span className="basis-1/3 text-center my-auto font-spoqa md:text-[18px] text-[14px]">
+      <span className="basis-1/3 text-center my-auto font-spoqa md:text-[18px] sm:text-[14px] text-[12px]">
         {orderQty}
       </span>
       <button
@@ -55,7 +55,7 @@ function OrderQtyButton({
         onClick={addQty}
         className={`basis-1/3 border-l-[1px] ${
           isActive ? null : "bg-none"
-        } border-disabled icon-icon-plus-line bg-center ${
+        } border-disabled icon-icon-plus-line bg-center sl:bg-auto bg-[length:12px_12px] ${
           blockAdjust && "pointer-events-none"
         }`}
       ></button>

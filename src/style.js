@@ -12,7 +12,8 @@ const styles = {
   whiteButton:
     "border-[1px] border-disabled bg-white rounded-[5px] text-subText font-spoqaBold hover:border-mainText hover:text-mainText",
   subButton: "rounded-[5px] text-white bg-primary",
-  closeButton: "w-[22px] h-[22px] icon-icon-delete",
+  closeButton:
+    "sm:w-[22px] w-[16px] sm:h-[22px] h-[16px] icon-icon-delete bg-center bg-cover",
   ModalWhiteButton:
     "w-[100px] h-[40px] border-[1px] border-disabled rounded-[5px] font-spoqa text-subText text-[16px]",
   ModalBasicButton:
@@ -20,7 +21,7 @@ const styles = {
   modalBox:
     "fixed top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] w-[400px] h-[280px] p-[30px] bg-white border-[1px] border-disabled rounded-[10px] z-[100]",
   smallModalBox:
-    "fixed top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] w-[360px] h-[200px] p-[20px] bg-white border-[1px] border-disabled z-[100] ",
+    "fixed top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] flex flex-col items-center sm:w-[360px] sm:h-[200px] w-[300px] h-[190px] sm:p-[15px] p-[15px] gap-[25px] bg-white border-[1px] border-disabled z-[100] ",
   modalOverlay: "fixed top-0 bottom-0 right-0 left-0 bg-[#000000]/50",
   inputBox: "border-disabled outline-none font-spoqa focus:border-primary",
   signUpInput:
@@ -30,7 +31,7 @@ const styles = {
   footerIcon:
     "inline-block sm:w-[32px] sm:h-[32px] w-[24px] h-[24px] mr-[14px] align-middle bg-center bg-contain",
   grayText: "font-spoqa text-[16px] text-subText",
-  textEllipsis: "inline-block overflow-hidden whitespace-nowrap text-ellipsis",
+  textEllipsis: "overflow-hidden whitespace-nowrap text-ellipsis",
 };
 
 export default styles;

@@ -174,15 +174,19 @@ function MyCart() {
     <>
       <NavBar />
       <main className={`${styles.mainLayout} flex-col items-center`}>
-        <h1 className="font-spoqaBold text-[36px] mb-[52px]">장바구니</h1>
+        <h1 className="font-spoqaBold sm:text-[36px] text-[30px] sm:mb-[52px] mb-[30px] ">
+          장바구니
+        </h1>
         <section className={`${styles.flexCenter} flex-col w-[95%] md:w-[85%]`}>
-          <div className="grid items-center grid-cols-[12%_minmax(30%,_40%)_1fr_1fr] w-full h-[50px] px-[30px] mb-[35px] rounded-[10px] bg-background text-center">
+          <div className="grid items-center sm:grid-cols-[12%_minmax(30%,_40%)_1fr_1fr] grid-cols-[7%_41%_30%_15%] w-full h-[50px] md:px-[30px] px-[10px] mb-[35px] rounded-[10px] bg-background text-center">
             <SelectButton checked={isAllChecked} onChange={selectAllItem} />
-            <span className="font-spoqa text-[18px] leading-[30px]">
+            <span className="font-spoqa sm:text-[18px] text-[14px] leading-[30px] sm:text-center text-left">
               상품정보
             </span>
-            <span className="font-spoqa text-[18px] leading-[30px]">수량</span>
-            <span className="font-spoqa text-[18px] leading-[30px]">
+            <span className="font-spoqa sm:text-[18px] text-[14px] leading-[30px] sm:text-center text-left">
+              수량
+            </span>
+            <span className="font-spoqa sm:text-[18px] text-[14px] leading-[30px] sm:text-center text-left">
               상품금액
             </span>
           </div>
@@ -234,7 +238,7 @@ function MyCart() {
                     },
                   })
                 }
-                style="w-[220px] h-[68px] mt-[40px] font-spoqaBold text-[24px]"
+                style="sm:w-[220px] w-[180px] sm:h-[68px] h-[60px] mt-[40px] font-spoqaBold sm:text-[24px] text-[20px]"
               >
                 주문하기
               </SubButton>

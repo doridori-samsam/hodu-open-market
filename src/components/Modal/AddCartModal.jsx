@@ -8,9 +8,7 @@ function AddCartModal({ open, close, existItem }) {
     <>
       {open ? (
         <ModalPortal close={close}>
-          <div
-            className={`${styles.smallModalBox} flex flex-col items-center gap-[15px]`}
-          >
+          <div className={`${styles.smallModalBox}`}>
             <button
               onClick={close}
               className={`${styles.closeButton} self-end`}

@@ -94,7 +94,7 @@ function ProductOverview({ productdata, productId }) {
           <img
             src={productdata.image}
             alt="상품 이미지"
-            className="md:w-[500px] sl:w-[380px] sm:w-[320px] md:h-[530px] sl:h-[380px] sm:h-[320px] w-full h-[330px]"
+            className="md:w-[620px] sl:w-[380px] sm:w-[320px] md:h-[530px] sl:h-[380px] sm:h-[320px] w-full h-[330px] object-fit"
           />
         </div>
         <div className="sm:basis-1/2 basis-3/5 w-full md:h-[530px] sl:h-[380px] sm:h-[320px] h-[230px] flex flex-col justify-between">
