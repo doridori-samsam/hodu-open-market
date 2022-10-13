@@ -186,7 +186,7 @@ function MyCart() {
             <span className="font-spoqa sm:text-[18px] text-[14px] leading-[30px] sm:text-center text-left">
               수량
             </span>
-            <span className="font-spoqa sm:text-[18px] text-[14px] leading-[30px] sm:text-center text-left">
+            <span className="whitespace-nowrap font-spoqa sm:text-[18px] text-[14px] leading-[30px] sm:text-center text-left">
               상품금액
             </span>
           </div>

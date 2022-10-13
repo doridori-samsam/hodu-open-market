@@ -22,7 +22,7 @@ function SignUp() {
         message: error.response.data.FAIL_Message,
       }),
   });
-  const joinMutation = useMutation();
+  const joinMutation = useMutation(clickSignUp);
 
   /**회원가입 타입 가져오기*/
   const [joinType, setJoinType] = useState("BUYER");

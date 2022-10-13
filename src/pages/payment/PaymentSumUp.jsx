@@ -10,8 +10,10 @@ function PaymentSumUp({
   clickPay,
 }) {
   return (
-    <div className="w-[37%]">
-      <h2 className="mb-[18px] font-spoqaMedium text-[24px]">최종결제 정보</h2>
+    <div className="md:w-[37%] sm:w-[50%]">
+      <h2 className="mb-[18px] font-spoqaMedium sm:text-[24px] text-[20px]">
+        최종결제 정보
+      </h2>
       <div
         className={`h-[350px] border-[2px] rounded-[10px] ${
           isPayActive ? "border-primary" : "border-disabled"
@@ -60,7 +62,7 @@ function PaymentSumUp({
           <MediumButton
             isActive={isPayActive}
             onClick={clickPay}
-            style="sm:text-[20px] w-[200px]"
+            style="sm:text-[20px] sm:w-[200px] w-[120px] h-[40px]"
           >
             결제하기
           </MediumButton>

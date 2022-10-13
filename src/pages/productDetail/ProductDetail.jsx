@@ -12,7 +12,6 @@ function ProductDetail() {
   const { productId } = useParams();
   const { data, status } = useQuery("product-detail", getProductDetail);
 
-  console.log(data);
   /**상품 디테일 정보 불러오기 */
   async function getProductDetail() {
     const res = await axios.get(url + "products/" + productId + "/");

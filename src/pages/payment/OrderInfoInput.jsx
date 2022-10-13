@@ -12,17 +12,17 @@ function OrderInfoInput({
 }) {
   return (
     <section className={`${styles.sectionLayout} mt-[80px]`}>
-      <h2 className="pb-[15px] border-b-[2px] border-disabled font-spoqaMedium text-[24px]">
+      <h2 className="pb-[15px] border-b-[2px] border-disabled font-spoqaMedium sm:text-[24px] text-[20px]">
         배송정보
       </h2>
       <div className="mt-[40px]">
-        <p className="pb-[8px] font-spoqaMedium text-[18px] border-b-[2px] border-disabled">
+        <p className="pb-[8px] font-spoqaMedium sm:text-[18px] text-[16px] border-b-[2px] border-disabled">
           주문자 정보
         </p>
-        <div className="flex items-center gap-[130px] border-b-[1px] border-disabled">
+        <div className="flex items-center sm:gap-[130px] gap-[30px] border-b-[1px] border-disabled">
           <label
             htmlFor="buyer_name"
-            className="basis-1/12 font-spoqa text-[16px]"
+            className="sm:basis-1/12 basis-3/12 font-spoqa ss:text-[16px] text-[13px]"
           >
             이름
           </label>
@@ -34,10 +34,10 @@ function OrderInfoInput({
             className={`${styles.inputBox} w-[330px] h-[40px] my-[8px] border-[1px] px-[10px]`}
           />
         </div>
-        <div className="flex items-center gap-[130px] border-b-[1px] border-disabled">
+        <div className="flex items-center sm:gap-[130px] gap-[30px] border-b-[1px] border-disabled">
           <label
             htmlFor="buyer_phone"
-            className="basis-1/12 font-spoqa text-[16px]"
+            className="sm:basis-1/12 basis-3/12 font-spoqa ss:text-[16px] text-[13px]"
           >
             휴대폰
           </label>
@@ -49,7 +49,7 @@ function OrderInfoInput({
               maxLength={4}
               onChange={handlePhoneNumber}
               onBlur={variousInputOnBlur}
-              className={`${styles.inputBox} w-[80px] h-[40px] my-[8px] border-[1px] px-[10px]`}
+              className={`${styles.inputBox} ss:w-[80px] w-[60px] h-[40px] my-[8px] border-[1px] px-[10px]`}
             />
             -
             <input
@@ -59,7 +59,7 @@ function OrderInfoInput({
               maxLength={4}
               onChange={handlePhoneNumber}
               onBlur={variousInputOnBlur}
-              className={`${styles.inputBox} w-[100px] h-[40px] my-[8px] border-[1px] px-[10px]`}
+              className={`${styles.inputBox} ss:w-[100px] w-[80px] h-[40px] my-[8px] border-[1px] px-[10px]`}
             />
             -
             <input
@@ -69,14 +69,14 @@ function OrderInfoInput({
               maxLength={4}
               onChange={handlePhoneNumber}
               onBlur={variousInputOnBlur}
-              className={`${styles.inputBox} w-[100px] h-[40px] my-[8px] border-[1px] px-[10px]`}
+              className={`${styles.inputBox} ss:w-[100px] w-[80px] h-[40px] my-[8px] border-[1px] px-[10px]`}
             />
           </div>
         </div>
-        <div className="flex items-center gap-[130px] border-b-[1px] border-disabled">
+        <div className="flex items-center sm:gap-[130px] gap-[30px] border-b-[1px] border-disabled">
           <label
             htmlFor="buyer_email"
-            className="basis-1/12 font-spoqa text-[16px]"
+            className="sm:basis-1/12 basis-3/12 font-spoqa ss:text-[16px] text-[13px]"
           >
             이메일
           </label>
@@ -90,13 +90,13 @@ function OrderInfoInput({
         </div>
       </div>
       <div className="mt-[40px]">
-        <p className="pb-[8px] font-spoqaMedium text-[18px] border-b-[2px] border-disabled">
+        <p className="pb-[8px] font-spoqaMedium sm:text-[18px] text-[16px] border-b-[2px] border-disabled">
           배송지 정보
         </p>
-        <div className="flex items-center gap-[130px] border-b-[1px] border-disabled">
+        <div className="flex items-center sm:gap-[130px] gap-[30px] border-b-[1px] border-disabled">
           <label
             htmlFor="receiver_name"
-            className="basis-1/12 font-spoqa text-[16px]"
+            className="sm:basis-1/12 basis-3/12 font-spoqa ss:text-[16px] text-[13px]"
           >
             수령인
           </label>
@@ -108,10 +108,10 @@ function OrderInfoInput({
             className={`${styles.inputBox} w-[330px] h-[40px] my-[8px] border-[1px] px-[10px]`}
           />
         </div>
-        <div className="flex items-center gap-[130px] border-b-[1px] border-disabled">
+        <div className="flex items-center sm:gap-[130px] gap-[30px] border-b-[1px] border-disabled">
           <label
             htmlFor="receiver_phone"
-            className="basis-1/12 font-spoqa text-[16px]"
+            className="sm:basis-1/12 basis-3/12 font-spoqa ss:text-[16px] text-[12px]"
           >
             휴대폰
           </label>
@@ -123,7 +123,7 @@ function OrderInfoInput({
               maxLength={4}
               onChange={handlePhoneNumber}
               onBlur={variousInputOnBlur}
-              className={`${styles.inputBox} w-[80px] h-[40px] my-[8px] border-[1px] px-[10px]`}
+              className={`${styles.inputBox} ss:w-[80px] w-[60px] h-[40px] my-[8px] border-[1px] px-[10px]`}
             />
             -
             <input
@@ -133,7 +133,7 @@ function OrderInfoInput({
               maxLength={4}
               onChange={handlePhoneNumber}
               onBlur={variousInputOnBlur}
-              className={`${styles.inputBox} w-[100px] h-[40px] my-[8px] border-[1px] px-[10px]`}
+              className={`${styles.inputBox} ss:w-[100px] w-[80px] h-[40px] my-[8px] border-[1px] px-[10px]`}
             />
             -
             <input
@@ -143,18 +143,18 @@ function OrderInfoInput({
               maxLength={4}
               onChange={handlePhoneNumber}
               onBlur={variousInputOnBlur}
-              className={`${styles.inputBox} w-[100px] h-[40px] my-[8px] border-[1px] px-[10px]`}
+              className={`${styles.inputBox} ss:w-[100px] w-[80px] h-[40px] my-[8px] border-[1px] px-[10px]`}
             />
           </div>
         </div>
-        <div className="flex items-center gap-[130px] border-b-[1px] border-disabled">
+        <div className="flex items-center sl:gap-[130px] gap-[30px] border-b-[1px] border-disabled">
           <label
             htmlFor="address"
-            className="basis-1/12 self-start mt-[18px] font-spoqa text-[16px]"
+            className="whitespace-nowrap sl:basis-1/12 basis-3/12 self-start mt-[18px] font-spoqa ss:text-[16px] text-[13px]"
           >
             배송주소
           </label>
-          <div className="flex flex-col">
+          <div className="md:w-fit sl:w-[600px] ss:w-[330px] w-full flex flex-col">
             <div className="flex items-center gap-[10px]">
               <input
                 type="text"
@@ -162,12 +162,12 @@ function OrderInfoInput({
                 name="address1"
                 value={addressVal1}
                 readOnly
-                className={`${styles.inputBox} w-[170px] h-[40px] my-[8px] border-[1px] px-[10px]`}
+                className={`${styles.inputBox} sl:w-[170px] w-[65%] h-[40px] my-[8px] border-[1px] px-[10px]`}
               />
               <SubButton
                 onClick={clickPostCode}
                 isActive="true"
-                style="w-[154px] h-[40px] font-spoqaMedium"
+                style="sl:w-[154px] w-[35%] h-[40px] font-spoqaMedium sl:text-[16px] text-[12px]"
               >
                 우편번호 조회
               </SubButton>
@@ -178,21 +178,21 @@ function OrderInfoInput({
               name="address2"
               value={addressVal2}
               readOnly
-              className={`${styles.inputBox} w-[600px] h-[40px] border-[1px] px-[10px]`}
+              className={`${styles.inputBox} md:w-[600px] w-full h-[40px] border-[1px] px-[10px]`}
             />
             <input
               type="text"
               id="address3"
               name="address"
               onBlur={variousInputOnBlur}
-              className={`${styles.inputBox} w-[600px] h-[40px] my-[8px] border-[1px] px-[10px]`}
+              className={`${styles.inputBox} md:w-[600px] w-full h-[40px] my-[8px] border-[1px] px-[10px]`}
             />
           </div>
         </div>
-        <div className="flex items-center gap-[130px] border-b-[1px] border-disabled">
+        <div className="flex items-center md:gap-[130px] sm:gap-[110px] gap-[30px] border-b-[1px] border-disabled">
           <label
             htmlFor="deliver-msg"
-            className="basis-1/12 font-spoqa text-[16px]"
+            className="whitespace-nowrap sm:basis-1/12 basis-3/12 font-spoqa ss:text-[16px] text-[13px]"
           >
             배송 메시지
           </label>
@@ -201,14 +201,16 @@ function OrderInfoInput({
             id="deliver-msg"
             name="address_message"
             onChange={singleInput}
-            className={`${styles.inputBox} w-[600px] h-[40px] my-[8px] border-[1px] px-[10px]`}
+            className={`${styles.inputBox} sl:w-[600px] w-[330px] h-[40px] my-[8px] border-[1px] px-[10px]`}
           />
         </div>
       </div>
-      <div className="mt-[70px] w-full flex flex-row justify-between">
-        <div className="w-[59%]">
-          <h2 className="mb-[18px] font-spoqaMedium text-[24px]">결제수단</h2>
-          <div className="h-[56px] flex items-center justify-between border-y-[2px] border-disabled">
+      <div className="mt-[70px] w-full flex md:flex-row flex-col sl:justify-between gap-[70px]">
+        <div className="md:w-[59%]">
+          <h2 className="mb-[18px] font-spoqaMedium sm:text-[24px] text-[20px]">
+            결제수단
+          </h2>
+          <div className="sm:h-[56px] h-[180px] flex sm:flex-row flex-col sm:items-center sm:justify-between justify-evenly border-y-[2px] border-disabled">
             <div className="flex shrink-0 gap-[8px]">
               <input
                 type="radio"

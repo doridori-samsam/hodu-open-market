@@ -8,7 +8,10 @@ function NavBar() {
         <div className="md:w-[85%] w-[95%] h-full justify-between flex items-center align-center">
           <SearchBox />
           <NavIcon />
-          <div className="icon-menu w-[25px] h-[25px] bg-cover sl:hidden hover:cursor-pointer" />
+          <div
+            onClick={() => console.log("클릭")}
+            className="icon-menu w-[25px] h-[25px] bg-cover sl:hidden hover:cursor-pointer"
+          />
         </div>
       </header>
     </>

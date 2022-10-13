@@ -166,13 +166,21 @@ function Payment() {
     <>
       <NavBar />
       <main className={`${styles.mainLayout} flex-col items-center`}>
-        <h1 className="font-spoqaBold text-[36px] mb-[52px]">주문/결제하기</h1>
+        <h1 className="font-spoqaBold sm:text-[36px] text-[30px] sm:mb-[52px] mb-[30px]">
+          주문/결제하기
+        </h1>
         <section className={`${styles.flexCenter} flex-col w-[95%] md:w-[85%]`}>
-          <div className="grid items-center grid-cols-[45%_1fr_1fr_1fr] w-full h-[50px] mb-[16px] rounded-[10px] bg-background text-center">
-            <span className="font-spoqa text-[18px]">상품정보</span>
-            <span className="font-spoqa text-[18px]">할인</span>
-            <span className="font-spoqa text-[18px]">배송비</span>
-            <span className="font-spoqa text-[18px]">주문금액</span>
+          <div className="grid items-center ss:grid-cols-[45%_1fr_1fr_1fr] grid-cols-[30%_1fr_1fr_1fr] w-full h-[50px] mb-[16px] rounded-[10px] bg-background text-center">
+            <span className="font-spoqa sm:text-[18px] text-[14px]">
+              상품정보
+            </span>
+            <span className="font-spoqa sm:text-[18px] text-[14px]">할인</span>
+            <span className="font-spoqa sm:text-[18px] text-[14px]">
+              배송비
+            </span>
+            <span className="font-spoqa sm:text-[18px] text-[14px]">
+              주문금액
+            </span>
           </div>
           <ul className="flex flex-col w-full">
             {selectedItems.map((item, idx) => {
@@ -190,10 +198,10 @@ function Payment() {
             })}
           </ul>
           <div className="self-end mt-[30px]">
-            <span className="mr-[10px] font-spoqaMedium text-[18px]">
+            <span className="mr-[10px] font-spoqaMedium sm:text-[18px] text-[14px]">
               총 주문금액
             </span>
-            <span className="font-spoqaBold text-accentText text-[24px]">
+            <span className="font-spoqaBold text-accentText sm:text-[24px] text-[20px]">
               {`${(itemPrice + shippingFee).toLocaleString()}원`}
             </span>
           </div>
