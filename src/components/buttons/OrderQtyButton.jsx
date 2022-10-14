@@ -54,7 +54,7 @@ function OrderQtyButton({
         disabled={!isActive}
         onClick={addQty}
         className={`basis-1/3 border-l-[1px] ${
-          isActive ? null : "bg-none"
+          isActive ? null : "bg-subText"
         } border-disabled icon-icon-plus-line bg-center sl:bg-auto bg-[length:12px_12px] ${
           blockAdjust && "pointer-events-none"
         }`}

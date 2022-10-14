@@ -5,6 +5,7 @@ import { useInView } from "react-intersection-observer";
 import ProductCarousel from "./ProductCarousel";
 import ProductList from "./ProductList";
 import NowLoading from "../../components/NowLoading";
+import SmNowLoading from "../../components/SmNowLoading";
 import styles from "../../style";
 
 function Products() {
@@ -58,6 +59,8 @@ function Products() {
     return <NowLoading />;
   }
 
+  console.log(isFetchingNextPage);
+
   return (
     <>
       <ProductCarousel />
@@ -69,6 +72,7 @@ function Products() {
           />
         )}
       </main>
+      {isFetchingNextPage && <SmNowLoading />}
     </>
   );
 }
