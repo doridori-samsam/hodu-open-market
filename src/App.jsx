@@ -11,6 +11,7 @@ import Payment from "./pages/payment/Payment";
 import SellerCenter from "./pages/sellerCenter/SellerCenter";
 import SellerProductRegister from "./pages/sellerCenter/sellerProductsUpload/SellerProductRegister";
 import SellerProductsEdit from "./pages/sellerCenter/sellerProductsUpload/SellerProductsEdit";
+import ProductSearch from "./pages/ProductSearch/ProductSearch";
 import NotFound from "./components/NotFound";
 import LogInModal from "./components/Modal/LogInModal";
 import UserContext, { UserContextProvider } from "./context/UserContext";
@@ -87,6 +88,7 @@ function Main() {
                 path="/products/:productId"
                 element={<ProductDetail />}
               ></Route>
+              <Route path="/search" element={<ProductSearch />}></Route>
             </Routes>
           </div>
           <LogInModal />

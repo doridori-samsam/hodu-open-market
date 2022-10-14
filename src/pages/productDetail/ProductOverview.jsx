@@ -43,7 +43,6 @@ function ProductOverview({ productdata, productId }) {
     const res = await axios.get(url + "cart/", {
       headers: { Authorization: `JWT ${token}` },
     });
-    console.log(res.data.results);
     return res.data.results;
   }
 

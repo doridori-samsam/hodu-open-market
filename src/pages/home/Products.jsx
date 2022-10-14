@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useInfiniteQuery } from "react-query";
+import { useInfiniteQuery, useQueryClient } from "react-query";
 import { useInView } from "react-intersection-observer";
 import ProductCarousel from "./ProductCarousel";
 import ProductList from "./ProductList";
@@ -10,6 +10,9 @@ import styles from "../../style";
 function Products() {
   const url = "https://openmarket.weniv.co.kr/";
   const [ref, inView] = useInView();
+  const queryClient = useQueryClient();
+  const [dataLength, setDataLength] = useState();
+
   const { data, status, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery("products", ({ pageParam = 1 }) => getProduct(pageParam), {
       getNextPageParam: (lastPage, allPages) => {
@@ -24,7 +27,7 @@ function Products() {
   async function getProduct(pageParam) {
     const res = await axios.get(url + "products/?page=" + pageParam);
     const result = res.data;
-
+    setDataLength(Math.ceil(result.count / 15));
     return {
       result: result.results,
       nextPage: pageParam + 1,
@@ -36,8 +39,21 @@ function Products() {
     if (inView && hasNextPage) {
       fetchNextPage();
     }
-  }, [inView && hasNextPage]);
+  }, [inView, hasNextPage]);
 
+  useEffect(() => {
+    for (let i = 1; i < dataLength + 1; i++) {
+      queryClient.prefetchQuery(["allItems", `Arr${i}`], () => getAllItems(i), {
+        staleTime: Infinity,
+        cacheTime: Infinity,
+      });
+    }
+  }, [dataLength]);
+
+  async function getAllItems(i) {
+    const res = await axios.get(url + "products/?page=" + i);
+    return res.data.results;
+  }
   if (status === "loading") {
     return <NowLoading />;
   }

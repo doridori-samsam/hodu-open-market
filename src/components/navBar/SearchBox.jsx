@@ -1,10 +1,27 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "../../style";
 
-function SearchBox() {
+function SearchBox({ defaultValue, giveKeyword }) {
   const navigate = useNavigate();
+  const [keyword, setKeyword] = useState("");
   function clickLogo() {
-    navigate("/");
+    window.location.replace("/");
+  }
+  function getKeyword(e) {
+    setKeyword(e.target.value);
+  }
+
+  function clickSearch() {
+    navigate("/search");
+    sessionStorage.setItem("search-word", keyword);
+    giveKeyword(keyword);
+  }
+
+  function pressEnterKey(e) {
+    if (e.key === "Enter") {
+      clickSearch();
+    }
   }
   return (
     <div className="h-full flex items-center">
@@ -16,11 +33,18 @@ function SearchBox() {
       </div>
       <div className="flex items-center justify-between w-[275px] h-[30px] ss:w-[380px] ss:h-[35px] sm:w-[400px] sm:h-[46px] px-[22px] border-[1px] border-primary rounded-[50px]">
         <input
+          defaultValue={defaultValue}
           type="text"
           placeholder="상품을 검색해보세요!"
+          onChange={getKeyword}
+          onKeyDown={pressEnterKey}
           className={`border-none ${styles.inputBox} basis-4/5 text-[12px] ss:text-[16px]`}
         ></input>
-        <button className="w-[20px] h-[20px] sm:w-[28px] sm:h-[28px] bg-cover icon-search"></button>
+        <button
+          disabled={!keyword}
+          onClick={clickSearch}
+          className="w-[20px] h-[20px] sm:w-[28px] sm:h-[28px] bg-cover icon-search"
+        ></button>
       </div>
     </div>
   );
