@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "../../style";
 
-function SearchBox({ defaultValue, giveKeyword }) {
+function SearchBox({ defaultValue, giveKeyword, hideSearch }) {
   const navigate = useNavigate();
   const [keyword, setKeyword] = useState("");
   function clickLogo() {
@@ -26,12 +26,18 @@ function SearchBox({ defaultValue, giveKeyword }) {
   return (
     <div className="h-full flex items-center">
       <div
-        className="hidden sm:inline-block w-[124px] h-[38px] md:mr-[30px] mr-[15px] icon-Logo-hodu bg-contain cursor-pointer"
+        className={`${
+          hideSearch ? "inline-block " : "hidden sm:inline-block"
+        }  sm:w-[124px] w-[100px] sm:h-[38px] h-[30px] md:mr-[30px] mr-[15px] icon-Logo-hodu bg-contain cursor-pointer`}
         onClick={clickLogo}
       >
         <span className="a11y-hidden">호두마켓 로고</span>
       </div>
-      <div className="flex items-center justify-between w-[275px] h-[30px] ss:w-[380px] ss:h-[35px] sm:w-[400px] sm:h-[46px] px-[22px] border-[1px] border-primary rounded-[50px]">
+      <div
+        className={`${
+          hideSearch ? "hidden sl:flex" : "flex"
+        } items-center justify-between w-[275px] h-[30px] ss:w-[380px] ss:h-[35px] sm:w-[400px] sm:h-[46px] px-[22px] border-[1px] border-primary rounded-[50px]`}
+      >
         <input
           defaultValue={defaultValue}
           type="text"

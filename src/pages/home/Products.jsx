@@ -46,7 +46,7 @@ function Products() {
     for (let i = 1; i < dataLength + 1; i++) {
       queryClient.prefetchQuery(["allItems", `Arr${i}`], () => getAllItems(i), {
         staleTime: Infinity,
-        cacheTime: Infinity,
+        cacheTime: 86000000,
       });
     }
   }, [dataLength]);
@@ -58,8 +58,6 @@ function Products() {
   if (status === "loading") {
     return <NowLoading />;
   }
-
-  console.log(isFetchingNextPage);
 
   return (
     <>
