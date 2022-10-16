@@ -4,7 +4,7 @@ function MediumButton({ children, style, isActive, type, onClick }) {
   return (
     <button
       disabled={!isActive}
-      className={`${styles.mediumButton} ${style}
+      className={`${style} ${styles.mediumButton} 
     ${isActive ? "bg-primary" : "bg-disabled"}`}
       type={type}
       onClick={onClick}

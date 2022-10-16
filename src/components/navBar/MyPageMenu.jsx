@@ -1,21 +1,23 @@
 import { useContext } from "react";
 import UserContext from "../../context/UserContext";
+import { useMutation } from "react-query";
 import axios from "axios";
 
 function MyPageMenu({ open, menuClose }) {
   const { changeToken, changeUserType } = useContext(UserContext);
   const url = "https://openmarket.weniv.co.kr/";
-  //로그아웃 함수
-  async function LogOut() {
-    try {
-      const res = await axios.post(url + "accounts/logout/");
-      changeToken("");
-      changeUserType("");
-      window.location.replace("/");
-    } catch (err) {
-      console.error(err);
-    }
-    menuClose();
+  const logOut = useMutation(clickLogOut, {
+    onMutate: () => menuClose(),
+    onSuccess: () => window.location.replace("/"),
+    onError: (error) => console.log(error),
+  });
+
+  /**로그아웃 함수 */
+  async function clickLogOut() {
+    const res = await axios.post(url + "accounts/logout/");
+    changeToken("");
+    changeUserType("");
+    return res;
   }
 
   return (
@@ -30,7 +32,7 @@ function MyPageMenu({ open, menuClose }) {
         </li>
         <li
           className="leading-[30px] hover:text-mainText hover:outline hover:outline-1 hover:rounded-sm hover:cursor-pointer align-middle"
-          onClick={LogOut}
+          onClick={logOut.mutate}
         >
           로그아웃
         </li>

@@ -19,7 +19,7 @@ const styles = {
   ModalBasicButton:
     "w-[100px] h-[40px] rounded-[5px] bg-primary font-spoqa text-white text-[16px]",
   modalBox:
-    "fixed top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] w-[400px] h-[280px] p-[30px] bg-white border-[1px] border-disabled rounded-[10px] z-[100]",
+    "fixed top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] sl:w-[400px] w-[300px] sl:h-[280px] h-[220px] p-[30px] bg-white border-[1px] border-disabled rounded-[10px] z-[100]",
   smallModalBox:
     "fixed top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] flex flex-col items-center sm:w-[360px] sm:h-[200px] w-[300px] h-[190px] sm:p-[15px] p-[15px] gap-[25px] bg-white border-[1px] border-disabled z-[100] ",
   modalOverlay: "fixed top-0 bottom-0 right-0 left-0 bg-[#000000]/50",

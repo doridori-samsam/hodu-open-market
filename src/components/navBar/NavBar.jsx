@@ -6,8 +6,7 @@ import styles from "../../style";
 
 function NavBar({ defaultWord, giveKeyword }) {
   const [isMenuShow, setIsMenuShow] = useState(false);
-  const display = window.outerWidth;
-  console.log(display);
+
   return (
     <>
       <header className="flex justify-center items-center w-full h-[50px] sm:h-[70px] fixed top-0 border-[1px] bg-white">
@@ -29,7 +28,8 @@ function NavBar({ defaultWord, giveKeyword }) {
           ></button>
         </div>
       </header>
-      <MobileNav isShow={isMenuShow} />
+      <MobileNav isShow={isMenuShow} closeNavBar={() => setIsMenuShow(false)} />
+      {/* {isMenuShow && <MobileNav isShow={isMenuShow} />} */}
     </>
   );
 }

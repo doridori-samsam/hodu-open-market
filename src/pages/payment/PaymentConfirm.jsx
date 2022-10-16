@@ -4,7 +4,7 @@ import styles from "../../style";
 function PaymentConfirm() {
   const navigate = useNavigate();
   setTimeout(() => {
-    navigate("/");
+    navigate("/", { replace: true });
   }, 3000);
   return (
     <main className={`${styles.mainLayout} flex-col items-center gap-[20px]`}>

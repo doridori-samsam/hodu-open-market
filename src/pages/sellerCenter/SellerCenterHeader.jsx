@@ -16,7 +16,6 @@ function SellerCenterHeader() {
             판매자 센터
           </span>
         </div>
-        <div className="icon-menu w-[25px] h-[25px] bg-cover sl:hidden hover:cursor-pointer" />
       </div>
     </header>
   );

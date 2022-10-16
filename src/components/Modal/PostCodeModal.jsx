@@ -24,11 +24,13 @@ function PostCodeModal({ open, close, onComplete }) {
       {open ? (
         <>
           <ModalPortal close={close}>
-            <DaumPostCode
-              onComplete={onComplete}
-              theme={themeObj}
-              style={postCodeStyle}
-            />
+            <aside className="flex w-[200px] h-[300px] borer-[1px] border-pink-500">
+              <DaumPostCode
+                onComplete={onComplete}
+                theme={themeObj}
+                style={postCodeStyle}
+              />
+            </aside>
           </ModalPortal>
         </>
       ) : null}
