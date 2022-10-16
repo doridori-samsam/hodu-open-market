@@ -38,7 +38,6 @@ function MyCartList({
         queryClient.invalidateQueries("cart-list");
       },
       onError: (error) => {
-        console.log("삭제 실패");
         console.error(error);
       },
     }

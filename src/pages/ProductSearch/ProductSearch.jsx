@@ -22,8 +22,6 @@ function ProductSearch() {
       item.store_name.includes(word)
   );
 
-  console.log(!!filterList.length);
-
   /**SearchBox 컴포넌트에서 입력한 keyword 가져오기 */
   function getKeyword(keyword) {
     setWord(keyword);

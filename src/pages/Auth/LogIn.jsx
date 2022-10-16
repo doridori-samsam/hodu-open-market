@@ -22,7 +22,6 @@ function LogIn() {
   const logInMutation = useMutation(logIn, {
     onSuccess: () => window.location.replace("/"),
     onError: (error) => {
-      console.log("실패했어요.");
       if (
         error.response.data.FAIL_Message === "로그인 정보가 없습니다." ||
         error.response.data.FAIL_Message ===

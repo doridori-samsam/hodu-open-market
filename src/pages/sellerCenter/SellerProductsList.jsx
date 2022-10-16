@@ -26,8 +26,8 @@ function SellerProductsList({ products }) {
         setIsDelModalOpen(false);
         queryClient.invalidateQueries("seller-products");
       },
-      onError: () => {
-        console.log("삭제 실패");
+      onError: (error) => {
+        console.error(error);
       },
     }
   );

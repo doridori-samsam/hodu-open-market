@@ -5,6 +5,7 @@ import NavBar from "../../components/navBar/NavBar";
 import ProductOverview from "./ProductOverview";
 import ProductMoreInfo from "./ProductMoreInfo";
 import NowLoading from "../../components/NowLoading";
+import NotFound from "../../components/NotFound";
 import styles from "../../style";
 
 function ProductDetail() {
@@ -23,7 +24,7 @@ function ProductDetail() {
   }
 
   if (status === "error") {
-    console.log("에러");
+    return <NotFound />;
   }
 
   return (

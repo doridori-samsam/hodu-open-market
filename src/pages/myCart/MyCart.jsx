@@ -167,9 +167,6 @@ function MyCart() {
     });
   }
 
-  console.log(data, "장바구니 데이터");
-  console.log(listDetails, "상품 상세정보");
-
   return (
     <>
       <NavBar />

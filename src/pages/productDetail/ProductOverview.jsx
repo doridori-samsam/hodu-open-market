@@ -29,8 +29,8 @@ function ProductOverview({ productdata, productId }) {
       );
       queryClient.invalidateQueries("cart-list", "info");
     },
-    onError: () => {
-      console.log("담기 실패");
+    onError: (error) => {
+      console.error(error);
     },
   });
 
@@ -40,10 +40,12 @@ function ProductOverview({ productdata, productId }) {
   });
 
   async function getCartList() {
-    const res = await axios.get(url + "cart/", {
-      headers: { Authorization: `JWT ${token}` },
-    });
-    return res.data.results;
+    if (userType === "BUYER") {
+      const res = await axios.get(url + "cart/", {
+        headers: { Authorization: `JWT ${token}` },
+      });
+      return res.data.results;
+    }
   }
 
   function getQuantity(num) {

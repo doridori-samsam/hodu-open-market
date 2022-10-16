@@ -11,7 +11,7 @@ function MobileNav({ isShow, closeNavBar }) {
   const navigate = useNavigate();
   const logOut = useMutation(clickLogOut, {
     onSuccess: () => window.location.replace("/"),
-    onError: (error) => console.log(error),
+    onError: (error) => console.error(error),
   });
 
   /**로그아웃 함수 */
