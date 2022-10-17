@@ -1,5 +1,4 @@
 function SelectButton({
-  style,
   value,
   defaultChecked,
   checked,

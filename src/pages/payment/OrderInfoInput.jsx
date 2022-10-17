@@ -19,10 +19,10 @@ function OrderInfoInput({
         <p className="pb-[8px] font-spoqaMedium sm:text-[18px] text-[16px] border-b-[2px] border-disabled">
           주문자 정보
         </p>
-        <div className="flex items-center sm:gap-[130px] gap-[30px] border-b-[1px] border-disabled">
+        <div className="flex items-center sl:gap-[55px] gap-[30px] border-b-[1px] border-disabled">
           <label
             htmlFor="buyer_name"
-            className="sm:basis-1/12 basis-3/12 font-spoqa ss:text-[16px] text-[13px]"
+            className="shrink-0 sl:basis-2/12 basis-3/12 font-spoqa ss:text-[16px] text-[13px]"
           >
             이름
           </label>
@@ -34,10 +34,10 @@ function OrderInfoInput({
             className={`${styles.inputBox} w-[330px] h-[40px] my-[8px] border-[1px] px-[10px]`}
           />
         </div>
-        <div className="flex items-center sm:gap-[130px] gap-[30px] border-b-[1px] border-disabled">
+        <div className="flex items-center sl:gap-[55px] gap-[30px] border-b-[1px] border-disabled">
           <label
             htmlFor="buyer_phone"
-            className="sm:basis-1/12 basis-3/12 font-spoqa ss:text-[16px] text-[13px]"
+            className="shrink-0 sl:basis-2/12 basis-3/12 font-spoqa ss:text-[16px] text-[13px]"
           >
             휴대폰
           </label>
@@ -73,10 +73,10 @@ function OrderInfoInput({
             />
           </div>
         </div>
-        <div className="flex items-center sm:gap-[130px] gap-[30px] border-b-[1px] border-disabled">
+        <div className="flex items-center sl:gap-[55px] gap-[30px] border-b-[1px] border-disabled">
           <label
             htmlFor="buyer_email"
-            className="sm:basis-1/12 basis-3/12 font-spoqa ss:text-[16px] text-[13px]"
+            className="shrink-0 sl:basis-2/12 basis-3/12 font-spoqa ss:text-[16px] text-[13px]"
           >
             이메일
           </label>
@@ -93,10 +93,10 @@ function OrderInfoInput({
         <p className="pb-[8px] font-spoqaMedium sm:text-[18px] text-[16px] border-b-[2px] border-disabled">
           배송지 정보
         </p>
-        <div className="flex items-center sm:gap-[130px] gap-[30px] border-b-[1px] border-disabled">
+        <div className="flex items-center sl:gap-[55px] gap-[30px] border-b-[1px] border-disabled">
           <label
             htmlFor="receiver_name"
-            className="sm:basis-1/12 basis-3/12 font-spoqa ss:text-[16px] text-[13px]"
+            className="shrink-0 sl:basis-2/12 basis-3/12 font-spoqa ss:text-[16px] text-[13px]"
           >
             수령인
           </label>
@@ -108,10 +108,10 @@ function OrderInfoInput({
             className={`${styles.inputBox} w-[330px] h-[40px] my-[8px] border-[1px] px-[10px]`}
           />
         </div>
-        <div className="flex items-center sm:gap-[130px] gap-[30px] border-b-[1px] border-disabled">
+        <div className="flex items-center sl:gap-[55px] gap-[30px] border-b-[1px] border-disabled">
           <label
             htmlFor="receiver_phone"
-            className="sm:basis-1/12 basis-3/12 font-spoqa ss:text-[16px] text-[12px]"
+            className="shrink-0 sl:basis-2/12 basis-3/12 font-spoqa ss:text-[16px] text-[12px]"
           >
             휴대폰
           </label>
@@ -147,14 +147,14 @@ function OrderInfoInput({
             />
           </div>
         </div>
-        <div className="flex items-center sl:gap-[130px] gap-[30px] border-b-[1px] border-disabled">
+        <div className="flex items-center sl:gap-[55px] gap-[30px] border-b-[1px] border-disabled">
           <label
             htmlFor="address"
-            className="whitespace-nowrap sl:basis-1/12 basis-3/12 self-start mt-[18px] font-spoqa ss:text-[16px] text-[13px]"
+            className="whitespace-nowrap shrink-0 sl:basis-2/12 basis-3/12 self-start mt-[18px] font-spoqa ss:text-[16px] text-[13px]"
           >
             배송주소
           </label>
-          <div className="md:w-fit sl:w-[600px] ss:w-[330px] w-full flex flex-col">
+          <div className="sl:w-[600px] w-[330px] flex flex-col">
             <div className="flex items-center gap-[10px]">
               <input
                 type="text"
@@ -167,7 +167,7 @@ function OrderInfoInput({
               <SubButton
                 onClick={clickPostCode}
                 isActive="true"
-                style="sl:w-[154px] w-[35%] h-[40px] font-spoqaMedium sl:text-[16px] text-[12px]"
+                style="sl:w-[154px] w-[35%] h-[40px] font-spoqaMedium sl:text-[16px] sm:text-[14px] text-[12px]"
               >
                 우편번호 조회
               </SubButton>
@@ -189,10 +189,10 @@ function OrderInfoInput({
             />
           </div>
         </div>
-        <div className="flex items-center md:gap-[130px] sm:gap-[110px] gap-[30px] border-b-[1px] border-disabled">
+        <div className="flex items-center sl:gap-[55px] gap-[30px] border-b-[1px] border-disabled">
           <label
             htmlFor="deliver-msg"
-            className="whitespace-nowrap sm:basis-1/12 basis-3/12 font-spoqa ss:text-[16px] text-[13px]"
+            className="whitespace-nowrap shrink-0 sl:basis-2/12 basis-3/12 font-spoqa ss:text-[16px] text-[13px]"
           >
             배송 메시지
           </label>
