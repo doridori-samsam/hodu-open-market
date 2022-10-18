@@ -24,7 +24,7 @@ function MobileNav({ isShow, closeNavBar }) {
 
   return (
     <nav
-      className={`w-full flex flex-col items-center  fixed sm:top-[70px] top-[50px] bg-white rounded-b-lg shadow-md transition-[height] ease-out duration-300 ${
+      className={`w-full flex flex-col items-center fixed sm:top-[70px] top-[50px] z-[100] bg-white rounded-b-lg shadow-md transition-[height] ease-out duration-300 ${
         isShow ? "h-[10rem] pt-[20px] sl:hidden" : "h-0"
       }`}
     >
