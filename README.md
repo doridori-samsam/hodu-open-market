@@ -104,9 +104,13 @@ vite: "3.0.7"
 
 ### ✔ svg sprite로 svg data를 css 파일에 묶어서 사용
 
+---
+
 ### ✔ promise all을 react-query useQueries로 구현
 
 https://github.com/doridori-samsam/hodu-open-market/blob/b53b800d54891a21ab5781b1cb09c83b3f45e09f/src/pages/myCart/MyCart.jsx#L26-L63
+
+---
 
 3. prefetch로 데이터불러오고 검색 시 data 사용
 4. 구매하기/상품 디테일 페이지에서 cache된 data사용 하여 성능향상
