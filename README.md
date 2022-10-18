@@ -18,10 +18,12 @@
 
 #### [기술]
 
+<div align=left>
 <img src="https://img.shields.io/badge/Vite-%23646CFF?style=for-the-badge&logo=vite&logoColor=white">
 <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=black">
 <img src="https://img.shields.io/badge/-React Query-%23FF4154?style=for-the-badge&logo=react query&logoColor=white">
 <img src="https://img.shields.io/badge/Tailwind-%2306B6D4?style=for-the-badge&logo=tailwind css&logoColor=white">
+</div>
 
 <br>
 <h2>🎨구현 기능</h2>
