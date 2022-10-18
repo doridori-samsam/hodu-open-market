@@ -45,7 +45,6 @@ vite: "3.0.7"
 #### [개발환경]
 
 <div align=left>
-<img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=Figma&logoColor=white">
 <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=Git&logoColor=white">
 <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white">
 <img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=Figma&logoColor=white">
@@ -53,6 +52,13 @@ vite: "3.0.7"
 
 <br>
 <h2>🎨구현 기능</h2>
+
+- 🔐 계정
+  - 로그인/로그아웃
+  - 구매자/판매자 회원가입
+  - 유효성 검증
+  - 토큰 검증
+
 <br>
 <h2>✨코드 포인트</h2>
 <br>
