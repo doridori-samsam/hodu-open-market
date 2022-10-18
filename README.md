@@ -24,6 +24,23 @@
 <img src="https://img.shields.io/badge/-React Query-%23FF4154?style=for-the-badge&logo=react query&logoColor=white">
 <img src="https://img.shields.io/badge/Tailwind-%2306B6D4?style=for-the-badge&logo=tailwind css&logoColor=white">
 </div>
+</br>
+📌 BackEnd는 제공된 API 사용
+📌 Daum Postcode Service API 사용
+<br/>
+📌 Version :
+
+```
+react : "18.2.0"
+react-router-dom : "6.3.0"
+axios: "0.27.2",
+react-daum-postcode: "3.1.1"
+react-intersection-observer: "9.4.0"
+react-query: "3.39.2"
+tailwindcss: "3.1.8"
+vite: "3.0.7"
+
+```
 
 <br>
 <h2>🎨구현 기능</h2>
