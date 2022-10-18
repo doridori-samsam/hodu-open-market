@@ -4,8 +4,8 @@ import { useQueryClient, useMutation, useQuery } from "react-query";
 import axios from "axios";
 import UserContext from "../../context/UserContext";
 import OrderQtyButton from "../../components/buttons/OrderQtyButton";
-import AddCartModal from "../../components/Modal/AddCartModal";
-import LogInModal from "../../components/Modal/LogInModal";
+import AddCartModal from "../../components/modal/AddCartModal";
+import LogInModal from "../../components/modal/LogInModal";
 import styles from "../../style";
 
 function ProductOverview({ productdata, productId }) {

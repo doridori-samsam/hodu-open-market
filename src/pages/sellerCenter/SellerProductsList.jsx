@@ -5,7 +5,7 @@ import axios from "axios";
 import UserContext from "../../context/UserContext";
 import SubButton from "../../components/buttons/SubButton";
 import WhiteButton from "../../components/buttons/WhiteButton";
-import DeleteCheckModal from "../../components/Modal/DeleteCheckModal";
+import DeleteCheckModal from "../../components/modal/DeleteCheckModal";
 
 function SellerProductsList({ products }) {
   const url = "https://openmarket.weniv.co.kr/";

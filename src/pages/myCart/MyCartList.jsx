@@ -4,8 +4,8 @@ import axios from "axios";
 import UserContext from "../../context/UserContext";
 import OrderQtyButton from "../../components/buttons/OrderQtyButton";
 import SubButton from "../../components/buttons/SubButton";
-import AdjustQtyModal from "../../components/Modal/AdjustQtyModal";
-import DeleteCheckModal from "../../components/Modal/DeleteCheckModal";
+import AdjustQtyModal from "../../components/modal/AdjustQtyModal";
+import DeleteCheckModal from "../../components/modal/DeleteCheckModal";
 import styles from "../../style";
 
 function MyCartList({

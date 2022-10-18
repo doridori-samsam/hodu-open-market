@@ -7,7 +7,7 @@ import NavBar from "../../components/navBar/NavBar";
 import OrderList from "./OrderList";
 import OrderInfoInput from "./OrderInfoInput";
 import PaymentSumUp from "./PaymentSumUp";
-import PostCodeModal from "../../components/Modal/PostCodeModal";
+import PostCodeModal from "../../components/modal/PostCodeModal";
 import PaymentConfirm from "./PaymentConfirm";
 import styles from "../../style";
 import { useEffect } from "react";

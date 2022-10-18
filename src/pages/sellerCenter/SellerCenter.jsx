@@ -106,7 +106,7 @@ function SellerCenter() {
             onClick={clickTabMenu}
             active={activeIndex}
           />
-          <article className="basis-5/6 bg-disabled border-[1px] border-disabled h-[800px]">
+          <article className="basis-5/6 bg-disabled border-[1px] border-disabled h-[800px] overflow-y-auto scrollbar-thin scrollbar-h-[30px] scrollbar-track-background scrollbar-thumb-disabled scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
             {sellerMenu[activeIndex].menuContent}
           </article>
         </section>

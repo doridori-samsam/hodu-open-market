@@ -8,7 +8,7 @@ import UploadWarning from "./UploadWarning";
 import EditorArea from "./EditorArea";
 import WhiteButton from "../../../components/buttons/WhiteButton";
 import SubButton from "../../../components/buttons/SubButton";
-import CancelProductUploadModal from "../../../components/Modal/CancelProductUploadModal";
+import CancelProductUploadModal from "../../../components/modal/CancelProductUploadModal";
 import styles from "../../../style";
 
 function SellerProductRegister() {

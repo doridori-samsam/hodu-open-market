@@ -13,7 +13,7 @@ import SellerProductRegister from "./pages/sellerCenter/sellerProductsUpload/Sel
 import SellerProductsEdit from "./pages/sellerCenter/sellerProductsUpload/SellerProductsEdit";
 import ProductSearch from "./pages/ProductSearch/ProductSearch";
 import NotFound from "./components/NotFound";
-import LogInModal from "./components/Modal/LogInModal";
+import LogInModal from "./components/modal/LogInModal";
 import UserContext, { UserContextProvider } from "./context/UserContext";
 
 const queryClient = new QueryClient();

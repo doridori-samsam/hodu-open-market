@@ -4,7 +4,7 @@ import UserContext from "../../context/UserContext";
 import NavMyCart from "./NavMyCart";
 import NavMyPage from "./NavMyPage";
 import NavLogIn from "./NavLogIn";
-import LogInModal from "../Modal/LogInModal";
+import LogInModal from "../modal/LogInModal";
 import MediumButton from "../buttons/MediumButton";
 
 function NavIcon() {

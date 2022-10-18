@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import ModalPortal from "./ModalPortal";
 import styles from "../../style";
 import SubButton from "../buttons/SubButton";
-import MediumButton from "../buttons/MediumButton";
 
 function LogInModal({ open, close }) {
   const navigate = useNavigate();
