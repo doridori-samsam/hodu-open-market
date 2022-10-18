@@ -25,7 +25,8 @@
 <img src="https://img.shields.io/badge/Tailwind-%2306B6D4?style=for-the-badge&logo=tailwind css&logoColor=white">
 </div>
 </br>
-📌 BackEnd는 제공된 API 사용
+📌 BackEnd : 제공된 API 사용
+<br/>
 📌 Daum Postcode Service API 사용
 <br/>
 📌 Version :
@@ -39,8 +40,16 @@ react-intersection-observer: "9.4.0"
 react-query: "3.39.2"
 tailwindcss: "3.1.8"
 vite: "3.0.7"
-
 ```
+
+#### [개발환경]
+
+<div align=left>
+<img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=Figma&logoColor=white">
+<img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=Git&logoColor=white">
+<img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white">
+<img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=Figma&logoColor=white">
+</div>
 
 <br>
 <h2>🎨구현 기능</h2>
