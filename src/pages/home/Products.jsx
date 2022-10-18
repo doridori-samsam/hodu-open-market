@@ -1,7 +1,7 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useInfiniteQuery, useQueryClient } from "react-query";
 import { useInView } from "react-intersection-observer";
+import axios from "axios";
 import ProductCarousel from "./ProductCarousel";
 import ProductList from "./ProductList";
 import NowLoading from "../../components/NowLoading";
@@ -10,10 +10,9 @@ import styles from "../../style";
 
 function Products() {
   const url = "https://openmarket.weniv.co.kr/";
-  const [ref, inView] = useInView();
   const queryClient = useQueryClient();
   const [dataLength, setDataLength] = useState();
-
+  const [ref, inView] = useInView();
   const { data, status, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery("products", ({ pageParam = 1 }) => getProduct(pageParam), {
       getNextPageParam: (lastPage, allPages) => {
@@ -42,6 +41,7 @@ function Products() {
     }
   }, [inView, hasNextPage]);
 
+  /**모든 상품 목록 prefetch */
   useEffect(() => {
     for (let i = 1; i < dataLength + 1; i++) {
       queryClient.prefetchQuery(["allItems", `Arr${i}`], () => getAllItems(i), {
