@@ -101,3 +101,66 @@ vite: "3.0.7"
 <br>
 <h2>💣이슈</h2>
 </br>
+<br>
+<h2>📂폴더트리</h2>
+
+```
+📦 src
+ ┣📂 assets
+ ┣📂 components
+ ┃ ┣📂 button
+ ┃ ┣📂 footer
+ ┃ ┣📂 Modal
+ ┃ ┣📂 modal
+ ┃ ┃ ┣📂 alert
+ ┃ ┃ ┃ ┣📂 alertBase
+ ┃ ┃ ┃ ┗📂 alerts
+ ┃ ┃ ┣📂 modalBase
+ ┃ ┃ ┗📂 modals
+ ┃ ┣📂 notFound
+ ┃ ┣📂 post
+ ┃ ┣📂 splash
+ ┃ ┃ ┗📂 logo
+ ┃ ┣📂 style
+ ┃ ┗📂 user
+ ┣📂 context
+ ┣📂 hooks
+ ┣📂 pages
+ ┃ ┣📂 chatPage
+ ┃ ┃ ┗📂 chatPageItem
+ ┃ ┣📂 chatRoomPage
+ ┃ ┃ ┗📂 chatRoomInput
+ ┃ ┣📂 emailLoginPage
+ ┃ ┣📂 followPage
+ ┃ ┃ ┗📂 followList
+ ┃ ┣📂 homePage
+ ┃ ┃ ┗📂 initialFeed
+ ┃ ┣📂 logInPage
+ ┃ ┃ ┣📂 loginSection
+ ┃ ┃ ┗📂 userAccount
+ ┃ ┣📂 postDetailPage
+ ┃ ┃ ┗📂 comment
+ ┃ ┣📂 profileEditPage
+ ┃ ┃ ┣📂 profileEditImg
+ ┃ ┃ ┗📂 profileEditInfo
+ ┃ ┣📂 profilePage
+ ┃ ┃ ┣📂 userHeader
+ ┃ ┃ ┣📂 userPost
+ ┃ ┃ ┗📂 userProduct
+ ┃ ┣📂 searchUserPage
+ ┃ ┃ ┗📂 searchResult
+ ┃ ┣📂 signUpPage
+ ┃ ┃ ┣📂 emailSignUp
+ ┃ ┃ ┗ 📂 profileSet
+ ┃ ┣📂 updatePostPage
+ ┃ ┣📂 updateProductPage
+ ┃ ┣📂 uploadPostPage
+ ┃ ┗📂 uploadProductPage
+ ┃  ┣📂 uploadProductImg
+ ┃  ┗📂 uploadProductInput
+ ┣📜 App.jsx
+ ┣📜 App.scss
+ ┗📜 index.js
+```
+
+</br>
