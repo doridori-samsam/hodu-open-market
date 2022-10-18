@@ -1,15 +1,14 @@
-import { useQueryClient, useQuery } from "react-query";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useQueryClient } from "react-query";
+import { useState } from "react";
 import NavBar from "../../components/navBar/NavBar";
 import SearchResult from "./SearchResult";
 import styles from "../../style";
 import EmptyResult from "./EmptyResult";
 
 function ProductSearch() {
-  const url = "https://openmarket.weniv.co.kr/";
   const queryClient = useQueryClient();
   const [word, setWord] = useState(sessionStorage.getItem("search-word"));
+
   /**prefetch로 캐쉬된 모든 상품 데이터 */
   const givenData = queryClient.getQueriesData("allItems");
   const allProductList = givenData.map((item, idx) => item[1]).flat();
@@ -39,7 +38,6 @@ function ProductSearch() {
         ) : (
           <EmptyResult word={word} />
         )}
-        {/* <SearchResult listdata={filterList} /> */}
       </main>
     </>
   );

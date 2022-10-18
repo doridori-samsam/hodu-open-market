@@ -108,59 +108,28 @@ vite: "3.0.7"
 📦 src
  ┣📂 assets
  ┣📂 components
- ┃ ┣📂 button
+ ┃ ┣📂 buttons
  ┃ ┣📂 footer
- ┃ ┣📂 Modal
  ┃ ┣📂 modal
- ┃ ┃ ┣📂 alert
- ┃ ┃ ┃ ┣📂 alertBase
- ┃ ┃ ┃ ┗📂 alerts
- ┃ ┃ ┣📂 modalBase
- ┃ ┃ ┗📂 modals
- ┃ ┣📂 notFound
- ┃ ┣📂 post
- ┃ ┣📂 splash
- ┃ ┃ ┗📂 logo
- ┃ ┣📂 style
- ┃ ┗📂 user
+ ┃ ┣📂 navBar
+ ┃ ┣ NotFound.jsx
+ ┃ ┣ NowLoading.jsx
+ ┃ ┣ SmNowLoading.jsx
  ┣📂 context
- ┣📂 hooks
  ┣📂 pages
- ┃ ┣📂 chatPage
- ┃ ┃ ┗📂 chatPageItem
- ┃ ┣📂 chatRoomPage
- ┃ ┃ ┗📂 chatRoomInput
- ┃ ┣📂 emailLoginPage
- ┃ ┣📂 followPage
- ┃ ┃ ┗📂 followList
- ┃ ┣📂 homePage
- ┃ ┃ ┗📂 initialFeed
- ┃ ┣📂 logInPage
- ┃ ┃ ┣📂 loginSection
- ┃ ┃ ┗📂 userAccount
- ┃ ┣📂 postDetailPage
- ┃ ┃ ┗📂 comment
- ┃ ┣📂 profileEditPage
- ┃ ┃ ┣📂 profileEditImg
- ┃ ┃ ┗📂 profileEditInfo
- ┃ ┣📂 profilePage
- ┃ ┃ ┣📂 userHeader
- ┃ ┃ ┣📂 userPost
- ┃ ┃ ┗📂 userProduct
- ┃ ┣📂 searchUserPage
- ┃ ┃ ┗📂 searchResult
- ┃ ┣📂 signUpPage
- ┃ ┃ ┣📂 emailSignUp
- ┃ ┃ ┗ 📂 profileSet
- ┃ ┣📂 updatePostPage
- ┃ ┣📂 updateProductPage
- ┃ ┣📂 uploadPostPage
- ┃ ┗📂 uploadProductPage
- ┃  ┣📂 uploadProductImg
- ┃  ┗📂 uploadProductInput
+ ┃ ┣📂 auth
+ ┃ ┣📂 home
+ ┃ ┣📂 myCart
+ ┃ ┣📂 payment
+ ┃ ┣📂 productDetail
+ ┃ ┣📂 productSearch
+ ┃ ┣📂 sellerCenter
+ ┃ ┃ ┣📂 sellerProductsUpload
  ┣📜 App.jsx
- ┣📜 App.scss
- ┗📜 index.js
+ ┣📜 main.jsx
+ ┣📜 index.css
+ ┗📜 style.js
+
 ```
 
 </br>

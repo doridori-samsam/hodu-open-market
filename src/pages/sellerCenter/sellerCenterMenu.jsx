@@ -22,4 +22,4 @@ function sellerCenterMenu({ content, onClick, active }) {
   );
 }
 
-export default sellerCenterMenu;
+export default SellerCenterMenu;

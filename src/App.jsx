@@ -11,7 +11,7 @@ import Payment from "./pages/payment/Payment";
 import SellerCenter from "./pages/sellerCenter/SellerCenter";
 import SellerProductRegister from "./pages/sellerCenter/sellerProductsUpload/SellerProductRegister";
 import SellerProductsEdit from "./pages/sellerCenter/sellerProductsUpload/SellerProductsEdit";
-import ProductSearch from "./pages/ProductSearch/ProductSearch";
+import ProductSearch from "./pages/productSearch/productSearch";
 import NotFound from "./components/NotFound";
 import LogInModal from "./components/modal/LogInModal";
 import UserContext, { UserContextProvider } from "./context/UserContext";
