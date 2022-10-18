@@ -1,4 +1,3 @@
-import styles from "../../style";
 function OrderList({ productData, quantity }) {
   return (
     <li className="grid ss:grid-cols-[minmax(30%,_45%)_1fr_1fr_1fr] grid-cols-[30%_1fr_1fr_1fr] items-center w-full ss:h-[120px] h-[180px] border-b-[1px] border-disabled">

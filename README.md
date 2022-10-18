@@ -2,6 +2,10 @@
 📌 2022.09 - 2022.10
 <br>
 📌 호두마켓 배포 URL : https://hodumarket.netlify.app/
+<br>
+<br>
+
+<img src="https://media.discordapp.net/attachments/934745841661526058/1031987148657790976/smartmockups_l9ehzc5a.jpg?width=771&height=578">
 
 <h2>📄개요</h2>
 
@@ -46,6 +50,7 @@ vite: "3.0.7"
 </br>
 
 <br>
+
 #### [개발환경]
 
 <div align=left>
@@ -93,13 +98,23 @@ vite: "3.0.7"
 
 - ETC
   - 모바일 유저를 위한 반응형 디자인 구현
+  - api 데이터 로딩 중 로딩 스피너 화면 구현
 
 </br>
 <br>
 <h2>✨코드 포인트</h2>
+1. promise all을 react-query useQueries로 구현
+2. svg sprite로 svg data를 css 파일에 묶어서 사용
+3. prefetch로 데이터불러오고 검색 시 data 사용
+4. 구매하기/상품 디테일 페이지에서 cache된 data사용 하여 성능향상
+5. useInfinite, useInview를 사용하여 무한 스크롤 구현
+6. 다음 우편번호 API를 사용한 우편번호 검색 기능 구현
+
 </br>
 <br>
 <h2>💣이슈</h2>
+1. tailwind 동적으로 background url 설정시 보이지 않는 이슈.
+
 </br>
 <br>
 <h2>📂폴더트리</h2>
@@ -114,7 +129,7 @@ vite: "3.0.7"
  ┃ ┣📂 navBar
  ┃ ┣ NotFound.jsx
  ┃ ┣ NowLoading.jsx
- ┃ ┣ SmNowLoading.jsx
+ ┃ ┗ SmNowLoading.jsx
  ┣📂 context
  ┣📂 pages
  ┃ ┣📂 auth
@@ -124,7 +139,7 @@ vite: "3.0.7"
  ┃ ┣📂 productDetail
  ┃ ┣📂 productSearch
  ┃ ┣📂 sellerCenter
- ┃ ┃ ┣📂 sellerProductsUpload
+ ┃ ┗📂 sellerProductsUpload
  ┣📜 App.jsx
  ┣📜 main.jsx
  ┣📜 index.css
