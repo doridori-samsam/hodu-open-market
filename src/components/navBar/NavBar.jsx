@@ -9,8 +9,8 @@ function NavBar({ defaultWord, giveKeyword }) {
 
   return (
     <>
-      <header className="flex justify-center items-center w-full h-[50px] sm:h-[70px] fixed top-0 border-[1px] bg-white">
-        <div className="md:w-[85%] w-[95%] h-full justify-between flex items-center align-center">
+      <header className="z-[100] flex justify-center items-center w-full h-[50px] sm:h-[70px] fixed top-0 border-[1px] bg-white">
+        <div className="md:w-[85%] w-[95%] h-full flex justify-between items-center align-center">
           <SearchBox
             defaultValue={defaultWord}
             giveKeyword={giveKeyword}

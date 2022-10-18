@@ -74,15 +74,19 @@ function ProductOverview({ productdata, productId }) {
 
   /**바로 주문하기 클릭 버튼 */
   function clickOrderItem() {
-    navigate("/order", {
-      state: {
-        items: [{ quantity: quantityNum }],
-        totalPrice: productdata.price * quantityNum,
-        shippingFee: productdata.shipping_fee,
-        orderKind: "direct_order",
-        product: productdata,
-      },
-    });
+    if (userType === "BUYER") {
+      navigate("/order", {
+        state: {
+          items: [{ quantity: quantityNum }],
+          totalPrice: productdata.price * quantityNum,
+          shippingFee: productdata.shipping_fee,
+          orderKind: "direct_order",
+          product: productdata,
+        },
+      });
+    } else {
+      setIsLogInModalOpen(true);
+    }
   }
 
   return (

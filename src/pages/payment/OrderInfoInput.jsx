@@ -31,7 +31,7 @@ function OrderInfoInput({
             id="buyer_name"
             name="buyer_name"
             onChange={singleInput}
-            className={`${styles.inputBox} w-[330px] h-[40px] my-[8px] border-[1px] px-[10px]`}
+            className={`${styles.inputBox} ss:w-[330px] w-full h-[40px] my-[8px] border-[1px] px-[10px]`}
           />
         </div>
         <div className="flex items-center sl:gap-[55px] gap-[30px] border-b-[1px] border-disabled">
@@ -41,7 +41,7 @@ function OrderInfoInput({
           >
             휴대폰
           </label>
-          <div className="flex items-center justify-between w-[330px]">
+          <div className="flex items-center ss:justify-between gap-[5px] ss:w-[330px] w-full">
             <input
               type="text"
               id="buyer_phone"
@@ -49,7 +49,7 @@ function OrderInfoInput({
               maxLength={4}
               onChange={handlePhoneNumber}
               onBlur={variousInputOnBlur}
-              className={`${styles.inputBox} ss:w-[80px] w-[60px] h-[40px] my-[8px] border-[1px] px-[10px]`}
+              className={`${styles.inputBox} ss:w-[80px] w-[25%] h-[40px] my-[8px] border-[1px] px-[10px]`}
             />
             -
             <input
@@ -59,7 +59,7 @@ function OrderInfoInput({
               maxLength={4}
               onChange={handlePhoneNumber}
               onBlur={variousInputOnBlur}
-              className={`${styles.inputBox} ss:w-[100px] w-[80px] h-[40px] my-[8px] border-[1px] px-[10px]`}
+              className={`${styles.inputBox} ss:w-[100px] w-[35%] h-[40px] my-[8px] border-[1px] px-[10px]`}
             />
             -
             <input
@@ -69,7 +69,7 @@ function OrderInfoInput({
               maxLength={4}
               onChange={handlePhoneNumber}
               onBlur={variousInputOnBlur}
-              className={`${styles.inputBox} ss:w-[100px] w-[80px] h-[40px] my-[8px] border-[1px] px-[10px]`}
+              className={`${styles.inputBox} ss:w-[100px] w-[35%] h-[40px] my-[8px] border-[1px] px-[10px]`}
             />
           </div>
         </div>
@@ -85,7 +85,7 @@ function OrderInfoInput({
             id="buyer_email"
             name="buyer_email"
             onChange={singleInput}
-            className={`${styles.inputBox} w-[330px] h-[40px] my-[8px] border-[1px] px-[10px]`}
+            className={`${styles.inputBox} ss:w-[330px] w-full h-[40px] my-[8px] border-[1px] px-[10px]`}
           />
         </div>
       </div>
@@ -105,7 +105,7 @@ function OrderInfoInput({
             id="receiver_name"
             name="receiver"
             onChange={singleInput}
-            className={`${styles.inputBox} w-[330px] h-[40px] my-[8px] border-[1px] px-[10px]`}
+            className={`${styles.inputBox} ss:w-[330px] w-full h-[40px] my-[8px] border-[1px] px-[10px]`}
           />
         </div>
         <div className="flex items-center sl:gap-[55px] gap-[30px] border-b-[1px] border-disabled">
@@ -115,7 +115,7 @@ function OrderInfoInput({
           >
             휴대폰
           </label>
-          <div className="flex items-center justify-between w-[330px]">
+          <div className="flex items-center ss:justify-between gap-[5px] ss:w-[330px] w-full">
             <input
               type="text"
               id="receiver_phone"
@@ -123,7 +123,7 @@ function OrderInfoInput({
               maxLength={4}
               onChange={handlePhoneNumber}
               onBlur={variousInputOnBlur}
-              className={`${styles.inputBox} ss:w-[80px] w-[60px] h-[40px] my-[8px] border-[1px] px-[10px]`}
+              className={`${styles.inputBox} ss:w-[80px] w-[25%] h-[40px] my-[8px] border-[1px] px-[10px]`}
             />
             -
             <input
@@ -133,7 +133,7 @@ function OrderInfoInput({
               maxLength={4}
               onChange={handlePhoneNumber}
               onBlur={variousInputOnBlur}
-              className={`${styles.inputBox} ss:w-[100px] w-[80px] h-[40px] my-[8px] border-[1px] px-[10px]`}
+              className={`${styles.inputBox} ss:w-[100px] w-[35%] h-[40px] my-[8px] border-[1px] px-[10px]`}
             />
             -
             <input
@@ -143,7 +143,7 @@ function OrderInfoInput({
               maxLength={4}
               onChange={handlePhoneNumber}
               onBlur={variousInputOnBlur}
-              className={`${styles.inputBox} ss:w-[100px] w-[80px] h-[40px] my-[8px] border-[1px] px-[10px]`}
+              className={`${styles.inputBox} ss:w-[100px] w-[35%] h-[40px] my-[8px] border-[1px] px-[10px]`}
             />
           </div>
         </div>
@@ -201,7 +201,7 @@ function OrderInfoInput({
             id="deliver-msg"
             name="address_message"
             onChange={singleInput}
-            className={`${styles.inputBox} sl:w-[600px] w-[330px] h-[40px] my-[8px] border-[1px] px-[10px]`}
+            className={`${styles.inputBox} sl:w-[600px] ss:w-[330px] w-full h-[40px] my-[8px] border-[1px] px-[10px]`}
           />
         </div>
       </div>
@@ -222,7 +222,7 @@ function OrderInfoInput({
               />
               <label
                 htmlFor="card"
-                className="font-spoqaMedium text-[16px] leading-[20px]"
+                className="font-spoqaMedium sm:text-[16px] text-[14px] leading-[20px]"
               >
                 신용/체크카드
               </label>
@@ -238,7 +238,7 @@ function OrderInfoInput({
               />
               <label
                 htmlFor="deposit"
-                className="font-spoqaMedium text-[16px] leading-[20px]"
+                className="font-spoqaMedium sm:text-[16px] text-[14px] leading-[20px]"
               >
                 무통장 입금
               </label>
@@ -254,7 +254,7 @@ function OrderInfoInput({
               />
               <label
                 htmlFor="mobile-pay"
-                className="font-spoqaMedium text-[16px] leading-[20px]"
+                className="font-spoqaMedium sm:text-[16px] text-[14px] leading-[20px]"
               >
                 휴대폰 결제
               </label>
@@ -270,7 +270,7 @@ function OrderInfoInput({
               />
               <label
                 htmlFor="naver-pay"
-                className="font-spoqaMedium text-[16px] leading-[20px]"
+                className="font-spoqaMedium sm:text-[16px] text-[14px] leading-[20px]"
               >
                 네이버페이
               </label>
@@ -286,7 +286,7 @@ function OrderInfoInput({
               />
               <label
                 htmlFor="kakao-pay"
-                className="font-spoqaMedium text-[16px] leading-[20px]"
+                className="font-spoqaMedium sm:text-[16px] text-[14px] leading-[20px]"
               >
                 카카오페이
               </label>

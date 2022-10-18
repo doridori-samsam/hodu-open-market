@@ -36,7 +36,7 @@ function SearchBox({ defaultValue, giveKeyword, hideSearch }) {
       <div
         className={`${
           hideSearch ? "hidden sl:flex" : "flex"
-        } items-center justify-between w-[275px] h-[30px] ss:w-[380px] ss:h-[35px] sm:w-[400px] sm:h-[46px] px-[22px] border-[1px] border-primary rounded-[50px]`}
+        } items-center justify-between w-[275px] h-[30px] ss:w-[380px] ss:h-[35px] sm:w-[400px] sm:h-[46px] sm:px-[22px] px-[15px] border-[1px] border-primary rounded-[50px]`}
       >
         <input
           defaultValue={defaultValue}
@@ -44,12 +44,12 @@ function SearchBox({ defaultValue, giveKeyword, hideSearch }) {
           placeholder="상품을 검색해보세요!"
           onChange={getKeyword}
           onKeyDown={pressEnterKey}
-          className={`border-none ${styles.inputBox} basis-4/5 text-[12px] ss:text-[16px]`}
+          className={`border-none ${styles.inputBox} basis-4/5 text-[12px] sm:text-[16px]`}
         ></input>
         <button
           disabled={!keyword}
           onClick={clickSearch}
-          className="w-[20px] h-[20px] sm:w-[28px] sm:h-[28px] bg-cover icon-search"
+          className="w-[20px] h-[20px] sm:w-[28px] sm:h-[28px] bg-cover bg-center icon-search"
         ></button>
       </div>
     </div>
