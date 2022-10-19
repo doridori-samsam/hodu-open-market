@@ -138,6 +138,12 @@ https://github.com/doridori-samsam/hodu-open-market/blob/b53b800d54891a21ab5781b
 #### ✔ prefetch로 cached된 data 사용으로 성능 향상
 
 https://github.com/doridori-samsam/hodu-open-market/blob/3d59cf8ae84b2b77337747ad735e76d4e59610b0/src/pages/home/Products.jsx#L27-L57
+<br/>
+홈페이지에서 first page 상품 api 데이터에서 상품의 총 개수를 한번에 불러와지는 상품목록 개수(15)로 나누고 올림해줍니다.
+이를 dataLength에 할당합니다. 그리고 dataLength 만큼 for 반복문으로 queryClient.prefetchQuery훅을 사용합니다.
+prefetch된 모든 상품의 데이터는 cached되어 상품 검색시에 사용됩니다.
+
+<br/>
 
 ---
 
