@@ -171,16 +171,20 @@ https://github.com/doridori-samsam/hodu-open-market/blob/af4603fd53fccb194a333f0
 https://github.com/doridori-samsam/hodu-open-market/blob/af4603fd53fccb194a333f0b801bd2678e320d11/src/pages/payment/Payment.jsx#L81-L91
 
 다음카카오에서 제공하는 우편번호 조회 API 서비스를 이용하여 우편 번호 검색 기능을 구현하였습니다.
+<br/>
 구매자가 상품 주문 시, 배송 주소 입력에서 우편번호찾기를 클릭하면 우편번호 검색 모달창이 나타납니다.
 <br/>
 사이트의 기본 컬러팔레트와 어울리도록 주소 검색창 색상을 수정하였습니다.
 
----
-
-</br>
 <br>
 <h2>💣이슈</h2>
-1. tailwind 동적으로 background url 설정시 보이지 않는 이슈.
+
+#### - tailwind로 동적으로 background Image url설정시 보이지 않는 이슈.
+
+<br/>
+https://github.com/doridori-samsam/hodu-open-market/blob/2ddbb1c8d2e0616f676e5dfa58b2668b0806c318/src/pages/home/ProductList.jsx#L4-L46
+Api로 불러온 데이터를 사용하여 동적으로 background Image의 url을 설정할 때, tailwind로 설정 시 이미지가 렌더링 되지 않는 이슈가 있었습니다.
+tailwind의 오류가 있는 것으로 보여, 인라인 속성으로 background Image url을 설정해 주었습니다.
 
 </br>
 <br>
