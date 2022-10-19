@@ -182,8 +182,8 @@ https://github.com/doridori-samsam/hodu-open-market/blob/af4603fd53fccb194a333f0
 #### - tailwind로 동적으로 background Image url설정시 보이지 않는 이슈.
 
 https://github.com/doridori-samsam/hodu-open-market/blob/2ddbb1c8d2e0616f676e5dfa58b2668b0806c318/src/pages/home/ProductList.jsx#L4-L46
-Api로 불러온 데이터를 사용하여 동적으로 background Image의 url을 설정할 때,
-<br/>tailwind로 설정 시 이미지가 렌더링 되지 않는 이슈가 있었습니다.
+Api로 불러온 데이터를 사용하여 동적으로 background Image의 url을 설정할 때, tailwind로 설정 시 이미지가 렌더링 되지 않는 이슈가 있었습니다.
+<br/>
 tailwind의 오류가 있는 것으로 보여, 인라인 속성으로 background Image url을 설정해 주었습니다.
 
 </br>
