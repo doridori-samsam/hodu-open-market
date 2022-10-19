@@ -160,12 +160,22 @@ https://github.com/doridori-samsam/hodu-open-market/blob/a06f65b8e2fda480fb1db81
 
 react-query의 useInfiniteQuery와 react-intersection-observer api를 사용하여 무한 스크롤 기능을 구현하였습니다.
 <br/>
-useInView의 'ref'는 각 페이지 마다 마지막 상품(15번째) <li>태그에 지정하였습니다.
+useInView의 'ref'는 각 페이지 마다 마지막 상품(15번째)에 지정하였습니다.
 
 ---
 
-5. useInfinite, useInview를 사용하여 무한 스크롤 구현
-6. 다음 우편번호 API를 사용한 우편번호 검색 기능 구현
+#### ✔ 다음 우편번호 API 서비스로 우편번호 검색 기능 구현
+
+https://github.com/doridori-samsam/hodu-open-market/blob/af4603fd53fccb194a333f0b801bd2678e320d11/src/components/Modal/PostCodeModal.jsx#L1-L41
+
+https://github.com/doridori-samsam/hodu-open-market/blob/af4603fd53fccb194a333f0b801bd2678e320d11/src/pages/payment/Payment.jsx#L81-L91
+
+다음카카오에서 제공하는 우편번호 조회 API 서비스를 이용하여 우편 번호 검색 기능을 구현하였습니다.
+구매자가 상품 주문 시, 배송 주소 입력에서 우편번호찾기를 클릭하면 우편번호 검색 모달창이 나타납니다.
+<br/>
+사이트의 기본 컬러팔레트와 어울리도록 주소 검색창 색상을 수정하였습니다.
+
+---
 
 </br>
 <br>
