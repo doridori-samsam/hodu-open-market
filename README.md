@@ -112,20 +112,18 @@ https://github.com/doridori-samsam/hodu-open-market/blob/b53b800d54891a21ab5781b
 <br/>
 이 때 아래와 같이 promise all을 사용할 수 있습니다.
 
-```
+```javaScript
   async function getCartList() {
     try {
       const res = await axios.get(url + "cart/", {
         headers: { Authorization: `JWT ${token}` }
       });
-      console.log(res.data.results);
       const items = res.data.results.map((item, idx) =>
         axios.get(url + "products/" + item.product_id + "/")
       );
       const itemsArr = await Promise.all(items);
-      console.log("결과", itemsArr);
     } catch (err) {
-      console.log(err);
+      console.errir(err);
     }
   }
 ```
@@ -135,6 +133,8 @@ https://github.com/doridori-samsam/hodu-open-market/blob/b53b800d54891a21ab5781b
 
 ---
 
+<br/>
+
 #### ✔ prefetch로 cached된 data 사용으로 성능 향상
 
 https://github.com/doridori-samsam/hodu-open-market/blob/3d59cf8ae84b2b77337747ad735e76d4e59610b0/src/pages/home/Products.jsx#L27-L57
@@ -142,10 +142,13 @@ https://github.com/doridori-samsam/hodu-open-market/blob/3d59cf8ae84b2b77337747a
 홈페이지에서 first page 상품 api 데이터에서 상품의 총 개수를 한번에 불러와지는 상품목록 개수(15)로 나누고 올림해줍니다.
 이를 dataLength에 할당합니다. 그리고 dataLength 만큼 for 반복문으로 queryClient.prefetchQuery훅을 사용합니다.
 prefetch된 모든 상품의 데이터는 cached되어 상품 검색시에 사용됩니다.
-
 <br/>
 
 ---
+
+<br/>
+
+#### ✔
 
 4. 구매하기/상품 디테일 페이지에서 cache된 data사용 하여 성능향상
 5. useInfinite, useInview를 사용하여 무한 스크롤 구현
