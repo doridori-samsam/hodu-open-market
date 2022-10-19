@@ -105,9 +105,31 @@ vite: "3.0.7"
 #### ✔ react-query useQueries로 promise all 구현
 
 https://github.com/doridori-samsam/hodu-open-market/blob/b53b800d54891a21ab5781b1cb09c83b3f45e09f/src/pages/myCart/MyCart.jsx#L26-L63
-
+<br/>
 구매자가 장바구니에 담은 상품목록을 불러온 후 상품 이름, 상품 가격, 배송비, 판매자 이름, 이미지 정보를 받아오기 위해
-장바구니 상폼목록의 상품 id로 다시 한번 상품 정보를 가져왔습니다.
+장바구니 상품목록의 상품 id로 다시 한번 상품 정보를 가져왔습니다.
+<br/>
+이 때 아래와 같이 promise all을 사용할 수 있습니다.
+
+```
+  async function getCartList() {
+    try {
+      const res = await axios.get(url + "cart/", {
+        headers: { Authorization: `JWT ${token}` }
+      });
+      console.log(res.data.results);
+      const items = res.data.results.map((item, idx) =>
+        axios.get(url + "products/" + item.product_id + "/")
+      );
+      const itemsArr = await Promise.all(items);
+      console.log("결과", itemsArr);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+```
+
+이처럼 Promise.all을 구현하기 위해 react-query의 useQueries 훅을 동적으로 사용하였습니다.
 
 ---
 
