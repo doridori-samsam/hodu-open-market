@@ -106,8 +106,9 @@ vite: "3.0.7"
 
 https://github.com/doridori-samsam/hodu-open-market/blob/b53b800d54891a21ab5781b1cb09c83b3f45e09f/src/pages/myCart/MyCart.jsx#L26-L63
 <br/>
-구매자가 장바구니에 담은 상품목록을 불러온 후 상품 이름, 상품 가격, 배송비, 판매자 이름, 이미지 정보를 받아오기 위해
-장바구니 상품목록의 상품 id로 다시 한번 상품 정보를 가져왔습니다.
+구매자가 장바구니에 담은 상품목록을 불러온 후,
+<br/>
+상품 이름, 상품 가격, 배송비, 판매자 이름, 이미지 정보를 받아오기 위해 장바구니 상품목록의 상품 id로 다시 한번 상품 정보를 가져왔습니다.
 <br/>
 이 때 아래와 같이 promise all을 사용할 수 있습니다.
 
@@ -130,10 +131,16 @@ https://github.com/doridori-samsam/hodu-open-market/blob/b53b800d54891a21ab5781b
 ```
 
 이처럼 Promise.all을 구현하기 위해 react-query의 useQueries 훅을 동적으로 사용하였습니다.
+<br/>
 
 ---
 
-3. prefetch로 데이터불러오고 검색 시 data 사용
+#### ✔ prefetch로 cached된 data 사용으로 성능 향상
+
+https://github.com/doridori-samsam/hodu-open-market/blob/3d59cf8ae84b2b77337747ad735e76d4e59610b0/src/pages/home/Products.jsx#L27-L57
+
+---
+
 4. 구매하기/상품 디테일 페이지에서 cache된 data사용 하여 성능향상
 5. useInfinite, useInview를 사용하여 무한 스크롤 구현
 6. 다음 우편번호 API를 사용한 우편번호 검색 기능 구현
