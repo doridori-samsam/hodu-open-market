@@ -133,8 +133,6 @@ https://github.com/doridori-samsam/hodu-open-market/blob/b53b800d54891a21ab5781b
 
 ---
 
-<br/>
-
 #### ✔ prefetch로 cached된 data 사용으로 성능 향상
 
 https://github.com/doridori-samsam/hodu-open-market/blob/3d59cf8ae84b2b77337747ad735e76d4e59610b0/src/pages/home/Products.jsx#L27-L57
@@ -146,11 +144,16 @@ prefetch된 모든 상품의 데이터는 cached되어 상품 검색시에 사�
 
 ---
 
+#### ✔장바구니에 상품 추가 시 cache된 data사용 하여 성능향상
+
+https://github.com/doridori-samsam/hodu-open-market/blob/9786c51373c2f6bb1e91dddddd2d4488079a4d6d/src/pages/productDetail/ProductOverview.jsx#L23-L49
 <br/>
+구매자가 장바구니에 상품 추가 시, 장바구니에 해당 상품이 기존에 존재하는지 검증하기 위해 사용자 장바구니 데이터를 불러옵니다.
+이 때, 사용자가 장바구니 페이지를 이미 방문한 적이 있으면 data를 fetch 하지 않고,
+useQueryClient훅을 사용하여 getQueryData로 장바구니 페이지에서 cache된 데이터를 불러옵니다.
 
-#### ✔
+---
 
-4. 구매하기/상품 디테일 페이지에서 cache된 data사용 하여 성능향상
 5. useInfinite, useInview를 사용하여 무한 스크롤 구현
 6. 다음 우편번호 API를 사용한 우편번호 검색 기능 구현
 
