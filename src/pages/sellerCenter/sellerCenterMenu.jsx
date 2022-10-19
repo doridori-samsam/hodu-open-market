@@ -1,6 +1,6 @@
 import React from "react";
 
-function sellerCenterMenu({ content, onClick, active }) {
+function SellerCenterMenu({ content, onClick, active }) {
   return (
     <ul className="basis-1/6 flex shrink-1 sl:flex-col sl:h-[300px] sl:justify-between gap-[5px]">
       {content.map((item, idx) => {

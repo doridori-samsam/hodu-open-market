@@ -9,7 +9,7 @@ import MainButton from "../../components/buttons/MainButton";
 import styles from "../../style";
 
 function LogIn() {
-  const { changeUserType, changeUserName } = useContext(UserContext);
+  const { changeUserType } = useContext(UserContext);
   const url = "https://openmarket.weniv.co.kr/";
 
   /**로그인 회원타입 가져오기 */

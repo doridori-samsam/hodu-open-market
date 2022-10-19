@@ -102,11 +102,11 @@ vite: "3.0.7"
 <br>
 <h2>✨코드 포인트</h2>
 
-### ✔ svg sprite로 svg data를 css 파일에 묶어서 사용
+#### ✔ svg sprite로 svg data를 css 파일에 묶어서 사용
 
 ---
 
-### ✔ promise all을 react-query useQueries로 구현
+#### ✔ promise all을 react-query useQueries로 구현
 
 https://github.com/doridori-samsam/hodu-open-market/blob/b53b800d54891a21ab5781b1cb09c83b3f45e09f/src/pages/myCart/MyCart.jsx#L26-L63
 
