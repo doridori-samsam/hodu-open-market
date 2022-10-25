@@ -3,7 +3,6 @@ import styles from "../../style";
 
 function SearchResult({ listdata }) {
   const navigate = useNavigate();
-  console.log(listdata);
   return (
     <section className={`${styles.flexCenter} ${styles.sectionLayout}`}>
       <ul className="w-full grid lg:grid-cols-[repeat(3,350px)] md:grid-cols-[repeat(3,300px)] sl:grid-cols-[repeat(3,220px)] sm:grid-cols-[repeat(2, 220px)] ss:grid-cols-[repeat(2,200px)] grid-cols-[repeat(2,150px)] gap-y-[50px] justify-between">
